@@ -14,25 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.blank-page', ['type_menu' => '']);
-});
-
-Route::get('/login', function () {
     return view('auth.login', ['type_menu' => '']);
 });
 
-Route::get('/register', function () {
-    return view('auth.register', ['type_menu' => '']);
-});
-
-Route::get('/forgot', function () {
-    return view('auth.forgot', ['type_menu' => '']);
-});
-
-Route::get('/reset', function () {
-    return view('auth.reset', ['type_menu' => '']);
-});
-
-Route::get('/verify', function () {
-    return view('auth.verify', ['type_menu' => '']);
+Route::middleware(['auth'])->group(function(){
+    Route::get('dashboard', function () {
+        return view('pages.dashboard', ['type_menu' => 'dashboard']);
+    });
 });
