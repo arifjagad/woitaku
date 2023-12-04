@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,8 @@ Route::middleware(['auth'])->group(function(){
         return view('pages.dashboard', ['type_menu' => 'dashboard']);
     });
 });
+
+Route::get('/create-admin', function () {
+    return view('pages.create-admin', ['type_menu' => 'create-admin']);
+});
+Route::post('create-admin', [AdminController::class, 'Add_CreateAdmin'])  -> name('create-admin');
