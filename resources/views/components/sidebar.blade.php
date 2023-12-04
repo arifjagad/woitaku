@@ -12,7 +12,18 @@
                     href="{{ url('dashboard') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>
-            <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}">
+            <li class="nav-item dropdown ">
+                <a href="#"
+                    class="nav-link has-dropdown"
+                    data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ url('layout-default-layout') }}">Default Layout</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown ">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
@@ -24,9 +35,9 @@
                 </ul>
             </li>
             <li class="menu-header">Settings</li>
-            <li class="{{ Request::is('add-admin') ? 'active' : '' }}">
+            <li class="{{ Request::is('list-admin') ? 'active' : '' }}">
                 <a class="nav-link"
-                    href="{{ url('create-admin') }}"><i class="fa-solid fa-user-plus"></i> <span>Create Admin</span></a>
+                    href="{{ url('list-admin') }}"><i class="fa-solid fa-user"></i> <span>List Admin</span></a>
             </li>
         </ul>
     </aside>

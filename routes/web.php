@@ -24,7 +24,10 @@ Route::middleware(['auth'])->group(function(){
     });
 });
 
-Route::get('/create-admin', function () {
+/* Route::get('/create-admin', function () {
     return view('pages.create-admin', ['type_menu' => 'create-admin']);
-});
-Route::post('create-admin', [AdminController::class, 'Add_CreateAdmin'])  -> name('create-admin');
+}); */
+
+Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
+Route::get('create-admin', [AdminController::class, 'createAdmin'])  -> name('create-admin');
+Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
