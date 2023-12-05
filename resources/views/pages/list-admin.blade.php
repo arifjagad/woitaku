@@ -15,7 +15,10 @@
         <div class="section-header">
             <h1>List Admin</h1>
         </div>
-
+        <h2 class="section-title">Explore the List of Admins!</h2>
+        <p class="section-lead">
+            You can view all administrators here.
+        </p>
         @if (session('success'))
             <div id="success-alert" class="alert alert-success alert-dismissible show fade m">
                 <div class="alert-body">
@@ -35,13 +38,8 @@
                 <div class="card-body">
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
-                        <div>
-                            <div class="card-header">
-                                <h4>Explore the List of Admins.</h4>
-                            </div>
-                            <div class="card-footer text-right">
-                                <a href="{{route('create-admin')}}" class="btn btn-primary">Create Admin</a>
-                            </div>
+                        <div class="card-footer text-right">
+                            <a href="{{route('create-admin')}}" class="btn btn-primary">Create Admin</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
