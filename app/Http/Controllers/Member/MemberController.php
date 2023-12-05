@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Member\Member;
 use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
@@ -17,5 +15,14 @@ class MemberController extends Controller
             ->get();
 
         return view('pages.member.member', ['datas' => $datas], ['type_menu' => 'member']);
+    }
+
+    public function indexEventOrganizer(){
+        $datas = DB::table('event_organizer')
+            ->join('users', 'event_organizer.id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'event_organizer.description', 'event_organizer.foto_profile', 'event_organizer.alamat', 'event_organizer.kota', 'event_organizer.nomor_whatsapp', 'event_organizer.created_at')
+            ->get();
+
+        return view('pages.member.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
     }
 }

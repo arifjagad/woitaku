@@ -12,7 +12,7 @@
                     href="{{ url('dashboard') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
             </li>
             <li class="menu-header">Management</li>
-            <li class="nav-item dropdown {{ $type_menu === 'member' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('member') || ('event-organizer') ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-users-gear"></i> <span>Members</span></a>
@@ -20,9 +20,9 @@
                     <li class="{{ Request::is('member') ? 'active' : '' }}">
                         <a href="{{ route('member') }}">List Users</a>
                     </li>
-                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
+                    <li class="{{ Request::is('event-organizer') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ url('layout-default-layout') }}">List Event Organizers</a>
+                            href="{{ url('event-organizer') }}">List Event Organizers</a>
                     </li>
                 </ul>
             </li>
@@ -31,9 +31,9 @@
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
+                    <li class="{{ Request::is('event-organizer123') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ url('layout-default-layout') }}">Default Layout</a>
+                            href="{{ url('event-organizer123') }}">Default Layout</a>
                     </li>
                 </ul>
             </li>
