@@ -5,6 +5,7 @@
 @push('style')
     <!-- CSS Libraries -->
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/sc-2.3.0/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 @endpush
 
 @section('main')
@@ -41,7 +42,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table" id="table-1">
+                                <table class="table-striped table" id="list-member">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
@@ -53,7 +54,6 @@
                                             <th>Kota</th>
                                             <th>Nomor Whatsapp</th>
                                             <th>Created At</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,7 +67,6 @@
                                                 <td>{{ $data->kota }}</td>
                                                 <td>{{ $data->nomor_whatsapp }}</td>
                                                 <td>{{ $data->created_at }}</td>
-                                                <td>123</td> <!-- Replace this with the actual data you want to display -->
                                             </tr>
                                         @endforeach
 
@@ -93,4 +92,42 @@
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/sc-2.3.0/datatables.min.js"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+
+    <!-- JSZip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- DataTables Buttons HTML5 -->
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
+    <!-- DataTables Buttons Print -->
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#list-member').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'btn btn-primary',
+                        /* exportOptions: {
+                            columns: ':not(:last-child)',
+                        } */
+                    }, {
+                        extend: 'csv',
+                        className: 'btn btn-primary',
+                    }, {
+                        extend: 'excel',
+                        className: 'btn btn-primary',
+                    }
+                ],
+                initComplete: function () {
+                    $('.btn-primary').removeClass('dt-button');
+                }
+            });
+        });
+    </script>
+
 @endpush
