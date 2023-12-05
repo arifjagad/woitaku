@@ -12,7 +12,7 @@
                     href="{{ url('dashboard') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
             </li>
             <li class="menu-header">Management</li>
-            <li class="nav-item dropdown {{ Request::is('member') || ('event-organizer') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('member') || Request::is('event-organizer') ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-users-gear"></i> <span>Members</span></a>
