@@ -16,6 +16,6 @@ class MemberController extends Controller
             ->select('users.id', 'users.name', 'users.email', 'detail_member.foto_profile', 'detail_member.kota', 'detail_member.nomor_whatsapp', 'detail_member.created_at')
             ->get();
 
-        return view('pages.member.list-member', ['datas' => $datas]);
+        return view('pages.member.member', ['datas' => $datas], ['type_menu' => 'member']);
     }
 }

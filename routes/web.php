@@ -32,5 +32,5 @@ Route::middleware(['auth'])->group(function(){
     Route::put('update-admin/{id}', [AdminController::class, 'updateAdmin'])->name('update-admin');
 
     // Route:User
-    Route::get('/list-member', [MemberController::class, 'indexMember'])->name('list-member');
+    Route::get('/member', [MemberController::class, 'indexMember'])->name('member');
 });

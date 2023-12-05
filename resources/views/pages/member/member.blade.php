@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'List Member')
+@section('title', 'Member')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -13,10 +13,10 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>List Member</h1>
+            <h1>Member</h1>
         </div>
 
-        <h2 class="section-title">Explore the List of Member!</h2>
+        <h2 class="section-title">View All Existing Member Data!</h2>
             <p class="section-lead">
                 You can view all Member here.
             </p>

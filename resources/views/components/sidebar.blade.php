@@ -12,13 +12,13 @@
                     href="{{ url('dashboard') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
             </li>
             <li class="menu-header">Management</li>
-            <li class="nav-item dropdown ">
+            <li class="nav-item dropdown {{ $type_menu === 'member' ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-users-gear"></i> <span>Members</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('list-member') ? 'active' : '' }}">
-                        <a href="{{ route('list-member') }}">List Users</a>
+                    <li class="{{ Request::is('member') ? 'active' : '' }}">
+                        <a href="{{ route('member') }}">List Users</a>
                     </li>
                     <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
                         <a class="nav-link"
