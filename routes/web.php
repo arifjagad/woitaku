@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Member\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,13 @@ Route::middleware(['auth'])->group(function(){
         return view('pages.dashboard', ['type_menu' => 'dashboard']);
     });
 
+    // Route::Admin
     Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
     Route::get('create-admin', [AdminController::class, 'createAdmin'])  -> name('create-admin');
     Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
     Route::get('profile-admin', [AdminController::class, 'profileAdmin'])->name('profile-admin');
     Route::put('update-admin/{id}', [AdminController::class, 'updateAdmin'])->name('update-admin');
+
+    // Route:User
+    Route::get('/list-member', [MemberController::class, 'indexMember'])->name('list-member');
 });
