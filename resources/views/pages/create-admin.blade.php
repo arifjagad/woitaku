@@ -31,7 +31,7 @@
                                             type="text"
                                             class="form-control @error('name') is-invalid @enderror"
                                             name="name"
-                                            required="required">
+                                            required>
                                         @error('name')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -45,7 +45,7 @@
                                             type="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             name="email"
-                                            required="required">
+                                            required>
                                         @error('email')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -61,7 +61,7 @@
                                             type="password"
                                             class="form-control @error('password') is-invalid @enderror"
                                             name="password"
-                                            required="required">
+                                            required>
                                         @error('password')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -71,12 +71,12 @@
                                     <div class="form-group col-6">
                                         <label>Password Confirmation</label>
                                         <input
-                                            id="password2"
+                                            id="password_confirmation"
                                             type="password"
-                                            class="form-control @error('password2') is-invalid @enderror"
+                                            class="form-control @error('password_confirmation') is-invalid @enderror"
                                             name="password_confirmation"
-                                            required="required">
-                                        @error('password2')
+                                            required>
+                                        @error('password_confirmation')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -100,6 +100,30 @@
 </div>
 @endsection @push('scripts')
 <!-- JS Libraies -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var passwordInput = document.getElementById('password');
+        var passwordConfirmationInput = document.getElementById('password_confirmation');
+        var initialPasswordValue = passwordInput.value;
+
+        passwordInput.addEventListener('input', function () {
+            if (passwordInput.value !== initialPasswordValue) {
+                // Jika kata sandi utama berubah, atur kembali nilai konfirmasi kata sandi
+                passwordConfirmationInput.value = initialPasswordValue;
+            }
+        });
+
+        passwordConfirmationInput.addEventListener('input', function () {
+            if (passwordInput.value !== passwordConfirmationInput.value) {
+                passwordConfirmationInput.setCustomValidity("Passwords do not match");
+            } else {
+                passwordConfirmationInput.setCustomValidity('');
+            }
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <!-- Page Specific JS File -->
 @endpush

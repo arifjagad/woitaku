@@ -22,12 +22,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('dashboard', function () {
         return view('pages.dashboard', ['type_menu' => 'dashboard']);
     });
+
+    Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
+    Route::get('create-admin', [AdminController::class, 'createAdmin'])  -> name('create-admin');
+    Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
+    Route::get('profile-admin', [AdminController::class, 'profileAdmin'])->name('profile-admin');
+    Route::put('update-admin/{id}', [AdminController::class, 'updateAdmin'])->name('update-admin');
 });
-
-/* Route::get('/create-admin', function () {
-    return view('pages.create-admin', ['type_menu' => 'create-admin']);
-}); */
-
-Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
-Route::get('create-admin', [AdminController::class, 'createAdmin'])  -> name('create-admin');
-Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
