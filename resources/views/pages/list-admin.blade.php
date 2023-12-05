@@ -1,10 +1,13 @@
-@extends('layouts.app') @section('title', 'List Admin') @push('style')
-<!-- CSS Libraries -->
-<link
-    rel="stylesheet"
-    href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
-    <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet"/>
-@endpush @section('main')
+@extends('layouts.app') @section('title', 'List Admin')
+
+@push('style')
+
+{{-- <link href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" > --}}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+
+@endpush
+
+@section('main')
 
 
 <div class="main-content">
@@ -87,14 +90,9 @@
 </div>
 @endsection @push('scripts')
 <!-- JS Libraies -->
-{{-- <script src="assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-    <script src="assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script> --}}
-<script
-    src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-{{-- <script src="{{ asset() }}"></script> --}}
-{{-- <script src="{{ asset() }}"></script> --}}
+{{-- <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script> --}}
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-
+<script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 <script>
