@@ -25,4 +25,14 @@ class MemberController extends Controller
 
         return view('pages.member.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
     }
+
+    public function indexEventOrganizerDetail($id){
+        $datas = DB::table('event_organizer')
+            ->join('users', 'event_organizer.id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'event_organizer.description', 'event_organizer.foto_profile', 'event_organizer.alamat', 'event_organizer.kota', 'event_organizer.nomor_whatsapp', 'event_organizer.created_at')
+            ->where('users.id', $id)
+            ->get();
+            
+        return view('pages.member.detail-event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
+    }
 }

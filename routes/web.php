@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function(){
     // Route:User
     Route::get('member', [MemberController::class, 'indexMember'])->name('member');
     Route::get('event-organizer', [MemberController::class, 'indexEventOrganizer'])->name('event-organizer');
+    Route::get('event-organizer/{id}', [MemberController::class, 'indexEventOrganizerDetail'])->name('event-organizer.detail');
 
     // Route:Activities
     // Route:Events

@@ -59,21 +59,18 @@
                                     </thead>
                                     <tbody>
                                         @php $id = 1; @endphp
-                                        @foreach ($datas as $data)
-                                            <tr>
-                                                <td class="text-center">{{ $id++ }}</td>
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $data->email }}</td>
-                                                <td>{{ $data->alamat }}</td>
-                                                <td>{{ $data->kota }}</td>
-                                                <td>{{ $data->nomor_whatsapp }}</td>
-                                                <td>{{ $data->created_at }}</td>
-                                                <td>
-                                                    <a href="{{route('event-organizer.detail', $data->id)}}" class="btn btn-primary">Detail</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
+                                        <tr>
+                                            <td class="text-center">{{ $id++ }}</td>
+                                            <td>{{ $datas->first()->name }}</td>
+                                            <td>{{ $datas->first()->email }}</td>
+                                            <td>{{ $datas->first()->alamat }}</td>
+                                            <td>{{ $datas->first()->kota }}</td>
+                                            <td>{{ $datas->first()->nomor_whatsapp }}</td>
+                                            <td>{{ $datas->first()->created_at }}</td>
+                                            <td>
+                                                123
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
