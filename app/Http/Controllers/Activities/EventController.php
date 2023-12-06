@@ -13,7 +13,7 @@ class EventController extends Controller
     public function indexEvent()
     {
         $datas = DB::table('detail_event')
-            ->join('event_organizer', 'detail_event.id_eo', '=', 'event_organizer.id')
+            ->join('event_organizer', 'detail_event.id_eo', '=', 'event_organizer.id_user')
             ->join('users', 'detail_event.id_eo', '=', 'users.id')
             ->select('detail_event.id', 
                     'users.name',
