@@ -85,6 +85,7 @@
                                                 <td>
                                                     @if ($data->verification == 'pending')
                                                         <a href="{{ route('event.accept', $data->id) }}" class="btn btn-success">Accept</a>
+                                                        <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-review" data-id="{{ $data->id }}">Review</a>
                                                         <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modal-reject" data-id="{{ $data->id }}">Reject</a>
                                                     @elseif ($data->verification == 'accepted')
                                                         <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-review" data-id="{{ $data->id }}">Review</a>
@@ -158,7 +159,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning">Review</button>
+                    <button type="submit" class="btn btn-info">Review</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </form>

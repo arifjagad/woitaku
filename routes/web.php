@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Activities\EventController;
+use App\Http\Controllers\Activities\CompetitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('event-organizer', [MemberController::class, 'indexEventOrganizer'])->name('event-organizer');
 
     // Route:Activities
+    // Route:Events
     Route::get('event', [EventController::class, 'indexEvent'])->name('event');
     Route::get('/event/accept/{id}', [EventController::class, 'acceptEvent'])->name('event.accept');
     Route::get('/event/review/{id}', [EventController::class, 'reviewEvent'])->name('event.review');
     Route::put('/event/review/{id}', [EventController::class, 'reviewEvent'])->name('event.review');
     Route::get('/event/reject/{id}', [EventController::class, 'rejectEvent'])->name('event.reject');
     Route::put('/event/reject/{id}', [EventController::class, 'rejectEvent'])->name('event.reject');
+
+    //Route:Competition
+    Route::get('competition', [CompetitionController::class, 'indexCompetition'])->name('competition');
 });
