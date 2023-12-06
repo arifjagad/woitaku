@@ -11,7 +11,6 @@ class MemberController extends Controller
     {
         $datas = DB::table('detail_member')
             ->join('users', 'detail_member.id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'detail_member.foto_profile', 'detail_member.kota', 'detail_member.nomor_whatsapp', 'detail_member.created_at')
             ->get();
 
         return view('pages.member.member', ['datas' => $datas], ['type_menu' => 'member']);
@@ -19,8 +18,7 @@ class MemberController extends Controller
 
     public function indexEventOrganizer(){
         $datas = DB::table('event_organizer')
-            ->join('users', 'event_organizer.id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'event_organizer.description', 'event_organizer.foto_profile', 'event_organizer.alamat', 'event_organizer.kota', 'event_organizer.nomor_whatsapp', 'event_organizer.created_at')
+            ->join('users', 'event_organizer.id_user', '=', 'users.id')
             ->get();
 
         return view('pages.member.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
@@ -28,11 +26,21 @@ class MemberController extends Controller
 
     public function indexEventOrganizerDetail($id){
         $datas = DB::table('event_organizer')
-            ->join('users', 'event_organizer.id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'event_organizer.description', 'event_organizer.foto_profile', 'event_organizer.alamat', 'event_organizer.kota', 'event_organizer.nomor_whatsapp', 'event_organizer.created_at')
+            ->join('users', 'event_organizer.id_user', '=', 'users.id')
+            ->join('detail_event', 'event_organizer.id_user', '=', 'detail_event.id_eo')
+            ->join('detail_competition', 'detail_competition.id_event', '=', 'detail_event.id')
             ->where('users.id', $id)
             ->get();
             
-        return view('pages.member.detail-event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
+        $eventCount = DB::table('detail_event')
+            ->where('id_eo', $id)
+            ->count();
+
+        $competitionCount = DB::table('detail_competition')
+            ->join('detail_event', 'detail_competition.id_event', '=', 'detail_event.id')
+            ->where('id_eo', $id)
+            ->count();
+
+        return view('pages.member.detail-event-organizer', compact('eventCount', 'competitionCount'), ['datas' => $datas], ['type_menu' => 'event-organizer']);
     }
 }

@@ -27,6 +27,12 @@ class Event extends Model
         'reaction_verification',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        // other casts...
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id');
