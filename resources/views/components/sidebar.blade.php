@@ -26,7 +26,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown {{ Request::is('event') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('event') || Request::is('competition') ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-calendar-days"></i> <span>Activities</span></a>
@@ -34,9 +34,9 @@
                     <li class="{{ Request::is('event') ? 'active' : '' }}">
                         <a href="{{ route('event') }}">List Events</a>
                     </li>
-                    <li class="{{ Request::is('event-organizer') ? 'active' : '' }}">
+                    <li class="{{ Request::is('competition') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ url('event-organizer') }}">LList Competitions</a>
+                            href="{{ url('competition') }}">List Competitions</a>
                     </li>
                 </ul>
             </li>
