@@ -69,7 +69,7 @@
                                                 <td>{{ $data->nomor_whatsapp }}</td>
                                                 <td>{{ $data->created_at }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-primary">Detail</a>
+                                                    <a href="{{route('event-organizer', $data->id)}}" class="btn btn-primary">Detail</a>
                                                 </td>
                                             </tr>
                                         @endforeach
