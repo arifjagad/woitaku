@@ -44,6 +44,10 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ Request::is('transaction') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ url('transaction') }}"><i class="fa-solid fa-file-invoice-dollar"></i> <span>Transaction</span></a>
+            </li>
             <li class="menu-header">Settings</li>
             <li class="{{ Request::is('list-admin') ? 'active' : '' }}">
                 <a class="nav-link"

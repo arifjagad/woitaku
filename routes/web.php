@@ -6,6 +6,7 @@ use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Activities\EventController;
 use App\Http\Controllers\Activities\CompetitionController;
 use App\Http\Controllers\Activities\BoothController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +54,8 @@ Route::middleware(['auth'])->group(function(){
 
     // Route:Booth
     Route::get('booth', [BoothController::class, 'indexBooth'])->name('booth');
+
+
+    // Route:Transaction
+    Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
 });
