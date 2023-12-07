@@ -1,9 +1,16 @@
-@extends('layouts.auth') @section('title', 'Login') @push('style')
+@extends('layouts.auth') 
+@section('title', 'Login') 
+@push('style')
 <!-- CSS Libraries -->
 <link
     rel="stylesheet"
     href="{{ asset('library/bootstrap-social/bootstrap-social.css') }}">
-@endpush @section('main')
+<style>
+
+</style>
+@endpush 
+@section('main')
+
 <div class="card card-primary">
     <div class="card-header">
         <h4>Login</h4>
