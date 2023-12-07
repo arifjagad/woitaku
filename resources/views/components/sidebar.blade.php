@@ -26,7 +26,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown {{ Request::is('event') || Request::is('competition') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('event') || Request::is('competition') || Request::is('booth') ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-calendar-days"></i> <span>Activities</span></a>

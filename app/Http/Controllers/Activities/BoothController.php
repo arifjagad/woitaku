@@ -12,6 +12,12 @@ class BoothController extends Controller
 {
     public function indexBooth()
     {
-        return view('pages.activities.booth', ['type_menu' => 'booth']);
+        $datas = DB::table('booth_rental')
+            ->join('detail_event', 'booth_rental.id_event', '=', 'detail_event.id')
+            ->join('users', 'detail_event.id_eo', '=', 'users.id')
+            ->get();
+
+        return view('pages.activities.booth', ['datas' => $datas], ['type_menu' => 'booth']);
     }
+
 }
