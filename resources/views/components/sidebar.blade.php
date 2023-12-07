@@ -38,6 +38,10 @@
                         <a class="nav-link"
                             href="{{ url('competition') }}">List Competitions</a>
                     </li>
+                    <li class="{{ Request::is('booth') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ url('booth') }}">List Booth</a>
+                    </li>
                 </ul>
             </li>
             <li class="menu-header">Settings</li>
