@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Activities\EventController;
 use App\Http\Controllers\Activities\CompetitionController;
+use App\Http\Controllers\Activities\BoothController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,7 @@ Route::middleware(['auth'])->group(function(){
 
     //Route:Competition
     Route::get('competition', [CompetitionController::class, 'indexCompetition'])->name('competition');
+
+    // Route:Booth
+    Route::get('booth', [BoothController::class, 'indexBooth'])->name('booth');
 });
