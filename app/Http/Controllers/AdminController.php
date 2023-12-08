@@ -28,7 +28,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'usertype' => 'admin',
-            'status' => 'inactive',
+            'status' => 'active',
         ]);
 
         Session::flash('success', 'Admin berhasil ditambahkan.');
