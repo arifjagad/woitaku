@@ -6,8 +6,8 @@ use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Activities\EventController;
 use App\Http\Controllers\Activities\CompetitionController;
 use App\Http\Controllers\Activities\BoothController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +24,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('dashboard', function () {
-        return view('pages.dashboard', ['type_menu' => 'dashboard']);
-    });
+    // Route:Dashboard
+    Route::get('dashboard', [DashboardController::class, 'indexDashboard'])->name('dashboard');
 
     // Route::Admin
     Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
@@ -54,7 +53,6 @@ Route::middleware(['auth'])->group(function(){
 
     // Route:Booth
     Route::get('booth', [BoothController::class, 'indexBooth'])->name('booth');
-
 
     // Route:Transaction
     Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
