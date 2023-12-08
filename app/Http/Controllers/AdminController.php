@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Laravel\Fortify\Fortify;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'usertype' => 'admin',
-            'status' => 'active',
+            'status' => 'inactive',
         ]);
 
         Session::flash('success', 'Admin berhasil ditambahkan.');

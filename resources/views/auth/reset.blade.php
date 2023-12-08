@@ -8,13 +8,25 @@
 
 @section('main')
     <div class="card card-primary">
+        @if (session('status'))
+            <div id="success-alert" class="alert alert-success alert-dismissible show fade m mb-4">
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    {{ session('status') }}
+                </div>
+            </div>
+        @endif
         <div class="card-header">
             <h4>Reset Password</h4>
         </div>
 
         <div class="card-body">
             <p class="text-muted">We will send a link to reset your password</p>
-            <form method="POST">
+            <form method="POST" class="needs-validation" novalidate="" action="{{ route('password.update')}}">
+                @csrf
+                <input type="hidden" name="token" value="{{ $request->token }}">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email"
@@ -22,8 +34,8 @@
                         class="form-control"
                         name="email"
                         tabindex="1"
-                        required
-                        autofocus>
+                        disabled
+                        value="{{$request->email}}">
                 </div>
 
                 <div class="form-group">
@@ -34,20 +46,17 @@
                         data-indicator="pwindicator"
                         name="password"
                         tabindex="2"
+                        autofocus
                         required>
-                    <div id="pwindicator"
-                        class="pwindicator">
-                        <div class="bar"></div>
-                        <div class="label"></div>
-                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="password-confirm">Confirm Password</label>
-                    <input id="password-confirm"
+                    <input
+                        id="password_confirmation"
                         type="password"
                         class="form-control"
-                        name="confirm-password"
+                        name="password_confirmation"
                         tabindex="2"
                         required>
                 </div>
@@ -65,9 +74,29 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
-    <script src="{{ asset('library/jquery.pwstrength/jquery.pwstrength.min.js') }}"></script>
-
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/auth-register.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var passwordInput = document.getElementById('password');
+            var passwordConfirmationInput = document.getElementById('password_confirmation');
+            var initialPasswordValue = passwordInput.value;
+    
+            passwordInput.addEventListener('input', function () {
+                if (passwordInput.value !== initialPasswordValue) {
+                    // Jika kata sandi utama berubah, atur kembali nilai konfirmasi kata sandi
+                    passwordConfirmationInput.value = initialPasswordValue;
+                }
+            });
+    
+            passwordConfirmationInput.addEventListener('input', function () {
+                if (passwordInput.value !== passwordConfirmationInput.value) {
+                    passwordConfirmationInput.setCustomValidity("Passwords do not match");
+                } else {
+                    passwordConfirmationInput.setCustomValidity('');
+                }
+            });
+        });
+    </script>
 @endpush
