@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Activities;
+namespace App\Http\Controllers\AdminControllers\Activities;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Models\Activities\Event;
-use Illuminate\Support\Facades\Session;
 
 class CompetitionController extends Controller
 {
@@ -31,6 +28,6 @@ class CompetitionController extends Controller
                     )
             ->get();
 
-        return view('pages.activities.competition', ['datas' => $datas], ['type_menu' => 'competition']);
+        return view('admin.activities.competition', ['datas' => $datas], ['type_menu' => 'competition']);
     }
 }

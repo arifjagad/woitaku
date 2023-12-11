@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Activities;
+namespace App\Http\Controllers\AdminControllers\Activities;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,7 +32,7 @@ class EventController extends Controller
                     )
             ->get();
 
-        return view('pages.activities.event', ['datas' => $datas], ['type_menu' => 'event']);
+        return view('admin.activities.event', ['datas' => $datas], ['type_menu' => 'event']);
     }
 
     public function acceptEvent($id){

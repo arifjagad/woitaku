@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Activities;
+namespace App\Http\Controllers\AdminControllers\Activities;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Models\Activities\Event;
-use Illuminate\Support\Facades\Session;
 
 class BoothController extends Controller
 {
@@ -17,7 +14,7 @@ class BoothController extends Controller
             ->join('users', 'detail_event.id_eo', '=', 'users.id')
             ->get();
 
-        return view('pages.activities.booth', ['datas' => $datas], ['type_menu' => 'booth']);
+        return view('admin.activities.booth', ['datas' => $datas], ['type_menu' => 'booth']);
     }
 
 }
