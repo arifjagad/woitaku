@@ -42,7 +42,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table" id="table-1">
+                                <table class="table-striped table  display nowrap" id="table-event">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
@@ -98,7 +98,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
                             </div>
                         </div>
                     </form>
@@ -178,6 +177,9 @@
     setTimeout(function() {
         $('#success-alert').alert('close');
     }, 1500);
+    $('#table-event').DataTable({
+        scrollX: true
+    });
 </script>
 <script>
     $(document).ready(function() {
@@ -195,7 +197,7 @@
             $('#modal-review form').attr('action', href);
         });
     });
-
+    
 
 </script>
 

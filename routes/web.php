@@ -1,33 +1,34 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Member\MemberController;
-use App\Http\Controllers\Activities\EventController;
-use App\Http\Controllers\Activities\CompetitionController;
-use App\Http\Controllers\Activities\BoothController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TransactionController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
+use App\Http\Middleware\CheckRole;
+use Illuminate\Support\Facades\Auth;
+//Admin
+use App\Http\Controllers\AdminControllers\Member\MemberController;
+use App\Http\Controllers\AdminControllers\Activities\EventController;
+use App\Http\Controllers\AdminControllers\Activities\CompetitionController;
+use App\Http\Controllers\AdminControllers\Activities\BoothController;
+use App\Http\Controllers\AdminControllers\DashboardController;
+use App\Http\Controllers\AdminControllers\TransactionController;
+use App\Http\Controllers\AdminControllers\AdminController;
+
+//Event Organizer
+use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
+
+//Member
+use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 
 Route::get('/', function () {
-    return view('auth.login', ['type_menu' => '']);
+/*     $user = Auth::user();
+dd($user->usertype); */
+    return view('member.index', ['type_menu' => 'index']);
 });
 
-Route::middleware(['auth'])->group(function(){
-    // Route:Dashboard
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('dashboard', [DashboardController::class, 'indexDashboard'])->name('dashboard');
 
-    // Route::Admin
+    // Route:Admin
     Route::get('list-admin', [AdminController::class, 'indexAdmin'])->name('list-admin');
     Route::get('create-admin', [AdminController::class, 'createAdmin'])  -> name('create-admin');
     Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
@@ -39,7 +40,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('event-organizer', [MemberController::class, 'indexEventOrganizer'])->name('event-organizer');
     Route::get('event-organizer/{id}', [MemberController::class, 'indexEventOrganizerDetail'])->name('event-organizer');
 
-    // Route:Activities
     // Route:Events
     Route::get('event', [EventController::class, 'indexEvent'])->name('event');
     Route::get('/event/accept/{id}', [EventController::class, 'acceptEvent'])->name('event.accept');
@@ -56,4 +56,12 @@ Route::middleware(['auth'])->group(function(){
 
     // Route:Transaction
     Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
+});
+
+Route::group(['middleware' => ['auth', 'role:event_organizer']], function () {
+    Route::get('dashboard', [DashboardController_EventOrganizer::class, 'indexDashboard'])->name('dashboard');
+});
+
+Route::group(['middleware' => ['auth', 'role:member']], function () {
+    Route::get('/', [Index_Member::class, 'index'])->name('index');
 });

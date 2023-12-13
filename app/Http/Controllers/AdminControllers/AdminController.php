@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AdminControllers;
 
-use Laravel\Fortify\Fortify;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
     public function indexAdmin(){
         $admins = User::where('usertype', 'admin')->get();
         $status = $admins->pluck('status')->toArray();
-        return view('pages.list-admin', ['users' => $admins], compact('status'));
+        return view('admin.list-admin', ['users' => $admins], compact('status'));
     }
 
     public function createAdmin()
     {
-        return view('pages.create-admin');
+        return view('admin.create-admin');
     }
 
     public function storeAdmin(Request $request)
@@ -39,7 +39,7 @@ class AdminController extends Controller
     {
         $id = auth()->user()->id;
         $data = User::find($id);
-        return view('pages.profile-admin', compact('data'), ['user' => $data]);
+        return view('admin.profile-admin', compact('data'), ['user' => $data]);
     }
 
     public function updateAdmin(Request $request, $id){

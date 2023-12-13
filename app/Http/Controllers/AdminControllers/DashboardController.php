@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
-use Laravel\Fortify\Fortify;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+namespace App\Http\Controllers\AdminControllers;
+
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -79,7 +76,7 @@ class DashboardController extends Controller
 
         // Contoh: Mendapatkan total transaksi per bulan
 
-        return view('pages.dashboard', 
+        return view('admin.dashboard', 
             compact(
                 'adminCount', 
                 'eventOrganizerCount', 

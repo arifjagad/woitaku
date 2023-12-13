@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\AdminControllers\Member;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ class MemberController extends Controller
             ->join('users', 'detail_member.id', '=', 'users.id')
             ->get();
 
-        return view('pages.member.member', ['datas' => $datas], ['type_menu' => 'member']);
+        return view('admin.member.member', ['datas' => $datas], ['type_menu' => 'member']);
     }
 
     public function indexEventOrganizer(){
@@ -21,7 +21,7 @@ class MemberController extends Controller
             ->join('users', 'event_organizer.id_user', '=', 'users.id')
             ->get();
 
-        return view('pages.member.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
+        return view('admin.member.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
     }
 
     public function indexEventOrganizerDetail($id){
@@ -41,6 +41,6 @@ class MemberController extends Controller
             ->where('id_eo', $id)
             ->count();
 
-        return view('pages.member.detail-event-organizer', compact('eventCount', 'competitionCount'), ['datas' => $datas], ['type_menu' => 'event-organizer']);
+        return view('admin.member.detail-event-organizer', compact('eventCount', 'competitionCount'), ['datas' => $datas], ['type_menu' => 'event-organizer']);
     }
 }

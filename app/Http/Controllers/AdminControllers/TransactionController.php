@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AdminControllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {
@@ -14,6 +15,6 @@ class TransactionController extends Controller
             ->join('detail_event', 'transaction.id_event', '=', 'detail_event.id')
             ->get();
 
-        return view('pages.transaction', ['datas' => $datas], ['type_menu' => 'transaction']);
+        return view('admin.transaction', ['datas' => $datas], ['type_menu' => 'transaction']);
     }
 }
