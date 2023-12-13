@@ -6,22 +6,24 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Http\Responses\LoginResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
-
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract; // Add this line
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
+    /* public function register(): void
     {
-        //
-    }
+        
+    } */
 
     /**
      * Bootstrap any application services.
@@ -47,4 +49,30 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::requestPasswordResetLinkView(fn () => view('auth.forgot', ['type_menu' => '']));
         Fortify::resetPasswordView(fn ($request) => view('auth.reset', ['type_menu' => ''], ['request' => $request]));
     }
+
+    /**
+     * Define your route model bindings, pattern filters, etc.
+     */
+    public function register()
+    {
+    $this->app->instance(LoginResponseContract::class, new class implements LoginResponseContract {
+        public function toResponse($request)
+        {
+            if (Auth::user()->usertype === 'admin') {
+                return $request->wantsJson()
+                    ? response()->json(['two_factor' => false])
+                    : redirect()->intended(config('fortify.home_admin'));
+            } else if (Auth::user()->usertype === 'event organizer') {
+                return $request->wantsJson()
+                    ? response()->json(['two_factor' => false])
+                    : redirect()->intended(config('fortify.home_eo'));
+            } else {
+                return $request->wantsJson()
+                    ? response()->json(['two_factor' => false])
+                    : redirect()->intended(config('fortify.home'));
+            }
+        }
+    });
+}
+
 }
