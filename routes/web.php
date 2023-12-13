@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Middleware\CheckRole;
-use Illuminate\Support\Facades\Auth;
 //Admin
 use App\Http\Controllers\AdminControllers\Member\MemberController;
 use App\Http\Controllers\AdminControllers\Activities\EventController;
@@ -20,8 +18,6 @@ use App\Http\Controllers\EventOrganizerControllers\DashboardController as Dashbo
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 
 Route::get('/', function () {
-/*     $user = Auth::user();
-dd($user->usertype); */
     return view('member.index', ['type_menu' => 'index']);
 });
 
@@ -58,10 +54,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
 });
 
-Route::group(['middleware' => ['auth', 'role:event_organizer']], function () {
-    Route::get('dashboard', [DashboardController_EventOrganizer::class, 'indexDashboard'])->name('dashboard');
+Route::group(['middleware' => ['auth', 'role:event organizer']], function () {
+    Route::get('dashboard', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
-    Route::get('/', [Index_Member::class, 'index'])->name('index');
+    Route::get('member.index', [Index_Member::class, 'index'])->name('index');
 });
