@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:event organizer']], function () {
-    Route::get('dashboard', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard');
+    Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('event_organizer.dashboard-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {

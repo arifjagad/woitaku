@@ -75,6 +75,8 @@ return [
     */
 
     'home' => RouteServiceProvider::HOME,
+    'home_admin' => RouteServiceProvider::HOMEADMIN,
+    'home_eo' => RouteServiceProvider::HOMEEO,
 
     /*
     |--------------------------------------------------------------------------
@@ -155,6 +157,6 @@ return [
             'confirmPassword' => true,
             // 'window' => 0,
         ]),
+        // ...
     ],
-
 ];
