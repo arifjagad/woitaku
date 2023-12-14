@@ -6,7 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Http\Responses\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -48,6 +48,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(fn () => view('auth.login', ['type_menu' => '']));
         Fortify::requestPasswordResetLinkView(fn () => view('auth.forgot', ['type_menu' => '']));
         Fortify::resetPasswordView(fn ($request) => view('auth.reset', ['type_menu' => ''], ['request' => $request]));
+        Fortify::registerView(fn () => view('auth.register', ['type_menu' => '']));
     }
 
     /**
@@ -55,24 +56,44 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    $this->app->instance(LoginResponseContract::class, new class implements LoginResponseContract {
-        public function toResponse($request)
-        {
-            if (Auth::user()->usertype === 'admin') {
-                return $request->wantsJson()
-                    ? response()->json(['two_factor' => false])
-                    : redirect()->intended(config('fortify.home_admin'));
-            } else if (Auth::user()->usertype === 'event organizer') {
-                return $request->wantsJson()
-                    ? response()->json(['two_factor' => false])
-                    : redirect()->intended(config('fortify.home_eo'));
-            } else {
-                return $request->wantsJson()
-                    ? response()->json(['two_factor' => false])
-                    : redirect()->intended(config('fortify.home'));
+        // Redirect after login
+        $this->app->instance(
+        LoginResponseContract::class, new class implements LoginResponseContract {
+                public function toResponse($request)
+                {
+                    if (Auth::user()->usertype === 'admin') {
+                        return $request->wantsJson()
+                            ? response()->json(['two_factor' => false])
+                            : redirect()->intended(config('fortify.home_admin'));
+                    } else if (Auth::user()->usertype === 'event organizer') {
+                        return $request->wantsJson()
+                            ? response()->json(['two_factor' => false])
+                            : redirect()->intended(config('fortify.home_eo'));
+                    } else {
+                        return $request->wantsJson()
+                            ? response()->json(['two_factor' => false])
+                            : redirect()->intended(config('fortify.home'));
+                    }
+                }
             }
-        }
-    });
-}
+        );
 
+        // Redirect after register
+        $this->app->instance(
+            RegisterResponse::class, new class implements RegisterResponse {
+                public function toResponse($request)
+                {
+                    if (Auth::user()->usertype === 'event organizer') {
+                        return $request->wantsJson()
+                            ? response()->json(['two_factor' => false])
+                            : redirect()->intended(config('fortify.home_eo'));
+                    } elseif (Auth::user()->usertype === 'member') {
+                        return $request->wantsJson()
+                            ? response()->json(['two_factor' => false])
+                            : redirect()->intended(config('fortify.home'));
+                    }
+                }
+            }
+        );
+    }
 }
