@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\Requests\EmailVerificationRequest;
 
 //Admin
 use App\Http\Controllers\AdminControllers\Member\MemberController;
@@ -54,10 +55,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
 });
 
-Route::group(['middleware' => ['auth', 'role:event organizer']], function () {
+Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('event_organizer.dashboard-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('member.index', [Index_Member::class, 'index'])->name('index');
 });
+

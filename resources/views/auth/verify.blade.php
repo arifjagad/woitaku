@@ -13,50 +13,19 @@
         </div>
 
         <div class="card-body">
-            <p class="text-muted">We will send a link to reset your password</p>
-            <form method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email"
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        tabindex="1"
-                        required
-                        autofocus>
+
+            @if (session('status') == 'verification-link-sent')
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    A new email verification link has been emailed to you!
                 </div>
+            @endif
+            
+            <form method="POST" action="{{ route('verification.send')}}" class="needs-validation" novalidation>
+                @csrf
 
                 <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input id="password"
-                        type="password"
-                        class="form-control pwstrength"
-                        data-indicator="pwindicator"
-                        name="password"
-                        tabindex="2"
-                        required>
-                    <div id="pwindicator"
-                        class="pwindicator">
-                        <div class="bar"></div>
-                        <div class="label"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password-confirm">Confirm Password</label>
-                    <input id="password-confirm"
-                        type="password"
-                        class="form-control"
-                        name="confirm-password"
-                        tabindex="2"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit"
-                        class="btn btn-primary btn-lg btn-block"
-                        tabindex="4">
-                        Reset Password
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        Resend Verification Email
                     </button>
                 </div>
             </form>
