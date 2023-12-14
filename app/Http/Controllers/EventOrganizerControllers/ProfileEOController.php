@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileEOController extends Controller
 {
@@ -23,7 +24,7 @@ class ProfileEOController extends Controller
 
         $data->save();
 
-        Session::flash('success', 'Profile berhasil diupdate.');
+        toast('Password Successfully Updated!','success');
         return redirect()->route('profile-eo');
     }
 }
