@@ -47,7 +47,7 @@
                             class="needs-validation"
                             novalidate=""
                             method="POST"
-                            action="#">
+                            action="{{ route('update-profile-eo', ['id' => $data->id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -60,6 +60,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 name="name"
+                                                value="{{$data->name}}"
                                                 required>
                                         </div>
                                         <div class="form-group col-6">
@@ -69,15 +70,16 @@
                                                 type="email"
                                                 class="form-control"
                                                 name="email"
+                                                value="{{$data->email}}"
                                                 required>
                                         </div>
                                         <div class="form-group col-12">
                                             <label>Description / About Organizer</label>
                                             <textarea class="form-control"
-                                                name="site_description"
-                                                id="site-description"
+                                                name="description"
+                                                id="description"
                                                 data-height="100"
-                                                required></textarea>
+                                                required>{{$data->description}}</textarea>
                                         </div>
                                         <div class="form-group col-12">
                                             <label>Organizer Profile Picture</label>
@@ -86,7 +88,7 @@
                                                     name="site_logo"
                                                     class="custom-file-input"
                                                     id="site-logo"
-                                                    required>
+                                                    >
                                                 <label class="custom-file-label">Choose File</label>
                                             </div>
                                             <div class="form-text text-muted">The image must have a maximum size of 200KB
@@ -97,8 +99,9 @@
                                             <input
                                                 id="address"
                                                 type="text"
-                                                class="form-control form-control-lg"
+                                                class="form-control"
                                                 name="address"
+                                                value="{{$data->alamat}}"
                                                 required>
                                         </div>
                                         <div class="form-group col-6">
@@ -108,16 +111,18 @@
                                                 type="text"
                                                 class="form-control"
                                                 name="city"
+                                                value="{{$data->kota}}"
                                                 required>
                                         </div>
                                         <div class="form-group col-6">
                                             <label>WhatsApp Number</label>
                                             <input
-                                                id="whatsapp-number"
+                                                id="whatsappNumber"
                                                 type="text"
                                                 class="form-control"
-                                                name="whatsapp-number"
+                                                name="whatsappNumber"
                                                 placeholder="62821xxxxxx"
+                                                value="{{$data->nomor_whatsapp}}"
                                                 required>
                                         </div>
                                     </div>

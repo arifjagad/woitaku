@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
     Route::get('profile-eo', [ProfileEOController::class, 'indexProfileEO'])->name('profile-eo');
     Route::put('update-password-eo/{id}', [ProfileEOController::class, 'updatePasswordEO'])->name('update-password-eo');
+    Route::put('update-profile-eo/{id}', [ProfileEOController::class, 'updateProfileEO'])->name('update-profile-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
