@@ -43,9 +43,90 @@
                         <div class="card-header">
                             <h4>Your Profile</h4>
                         </div>
-                        <div class="card-body">
-                            123
-                        </div>
+                        <form
+                            class="needs-validation"
+                            novalidate=""
+                            method="POST"
+                            action="#">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="form-group col-6">
+                                            <label>Name</label>
+                                            <input
+                                                id="name"
+                                                type="text"
+                                                class="form-control"
+                                                name="name"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>Email</label>
+                                            <input
+                                                id="email"
+                                                type="email"
+                                                class="form-control"
+                                                name="email"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>Description / About Organizer</label>
+                                            <textarea class="form-control"
+                                                name="site_description"
+                                                id="site-description"
+                                                data-height="100"
+                                                required></textarea>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>Organizer Profile Picture</label>
+                                            <div class="custom-file">
+                                                <input type="file"
+                                                    name="site_logo"
+                                                    class="custom-file-input"
+                                                    id="site-logo"
+                                                    required>
+                                                <label class="custom-file-label">Choose File</label>
+                                            </div>
+                                            <div class="form-text text-muted">The image must have a maximum size of 200KB
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>Address</label>
+                                            <input
+                                                id="address"
+                                                type="text"
+                                                class="form-control form-control-lg"
+                                                name="address"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>City</label>
+                                            <input
+                                                id="city"
+                                                type="text"
+                                                class="form-control"
+                                                name="city"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>WhatsApp Number</label>
+                                            <input
+                                                id="whatsapp-number"
+                                                type="text"
+                                                class="form-control"
+                                                name="whatsapp-number"
+                                                placeholder="62821xxxxxx"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="card">
@@ -56,7 +137,7 @@
                             class="needs-validation"
                             novalidate=""
                             method="POST"
-                            action="{{ route('update-eo', ['id' => $data->id]) }}">
+                            action="{{ route('update-password-eo', ['id' => $data->id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
