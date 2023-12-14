@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Http\Requests\EmailVerificationRequest;
 
 //Admin
 use App\Http\Controllers\AdminControllers\Member\MemberController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\AdminControllers\AdminController;
 
 //Event Organizer
 use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
+use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -56,7 +56,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
-    Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('event_organizer.dashboard-eo');
+    Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
+    Route::get('profile-eo', [ProfileEOController::class, 'indexProfileEO'])->name('profile-eo');
+    Route::put('update-eo/{id}', [ProfileEOController::class, 'updateEO'])->name('update-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
