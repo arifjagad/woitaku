@@ -56,10 +56,10 @@
     @elseif (auth()->user()->usertype == 'event organizer')
         <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-                <a href="{{ url('dashboard') }}">Woitaku</a>
+                <a href="{{ url('dashboard-eo') }}">Woitaku</a>
             </div>
             <ul class="sidebar-menu">
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                <li class="{{ Request::is('dashboard-eo') ? 'active' : '' }}">
                     <a class="nav-link"
                         href="{{ url('dashboard-eo') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
                 </li>
