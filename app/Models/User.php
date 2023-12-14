@@ -49,4 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail // Add MustVerifyE
     {
         return $this->hasOne(EventOrganizer::class, 'id_user');
     }
+
+
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'id_member');
+    }
 }

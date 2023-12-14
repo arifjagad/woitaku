@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\UserRegistered;
 use App\Listeners\CreateEventOrganizer;
+use App\Listeners\CreateMember;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -24,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserRegistered::class => [
             CreateEventOrganizer::class,
+            CreateMember::class,
         ],
     ];
 
