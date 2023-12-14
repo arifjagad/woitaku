@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ProfileEOController extends Controller
 {
@@ -22,6 +24,10 @@ class ProfileEOController extends Controller
     public function updateProfileEO(Request $request, $id){
         DB::beginTransaction();
 
+        $request->validate([
+            'foto_profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:300',
+        ]);
+
         // Update users table
         $user = User::find(auth()->user()->id);
         $user->name = $request->name;
@@ -33,7 +39,20 @@ class ProfileEOController extends Controller
         $detailEventOrganizer->alamat = $request->address;
         $detailEventOrganizer->kota = $request->city;
         $detailEventOrganizer->nomor_whatsapp = $request->whatsappNumber;
+
+        if ($request->hasFile('foto_profile')) {
+            $file = $request->file('foto_profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = 'event_organizer/profile_photos/' . $fileName;
+
+            Storage::disk('public')->put($filePath, File::get($file));
+
+            $detailEventOrganizer->foto_profile = $filePath;
+        }
+
         $detailEventOrganizer->save();
+
+        
 
         DB::commit();
 

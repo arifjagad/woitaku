@@ -47,7 +47,8 @@
                             class="needs-validation"
                             novalidate=""
                             method="POST"
-                            action="{{ route('update-profile-eo', ['id' => $data->id]) }}">
+                            action="{{ route('update-profile-eo', ['id' => $data->id]) }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -85,13 +86,16 @@
                                             <label>Organizer Profile Picture</label>
                                             <div class="custom-file">
                                                 <input type="file"
-                                                    name="site_logo"
+                                                    name="foto_profile"
                                                     class="custom-file-input"
-                                                    id="site-logo"
+                                                    id="foto_profile"
+                                                    value="{{$data->foto_profile}}"
+                                                    required
                                                     >
                                                 <label class="custom-file-label">Choose File</label>
                                             </div>
-                                            <div class="form-text text-muted">The image must have a maximum size of 200KB
+                                            <div class="form-text text-muted">
+                                                The image must have a maximum size of 300kb <span class="float-right">{{basename($data->foto_profile)}}</span>
                                             </div>
                                         </div>
                                         <div class="form-group col-12">
