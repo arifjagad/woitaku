@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\EventOrganizer;
+
 class User extends Authenticatable implements MustVerifyEmail // Add MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,4 +44,9 @@ class User extends Authenticatable implements MustVerifyEmail // Add MustVerifyE
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function eventOrganizer()
+    {
+        return $this->hasOne(EventOrganizer::class, 'id_user');
+    }
 }
