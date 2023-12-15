@@ -22,11 +22,19 @@ class ProfileEOController extends Controller
     }
 
     public function updateProfileEO(Request $request, $id){
-        DB::beginTransaction();
 
+        // Validasi
         $request->validate([
-            'foto_profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:300',
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|max:50',
+            'description' => 'nullable|string',
+            'address' => 'nullable|string',
+            'city' => 'nullable|string',
+            'whatsappNumber' => ['nullable', 'string', 'min:10', 'regex:/^628[0-9]+$/'],
+            'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:300',
         ]);
+
+        DB::beginTransaction();
 
         // Update users table
         $user = User::find(auth()->user()->id);
@@ -40,6 +48,7 @@ class ProfileEOController extends Controller
         $detailEventOrganizer->kota = $request->city;
         $detailEventOrganizer->nomor_whatsapp = $request->whatsappNumber;
 
+        // Verifikasi Upload Foto Profile
         if ($request->hasFile('foto_profile')) {
             $file = $request->file('foto_profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
@@ -50,9 +59,12 @@ class ProfileEOController extends Controller
             $detailEventOrganizer->foto_profile = $filePath;
         }
 
-        $detailEventOrganizer->save();
-
-        
+        // Kondisi update jika ada atau tidaknya foto profile baru
+        if ($request->hasFile('foto_profile') || $detailEventOrganizer->isDirty('foto_profile')) {
+            $detailEventOrganizer->save();
+        }else{
+            $detailEventOrganizer->save();
+        }
 
         DB::commit();
 
@@ -61,6 +73,11 @@ class ProfileEOController extends Controller
     }
 
     public function updatePasswordEO(Request $request, $id){
+        // Validasi
+        $request->validate([
+            'password' => 'required|string|min:8|max:30|confirmed',
+        ]);
+
         $data = User::find($id);
         if($request->password != null){
             $data->password = Hash::make($request->password);
