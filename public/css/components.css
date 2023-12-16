@@ -97,8 +97,8 @@
 }
 .article .article-header .article-badge {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 10px;
+  right: 10px;
 }
 .article .article-header .article-badge .article-badge-item {
   padding: 7px 15px;
