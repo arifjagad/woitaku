@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\EventOrganizerControllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\EventOrganizer;
 
-class DashboardController extends Controller
+class HeaderController extends Controller
 {
-    public function indexDashboard_EventOrganizer(){
+    public function headerEventOrganizer(){
         $data = DB::table('users')
             ->join('event_organizer', 'users.id', '=', 'event_organizer.id_user')
             ->select('users.*', 'event_organizer.*')
             ->where('users.id', auth()->id())
             ->first();
 
-        return view('event_organizer.dashboard-eo', ['type_menu' => 'event_organizer.dashboard-eo'], compact('data'));
+        return $data;
     }
 }
