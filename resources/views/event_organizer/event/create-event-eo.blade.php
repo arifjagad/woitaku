@@ -141,16 +141,28 @@
                                         <input type="text"
                                             name="start_date"
                                             id="start_date"
-                                            class="form-control datepicker"
+                                            class="form-control datepicker @error('start_date') is-invalid @enderror"
                                             required>
+                                        <!-- Error Message -->
+                                        @error('start_date')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>End Date</label>
                                         <input type="text"
                                             name="end_date"
                                             id="end_date"
-                                            class="form-control datepicker"
+                                            class="form-control datepicker @error('end_date') is-invalid @enderror"
                                             required>
+                                        <!-- Error Message -->
+                                        @error('end_date')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Description</label>
