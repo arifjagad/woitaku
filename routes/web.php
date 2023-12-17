@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
 
     // Route:Payment Method
     Route::get('payment-method', [PaymentMethodController::class, 'indexPaymentMethodEO'])->name('payment-method');
+    Route::get('create-payment-method', [PaymentMethodController::class, 'createPaymentMethodEO'])->name('create-payment-method');
+    Route::post('create-payment-method', [PaymentMethodController::class, 'storePaymentMethodEO'])->name('create-payment-method');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {

@@ -25,7 +25,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href="#" class="btn btn-primary">Create New Payment Method</a>
+                            <a href=" {{ route('create-payment-method') }} " class="btn btn-primary">Create New Payment Method</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
