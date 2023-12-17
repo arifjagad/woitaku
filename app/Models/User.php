@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\EventOrganizer;
 
@@ -44,6 +45,20 @@ class User extends Authenticatable implements MustVerifyEmail // Add MustVerifyE
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+   /*  public static function validateUsers($data)
+    {
+        $rules = [
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|max:50',
+            'password' => 'required|password|min:8|max:50',
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        return $validator;
+    } */
+
 
     public function eventOrganizer()
     {

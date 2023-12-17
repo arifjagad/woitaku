@@ -22,46 +22,69 @@ class ProfileEOController extends Controller
     }
 
     public function updateProfileEO(Request $request, $id){
-        DB::beginTransaction();
-
-        $request->validate([
-            'foto_profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:300',
-        ]);
-
-        // Update users table
-        $user = User::find(auth()->user()->id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
-
-        $detailEventOrganizer = EventOrganizer::where('id_user', auth()->user()->id)->first();
-        $detailEventOrganizer->description = $request->description;
-        $detailEventOrganizer->alamat = $request->address;
-        $detailEventOrganizer->kota = $request->city;
-        $detailEventOrganizer->nomor_whatsapp = $request->whatsappNumber;
-
-        if ($request->hasFile('foto_profile')) {
-            $file = $request->file('foto_profile');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = 'event_organizer/profile_photos/' . $fileName;
-
-            Storage::disk('public')->put($filePath, File::get($file));
-
-            $detailEventOrganizer->foto_profile = $filePath;
+        try {
+            // Validasi
+            $request->validate([
+                'name' => 'required|string|max:30',
+                'email' => 'required|email|max:50',
+                'description' => 'nullable|string',
+                'address' => 'nullable|string',
+                'city' => 'nullable|string',
+                'whatsappNumber' => ['nullable', 'string', 'min:10', 'regex:/^628[0-9]+$/'],
+                'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:3000',
+            ]);
+    
+            DB::beginTransaction();
+    
+            // Update users table
+            $user = User::find(auth()->user()->id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+    
+            $detailEventOrganizer = EventOrganizer::where('id_user', auth()->user()->id)->first();
+            $detailEventOrganizer->description = $request->description;
+            $detailEventOrganizer->alamat = $request->address;
+            $detailEventOrganizer->kota = $request->city;
+            $detailEventOrganizer->nomor_whatsapp = $request->whatsappNumber;
+    
+            // Verifikasi Upload Foto Profile
+            if ($request->hasFile('foto_profile')) {
+                $file = $request->file('foto_profile');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = 'event_organizer/profile_photos/' . $fileName;
+    
+                Storage::disk('public')->put($filePath, File::get($file));
+    
+                $detailEventOrganizer->foto_profile = $filePath;
+            }
+    
+            // Kondisi update jika ada atau tidaknya foto profile baru
+            if ($request->hasFile('foto_profile') || $detailEventOrganizer->isDirty('foto_profile')) {
+                $detailEventOrganizer->save();
+            } else {
+                $detailEventOrganizer->save();
+            }
+    
+            DB::commit();
+    
+            toast('Profile Successfully Updated!', 'success');
+            return redirect()->route('profile-eo');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollback();
+            toast('Validation Failed!', 'error');
+            return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
-
-        $detailEventOrganizer->save();
-
-        
-
-        DB::commit();
-
-        toast('Profile Successfully Updated!','success');
-        return redirect()->route('profile-eo');
     }
+    
 
     public function updatePasswordEO(Request $request, $id){
-        $data = User::find($id);
+        // Validasi
+        $request->validate([
+            'password' => 'required|string|min:8|max:30',
+        ]);
+
+        $data = User::find(auth()->user()->id);
         if($request->password != null){
             $data->password = Hash::make($request->password);
         }

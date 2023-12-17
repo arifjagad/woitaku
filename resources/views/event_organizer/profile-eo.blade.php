@@ -13,35 +13,26 @@
         </div>
         <h2 class="section-title">Hi, {{auth()->user()->name}}!</h2>
         <p class="section-lead">
-            Change information about yourself on this page.
+            Update your organizer information here.
         </p>
-        @if (session('success'))
-            <div id="success-alert" class="alert alert-success alert-dismissible show fade m">
-                <div class="alert-body">
-                    <button class="close" data-dismiss="alert">
-                        <span>&times;</span>
-                    </button>
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-4">
+                {{-- <div class="col-12 col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-header">
                             <h4>Guidebook</h4>
                         </div>
                         <div class="card-body">
-                            123
+                            Isi Guide Book
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-8">
+                </div> --}}
+
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Your Profile</h4>
+                            <h4>Organizer Profile</h4>
                         </div>
                         <form
                             class="needs-validation"
@@ -55,47 +46,72 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
-                                            <label>Name</label>
+                                            <label>Name Organizer</label>
                                             <input
                                                 id="name"
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control @error('name') is-invalid @enderror"
                                                 name="name"
                                                 value="{{$data->name}}"
                                                 required>
+                                            <!-- Error Message -->
+                                            @error('name')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-6">
                                             <label>Email</label>
                                             <input
                                                 id="email"
                                                 type="email"
-                                                class="form-control"
+                                                class="form-control @error('email') is-invalid @enderror"
                                                 name="email"
                                                 value="{{$data->email}}"
                                                 required>
+                                            <!-- Error Message -->
+                                            @error('email')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-12">
                                             <label>Description / About Organizer</label>
-                                            <textarea class="form-control"
+                                            <textarea class="form-control @error('description') is-invalid @enderror"
                                                 name="description"
                                                 id="description"
                                                 data-height="100"
                                                 required>{{$data->description}}</textarea>
+                                            <!-- Error Message -->
+                                            @error('description')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-12">
                                             <label>Organizer Profile Picture</label>
                                             <div class="custom-file">
                                                 <input type="file"
                                                     name="foto_profile"
-                                                    class="custom-file-input"
+                                                    class="custom-file-input @error('foto_profile') is-invalid @enderror"
                                                     id="foto_profile"
                                                     value="{{$data->foto_profile}}"
-                                                    required
+                                                    accept=".jpg, .jpeg, .png"
                                                     >
                                                 <label class="custom-file-label">Choose File</label>
+                                                <!-- Error Message -->
+                                                @error('foto_profile')
+                                                <div class="invalid-feedback">
+                                                    {{$message}}
+                                                </div>
+                                                @enderror
                                             </div>
                                             <div class="form-text text-muted">
-                                                The image must have a maximum size of 300kb <span class="float-right">{{basename($data->foto_profile)}}</span>
+                                                The image must have a maximum size of 300kb 
+                                                <span class="float-right">{{basename($data->foto_profile)}}</span>
                                             </div>
                                         </div>
                                         <div class="form-group col-12">
@@ -103,31 +119,49 @@
                                             <input
                                                 id="address"
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control @error('address') is-invalid @enderror"
                                                 name="address"
                                                 value="{{$data->alamat}}"
                                                 required>
+                                            <!-- Error Message -->
+                                            @error('address')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-6">
                                             <label>City</label>
                                             <input
                                                 id="city"
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control @error('address') is-invalid @enderror"
                                                 name="city"
                                                 value="{{$data->kota}}"
                                                 required>
+                                            <!-- Error Message -->
+                                            @error('city')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>WhatsApp Number</label>
+                                            <label>WhatsApp Number (628xx)</label>
                                             <input
                                                 id="whatsappNumber"
                                                 type="text"
-                                                class="form-control"
+                                                class="form-control @error('whatsappNumber') is-invalid @enderror"
                                                 name="whatsappNumber"
                                                 placeholder="62821xxxxxx"
                                                 value="{{$data->nomor_whatsapp}}"
                                                 required>
+                                            <!-- Error Message -->
+                                            @error('whatsappNumber')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -160,6 +194,7 @@
                                                 class="form-control @error('password') is-invalid @enderror"
                                                 name="password"
                                                 required>
+                                            <!-- Error Message -->
                                             @error('password')
                                             <div class="invalid-feedback">
                                                 {{$message}}
@@ -171,15 +206,9 @@
                                             <input
                                                 id="password_confirmation"
                                                 type="password"
-                                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                class="form-control"
                                                 name="password_confirmation"
                                                 required>
-                                            @error('password_confirmation')
-                                            <div class="invalid-feedback">
-                                                {{$message}}
-                                            </div>
-                                            @enderror
-                                            <!-- Error Message -->
                                         </div>
                                     </div>
                                 </div>

@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminControllers\AdminController;
 //Event Organizer
 use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
 use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
+use App\Http\Controllers\EventOrganizerControllers\EventEOController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -56,10 +57,22 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
+    // Route:Dashboard
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
+    
+    // Route:Profile
     Route::get('profile-eo', [ProfileEOController::class, 'indexProfileEO'])->name('profile-eo');
     Route::put('update-password-eo/{id}', [ProfileEOController::class, 'updatePasswordEO'])->name('update-password-eo');
     Route::put('update-profile-eo/{id}', [ProfileEOController::class, 'updateProfileEO'])->name('update-profile-eo');
+    
+    // Rote:Event
+    Route::get('event-eo', [EventEOController::class, 'indexEventEO'])->name('event-eo');
+    Route::get('create-event-eo', [EventEOController::class, 'createEventEO'])->name('create-event-eo');
+    Route::post('create-event-eo', [EventEOController::class, 'storeEventEO'])->name('create-event-eo');
+    Route::get('edit-event-eo/{id}', [EventEOController::class, 'editEventEO'])->name('edit-event-eo');
+    Route::put('update-event-eo/{id}', [EventEOController::class, 'updateEventEO'])->name('update-event-eo');
+    Route::get('delete-event-eo/{id}', [EventEOController::class, 'deleteEventEO'])->name('delete-event-eo');
+
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
