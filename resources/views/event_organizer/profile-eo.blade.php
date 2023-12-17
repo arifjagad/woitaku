@@ -13,7 +13,7 @@
         </div>
         <h2 class="section-title">Hi, {{auth()->user()->name}}!</h2>
         <p class="section-lead">
-            Change information about yourself on this page.
+            Update your organizer information here.
         </p>
 
         <div class="section-body">
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Your Profile</h4>
+                            <h4>Organizer Profile</h4>
                         </div>
                         <form
                             class="needs-validation"
@@ -99,6 +99,7 @@
                                                     class="custom-file-input @error('foto_profile') is-invalid @enderror"
                                                     id="foto_profile"
                                                     value="{{$data->foto_profile}}"
+                                                    accept=".jpg, .jpeg, .png"
                                                     >
                                                 <label class="custom-file-label">Choose File</label>
                                                 <!-- Error Message -->
@@ -109,7 +110,8 @@
                                                 @enderror
                                             </div>
                                             <div class="form-text text-muted">
-                                                The image must have a maximum size of 300kb <span class="float-right">{{basename($data->foto_profile)}}</span>
+                                                The image must have a maximum size of 300kb 
+                                                <span class="float-right">{{basename($data->foto_profile)}}</span>
                                             </div>
                                         </div>
                                         <div class="form-group col-12">

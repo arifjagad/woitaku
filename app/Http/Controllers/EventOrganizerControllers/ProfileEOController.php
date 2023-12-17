@@ -31,7 +31,7 @@ class ProfileEOController extends Controller
                 'address' => 'nullable|string',
                 'city' => 'nullable|string',
                 'whatsappNumber' => ['nullable', 'string', 'min:10', 'regex:/^628[0-9]+$/'],
-                'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:300',
+                'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:3000',
             ]);
     
             DB::beginTransaction();
@@ -81,10 +81,10 @@ class ProfileEOController extends Controller
     public function updatePasswordEO(Request $request, $id){
         // Validasi
         $request->validate([
-            'password' => 'required|string|min:8|max:30|confirmed',
+            'password' => 'required|string|min:8|max:30',
         ]);
 
-        $data = User::find($id);
+        $data = User::find(auth()->user()->id);
         if($request->password != null){
             $data->password = Hash::make($request->password);
         }
