@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Event')
+@section('title', 'Update Event')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,7 +16,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new event</h1>
+            <h1>Update Event</h1>
         </div>
 
         <div class="row">
@@ -26,37 +26,63 @@
                         <h4>Guidebook</h4>
                     </div>
                     <div class="card-body">
-                        <ol class="list-group text-justify ml-2">
-                            <li>
-                                Perhatikan keseluruhan kolom form yang ada, pastikan tidak ada yang kosong.
-                            </li>
-                            <li>
-                                Upload featured image dengan ukuran yang sesuai, yaitu 1300x600 px.
-                            </li>
-                            <li>
-                                Isi deskripsi event selengkap mungkin, agar peserta dapat memahami event yang kamu buat.
-                            </li>
-                            <li>
-                                Jika kamu ingin membuat event berbayar, maka isi kolom ticket price dan ticket qty. Jika tidak, maka kosongkan saja.
-                            </li>
-                            <li>
-                                Upload dokumen yang menyatakan bahwa kamu ingin menyelenggarakan event. Kami akan verifikasi secara manual apakah event yang ingin kamu selenggarakan sudah sesuai ketentuan atau tidak.
-                            </li>
-                        </ol>
+                        <div>
+                            <ol class="list-group text-justify ml-2">
+                                <li>
+                                    Perhatikan keseluruhan kolom form yang ada, pastikan tidak ada yang kosong.
+                                </li>
+                                <li>
+                                    Upload featured image dengan ukuran yang sesuai, yaitu 1300x600 px.
+                                </li>
+                                <li>
+                                    Isi deskripsi event selengkap mungkin, agar peserta dapat memahami event yang kamu buat.
+                                </li>
+                                <li>
+                                    Jika kamu ingin membuat event berbayar, maka isi kolom ticket price dan ticket qty. Jika tidak, maka kosongkan saja.
+                                </li>
+                                <li>
+                                    Upload dokumen yang menyatakan bahwa kamu ingin menyelenggarakan event. Kami akan verifikasi secara manual apakah event yang ingin kamu selenggarakan sudah sesuai ketentuan atau tidak.
+                                </li>
+                            </ol>
+                        </div>
+                        <hr>
+                        <div class="my-4">
+                            <p class="text-sm text-justify">
+                                Kamu dapat melihat status verifikasi event yang kamu buat di sini. 
+                                Jika statusnya <span class="badge badge-success">Verified</span>, maka event kamu sudah dapat diakses oleh peserta. 
+                                Jika statusnya <span class="badge badge-warning">Pending</span>, maka event kamu sedang dalam proses verifikasi. 
+                                Jika statusnya <span class="badge badge-info">Revision</span>, maka perlu mengubah sedikit sesuai instruksi yang kami berikan agar event tersebut sesuai. 
+                                Jika statusnya <span class="badge badge-danger">Rejected</span>, maka event kamu tidak memenuhi syarat dan tidak dapat diakses oleh peserta.
+                            </p>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>Event Verification Status</h4>
+                        <div class="text-sm float-right text-right">
+                            @if ($data->verification == 'accepted')
+                                <span class="badge badge-success px-4">
+                                    {{ $data->verification }}
+                                </span>
+                            @elseif ($data->verification == 'pending')
+                                <span class="badge badge-warning px-4">
+                                    {{ $data->verification }}
+                                </span>
+                            @elseif ($data->verification == 'revision')
+                                <span class="badge badge-info px-4">
+                                    {{ $data->verification }}
+                                </span>
+                            @else
+                                <span class="badge badge-danger px-4">
+                                    {{ $data->verification }}
+                                </span>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body">
-                        <p class="text-sm text-justify">
-                            Kamu dapat melihat status verifikasi event yang kamu buat di sini. 
-                            Jika statusnya <span class="badge badge-success">Verified</span>, maka event kamu sudah dapat diakses oleh peserta. 
-                            Jika statusnya <span class="badge badge-warning">Pending</span>, maka event kamu sedang dalam proses verifikasi. 
-                            Jika statusnya <span class="badge badge-info">Revision</span>, maka perlu mengubah sedikit sesuai instruksi yang kami berikan agar event tersebut sesuai. 
-                            Jika statusnya <span class="badge badge-danger">Rejected</span>, maka event kamu tidak memenuhi syarat dan tidak dapat diakses oleh peserta.
-                        </p>
+                        <p class="my-4 text-justify"><strong>Keterangan:</strong> {{ $data->reason_verification }}</p>
                     </div>
                     {{-- <div class="card-footer">
                         STATUS EVENT KAMU
@@ -66,15 +92,16 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Event</h4>
+                        <h4>Update Event</h4>
                     </div>
                     <form
                         class="needs-validation"
                         novalidate=""
                         method="POST"
-                        action="#"
+                        action="{{ route('update-event-eo', ['id' => $data->id]) }}"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="row">
@@ -85,6 +112,7 @@
                                             type="text"
                                             class="form-control @error('event_name') is-invalid @enderror"
                                             name="event_name"
+                                            value="{{ $data->event_name }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('event_name')
@@ -97,7 +125,7 @@
                                         <label>Event City</label>
                                         <select class="form-control select2" id="city" name="city">
                                             @foreach ($indonesiaCities as $city)
-                                                <option value="{{ $city }}">{{ $city }}</option>
+                                                <option value="{{ $city }}" @if ($city == $data->city) selected @endif>{{ $city }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -107,7 +135,7 @@
                                             name="event_address"
                                             id="event_address"
                                             data-height="60"
-                                            required></textarea>
+                                            required>{{ $data->address }}</textarea>
                                         <!-- Error Message -->
                                         @error('event_address')
                                         <div class="invalid-feedback">
@@ -122,7 +150,8 @@
                                                 name="featured_image"
                                                 class="custom-file-input @error('featured_image') is-invalid @enderror"
                                                 id="featured_image"
-                                                required
+                                                
+                                                value="{{$data->featrued_image}}"
                                                 >
                                             <label class="custom-file-label">Choose File</label>
                                             <!-- Error Message -->
@@ -134,6 +163,7 @@
                                         </div>
                                         <div class="form-text text-muted">
                                             The image must have a maximum size of 300kb
+                                            <span class="float-right">{{basename($data->featured_image)}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-6">
@@ -141,23 +171,37 @@
                                         <input type="text"
                                             name="start_date"
                                             id="start_date"
-                                            class="form-control datepicker"
+                                            class="form-control datepicker @error('start_date') is-invalid @enderror"
+                                            value="{{ $data->start_date }}"
                                             required>
+                                        <!-- Error Message -->
+                                        @error('start_date')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>End Date</label>
                                         <input type="text"
                                             name="end_date"
                                             id="end_date"
-                                            class="form-control datepicker"
+                                            class="form-control datepicker @error('end_date') is-invalid @enderror"
+                                            value="{{ $data->end_date }}"
                                             required>
+                                        <!-- Error Message -->
+                                        @error('end_date')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Description</label>
                                         <textarea class="summernote"
                                             name="event_description"
                                             id="event_description"
-                                            required></textarea>
+                                            required>{{ $data->event_description }}</textarea>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>Ticket Price</label>
@@ -174,6 +218,7 @@
                                             type="number"
                                             class="form-control @error('ticket_price') is-invalid @enderror"
                                             name="ticket_price"
+                                            value="{{ $data->ticket_price }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('ticket_price')
@@ -197,6 +242,7 @@
                                             type="number"
                                             class="form-control @error('ticket_qty') is-invalid @enderror"
                                             name="ticket_qty"
+                                            value="{{ $data->ticket_qty }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('ticket_qty')
@@ -221,6 +267,7 @@
                                             class="form-control @error('document') is-invalid @enderror"
                                             name="document"
                                             placeholder="Kirim link dokumen kamu disini"
+                                            value="{{ $data->document }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('document')
@@ -233,7 +280,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Create Event</button>
+                            <button class="btn btn-primary">Update Event</button>
                         </div>
                     </form>
                 </div>

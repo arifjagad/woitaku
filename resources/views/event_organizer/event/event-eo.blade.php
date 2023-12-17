@@ -71,7 +71,7 @@
                                             {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                         </p>
                                         <div class="article-user">
-                                            <a href="#" class="btn btn-icon icon-left btn-primary">
+                                            <a href="{{ route('edit-event-eo', ['id' => $data->id]) }}" class="btn btn-icon icon-left btn-primary">
                                                 EDIT
                                             </a>
                                             <a href="#" class="btn btn-icon icon-left btn-danger">
