@@ -51,4 +51,12 @@ class PaymentMethodController extends Controller
         toast('Payment Method Updated!','success');
         return redirect()->route('payment-method');
     }
+
+    public function deletePaymentMethodEO($id){
+        $data = PaymentMethods::find($id);
+        $data->delete();
+
+        toast('Payment Method Deleted!','success');
+        return redirect()->route('payment-method');
+    }
 }

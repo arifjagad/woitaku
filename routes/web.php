@@ -79,7 +79,8 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::post('create-payment-method', [PaymentMethodController::class, 'storePaymentMethodEO'])->name('create-payment-method');
     Route::get('edit-payment-method/{id}', [PaymentMethodController::class, 'editPaymentMethodEO'])->name('edit-payment-method');
     Route::put('update-payment-method/{id}', [PaymentMethodController::class, 'updatePaymentMethodEO'])->name('update-payment-method');
-    
+    Route::get('delete-payment-method/{id}', [PaymentMethodController::class, 'deletePaymentMethodEO'])->name('delete-payment-method');
+
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {

@@ -52,7 +52,7 @@
                                             <td>{{ $data->account_holder_name }}</td>
                                             <td>
                                                 <a href="{{ route('edit-payment-method', $data->id) }}" class="btn btn-primary">Edit</a>
-                                                <a href="#" class="btn btn-danger">Delete</a>
+                                                <a href="{{ route('delete-payment-method', $data->id) }}" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                         @endforeach
