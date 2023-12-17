@@ -211,4 +211,13 @@ class EventEOController extends Controller
         return view('event_organizer.event.edit-event-eo', ['type_menu' => 'edit-event-eo', 'eventId' => $eventId, 'event' => $event, 'indonesiaCities' => $indonesiaCities]);
     }
 
+    public function deleteEventEO($id)
+    {
+        $event = DetailEvent::findOrFail($id);
+        $event->delete();
+
+        toast('Event Successfully Deleted!', 'success');
+        return redirect()->route('event-eo');
+    }
+
 }

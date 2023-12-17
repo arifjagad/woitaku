@@ -74,7 +74,7 @@
                                             <a href="{{ route('edit-event-eo', ['id' => $data->id]) }}" class="btn btn-icon icon-left btn-primary">
                                                 EDIT
                                             </a>
-                                            <a href="#" class="btn btn-icon icon-left btn-danger">
+                                            <a href="{{ route('delete-event-eo', ['id' => $data->id]) }}" class="btn btn-icon icon-left btn-danger">
                                                 DELETE
                                             </a>
                                         </div>

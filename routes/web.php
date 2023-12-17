@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::post('create-event-eo', [EventEOController::class, 'storeEventEO'])->name('create-event-eo');
     Route::get('edit-event-eo/{id}', [EventEOController::class, 'editEventEO'])->name('edit-event-eo');
     Route::put('update-event-eo/{id}', [EventEOController::class, 'updateEventEO'])->name('update-event-eo');
+    Route::get('delete-event-eo/{id}', [EventEOController::class, 'deleteEventEO'])->name('delete-event-eo');
 
 });
 
