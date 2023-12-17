@@ -34,5 +34,21 @@ class PaymentMethodController extends Controller
         return redirect()->route('payment-method', compact('data'));
     }
 
-    
+    public function editPaymentMethodEO($id){
+        $data = PaymentMethods::find($id);
+
+        return view('event_organizer.payment_method.edit-payment-method', ['type_menu' => 'payment-method'], compact('data'));
+    }
+
+    public function updatePaymentMethodEO($id){
+
+        $data = PaymentMethods::find($id);
+        $data->bank_name = request('bank_name');
+        $data->account_number = request('account_number');
+        $data->account_holder_name = request('account_holder_name');
+        $data->save();
+
+        toast('Payment Method Updated!','success');
+        return redirect()->route('payment-method');
+    }
 }

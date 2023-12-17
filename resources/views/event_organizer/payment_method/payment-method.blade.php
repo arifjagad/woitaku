@@ -51,7 +51,7 @@
                                             <td>{{ $data->account_number }}</td>
                                             <td>{{ $data->account_holder_name }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-primary">Edit</a>
+                                                <a href="{{ route('edit-payment-method', $data->id) }}" class="btn btn-primary">Edit</a>
                                                 <a href="#" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
