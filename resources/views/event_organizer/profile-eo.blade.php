@@ -96,7 +96,7 @@
                                             <div class="custom-file">
                                                 <input type="file"
                                                     name="foto_profile"
-                                                    class="custom-file-input @error('description') is-invalid @enderror"
+                                                    class="custom-file-input @error('foto_profile') is-invalid @enderror"
                                                     id="foto_profile"
                                                     value="{{$data->foto_profile}}"
                                                     >
