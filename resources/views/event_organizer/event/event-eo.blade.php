@@ -12,17 +12,33 @@
         <div class="section-header">
             <h1>Your Event</h1>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                
+            </div>
+        </div>
         <div class="section-body">
             <!-- Pengecekan apakah ada data event atau tidak -->
-            @if(count($data) > 3)
+            @if(count($data) > 0)
             <div class="card">
                 <div class="card-header">
-                    <h4>Example Card</h4>
+                    <h4>All Events You Have</h4>
+                    <div class="card-header-action">
+                        <a href="{{ route('create-event-eo') }}" class="btn btn-primary">Create New Event</a>
+                    </div>
                 </div>
                 <div class="card-body">
+                    <form action="{{ route('event-eo') }}" method="GET" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search events...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="row">
-                        <div class="col-12 col-md-4 col-lg-4">
-                            @foreach ($data as $data)
+                        @foreach ($data as $data)
+                            <div class="col-12 col-md-4 col-lg-4">
                                 <article class="article article-style-c">
                                     <div class="article-header">
                                         <div class="article-image"
@@ -52,7 +68,7 @@
                                             </h1>
                                         </div>
                                         <p class="text-justify">
-                                            {{ Str::limit($data->event_description, $limit = 100, $end = '...') }}
+                                            {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                         </p>
                                         <div class="article-user">
                                             <a href="#" class="btn btn-icon icon-left btn-primary">
@@ -64,12 +80,9 @@
                                         </div>
                                     </div>
                                 </article>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
-                </div>
-                <div class="card-footer bg-whitesmoke">
-                    123
                 </div>
             </div>
             <!-- Jika data event tidak ada tampilkan ini -->

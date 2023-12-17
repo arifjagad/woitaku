@@ -14,12 +14,17 @@ use Illuminate\Support\Str;
 
 class EventEOController extends Controller
 {
-    public function indexEventEO()
+    public function indexEventEO(Request $request)
     {
+        $query = $request->input('search');
+
         $data = DB::table('detail_event')
-            ->join('users', 'detail_event.id_eo', '=', 'users.id')
-            ->where('users.id', auth()->id())
-            ->get();
+        ->join('users', 'detail_event.id_eo', '=', 'users.id')
+        ->where('users.id', auth()->id())
+        ->when($query, function ($query, $searchTerm) {
+                return $query->where('event_name', 'like', '%' . $searchTerm . '%');
+            })        
+        ->get();
 
         return view('event_organizer.event.event-eo', ['type_menu' => 'event-eo'], compact('data'));
     }
