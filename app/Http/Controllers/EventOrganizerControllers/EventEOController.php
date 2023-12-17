@@ -111,8 +111,6 @@ class EventEOController extends Controller
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            dd($e->errors(), $request->all());
-
             toast('Validation Failed!', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
@@ -202,8 +200,6 @@ class EventEOController extends Controller
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            dd($e->errors(), $request->all());
-
             toast('Validation Failed!', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
