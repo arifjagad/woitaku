@@ -57,6 +57,7 @@
                                             type="text"
                                             class="form-control @error('account_holder_name') is-invalid @enderror"
                                             name="account_holder_name"
+                                            oninput="toUpperCase(this)"
                                             required>
                                         <!-- Error Message -->
                                         @error('account_holder_name')
@@ -86,4 +87,9 @@
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+<script>
+    function toUpperCase(element) {
+        element.value = element.value.toUpperCase();
+    }
+</script>
 @endpush

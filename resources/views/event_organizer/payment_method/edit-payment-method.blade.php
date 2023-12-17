@@ -93,7 +93,6 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 <script>
     function toUpperCase(element) {
-        // Mengubah nilai input menjadi huruf besar
         element.value = element.value.toUpperCase();
     }
 </script>
