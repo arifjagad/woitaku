@@ -16,6 +16,8 @@ use App\Http\Controllers\EventOrganizerControllers\DashboardController as Dashbo
 use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
 use App\Http\Controllers\EventOrganizerControllers\EventEOController;
 use App\Http\Controllers\EventOrganizerControllers\PaymentMethodController;
+use App\Http\Controllers\EventOrganizerControllers\CompetitionEOController;
+
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 
@@ -82,6 +84,8 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('updateStatusPaymentMethodEO', [PaymentMethodController::class, 'updateStatusPaymentMethodEO'])->name('updateStatusPaymentMethodEO');
     Route::get('delete-payment-method/{id}', [PaymentMethodController::class, 'deletePaymentMethodEO'])->name('delete-payment-method');
 
+    // Route:Competition
+    Route::get('competition-eo', [CompetitionEOController::class, 'indexCompetitionEO'])->name('competition-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
