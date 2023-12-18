@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\AdminControllers\Activities;
+namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,7 @@ class BoothController extends Controller
             ->join('users', 'detail_event.id_eo', '=', 'users.id')
             ->get();
 
-        return view('admin.activities.booth', ['datas' => $datas], ['type_menu' => 'booth']);
+        return view('admin.booth', ['datas' => $datas], ['type_menu' => 'booth']);
     }
 
 }

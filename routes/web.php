@@ -3,14 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 //Admin
-use App\Http\Controllers\AdminControllers\Member\MemberController;
-use App\Http\Controllers\AdminControllers\Activities\EventController;
-use App\Http\Controllers\AdminControllers\Activities\CompetitionController;
-use App\Http\Controllers\AdminControllers\Activities\BoothController;
+use App\Http\Controllers\AdminControllers\EventController;
+use App\Http\Controllers\AdminControllers\CompetitionController;
+use App\Http\Controllers\AdminControllers\BoothController;
 use App\Http\Controllers\AdminControllers\DashboardController;
 use App\Http\Controllers\AdminControllers\TransactionController;
 use App\Http\Controllers\AdminControllers\AdminController;
-
+use App\Http\Controllers\AdminControllers\UserController;
 //Event Organizer
 use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
 use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
@@ -36,9 +35,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::put('update-admin/{id}', [AdminController::class, 'updateAdmin'])->name('update-admin');
 
     // Route:User
-    Route::get('member', [MemberController::class, 'indexMember'])->name('member');
-    Route::get('event-organizer', [MemberController::class, 'indexEventOrganizer'])->name('event-organizer');
-    Route::get('event-organizer/{id}', [MemberController::class, 'indexEventOrganizerDetail'])->name('event-organizer');
+    Route::get('member', [UserController::class, 'indexMember'])->name('member');
+    Route::get('event-organizer', [UserController::class, 'indexEventOrganizer'])->name('event-organizer');
+    Route::get('event-organizer/{id}', [UserController::class, 'indexEventOrganizerDetail'])->name('event-organizer');
 
     // Route:Events
     Route::get('event', [EventController::class, 'indexEvent'])->name('event');
