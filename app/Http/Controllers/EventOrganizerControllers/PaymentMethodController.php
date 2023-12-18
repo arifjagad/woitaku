@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 class PaymentMethodController extends Controller
 {
     public function indexPaymentMethodEO(){
-
         $userId = Auth::id();
         $data = PaymentMethods::where('id_eo', $userId)->get();
 
@@ -18,17 +17,25 @@ class PaymentMethodController extends Controller
     }
 
     public function createPaymentMethodEO(){
-
         return view('event_organizer.payment_method.create-payment-method', ['type_menu' => 'payment-method']);
     }
 
-    public function storePaymentMethodEO($request){
+    public function storePaymentMethodEO(Request $request){
         $userId = Auth::id();
+
+        $existingPaymentMethodsCount = PaymentMethods::where('id_eo', $userId)->count();
+
+        if ($existingPaymentMethodsCount >= 3) {
+            toast('You can only add a maximum of 3 payment methods.','error');
+            return redirect()->route('create-payment-method');
+        }
+
         $data = PaymentMethods::create([
             'id_eo' => $userId,
             'bank_name' => request('bank_name'),
             'account_number' => request('account_number'),
             'account_holder_name' => request('account_holder_name'),
+            'status' => 1
         ]);
 
         toast('Payment Method Created!','success');
