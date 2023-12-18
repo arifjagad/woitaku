@@ -65,7 +65,13 @@
                                                 <td class="text-center">{{ $id++ }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->name }}</td>
-                                                <td>{{ $data->event_category }}</td>
+                                                <td>
+                                                    @if ($data->ticket_price = 0)
+                                                        Free
+                                                    @else
+                                                        Paid
+                                                    @endif
+                                                </td>
                                                 <td>{{ $data->city }}</td>
                                                 <td><a href="{{ $data->document }}" target="_blank" class="btn btn-primary">View Document</a></td>
                                                 {{-- <td>

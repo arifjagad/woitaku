@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Member')
+@section('title', 'Event Organizer')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -13,12 +13,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Member</h1>
+            <h1>Event Organizer</h1>
         </div>
 
-        <h2 class="section-title">View All Existing Member Data!</h2>
+        <h2 class="section-title">View All Existing Event Organizer Data!</h2>
             <p class="section-lead">
-                You can view all Member here.
+                You can view all Event Organizer here.
             </p>
 
             @if (session('success'))
@@ -42,31 +42,35 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table" id="list-member">
+                                <table class="table-striped table" id="list-event-organizer">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Name</th>
+                                            <th>Event Organizer Name</th>
                                             <th>Email</th>
-                                            <th>Foto Profile</th>
-                                            <th>Kota</th>
-                                            <th>Nomor Whatsapp</th>
+                                            <th>Address</th>
+                                            <th>City</th>
+                                            <th>WhatsApp Number</th>
                                             <th>Created At</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php $id = 1; @endphp
-                                        @foreach ($datas as $data)
+                                        @foreach ($data as $data)
                                             <tr>
                                                 <td class="text-center">{{ $id++ }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->email }}</td>
-                                                <td>{{ $data->foto_profile }}</td>
+                                                <td>{{ $data->alamat }}</td>
                                                 <td>{{ $data->kota }}</td>
                                                 <td>{{ $data->nomor_whatsapp }}</td>
                                                 <td>{{ $data->created_at }}</td>
+                                                <td>
+                                                    <a href="{{route('event-organizer', $data->id)}}" class="btn btn-primary">Detail</a>
+                                                </td>
                                             </tr>
                                         @endforeach
 
@@ -106,7 +110,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#list-member').DataTable({
+            $('#list-event-organizer').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     {
