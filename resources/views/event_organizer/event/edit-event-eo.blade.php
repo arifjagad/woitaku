@@ -219,7 +219,7 @@
                                             class="form-control @error('ticket_price') is-invalid @enderror"
                                             name="ticket_price"
                                             value="{{ $data->ticket_price }}"
-                                            required>
+                                            >
                                         <!-- Error Message -->
                                         @error('ticket_price')
                                         <div class="invalid-feedback">
@@ -243,7 +243,7 @@
                                             class="form-control @error('ticket_qty') is-invalid @enderror"
                                             name="ticket_qty"
                                             value="{{ $data->ticket_qty }}"
-                                            required>
+                                            >
                                         <!-- Error Message -->
                                         @error('ticket_qty')
                                         <div class="invalid-feedback">
