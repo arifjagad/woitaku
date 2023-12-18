@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminControllers\AdminController;
 use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
 use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
 use App\Http\Controllers\EventOrganizerControllers\EventEOController;
-
+use App\Http\Controllers\EventOrganizerControllers\PaymentMethodController;
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 
@@ -72,6 +72,15 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('edit-event-eo/{id}', [EventEOController::class, 'editEventEO'])->name('edit-event-eo');
     Route::put('update-event-eo/{id}', [EventEOController::class, 'updateEventEO'])->name('update-event-eo');
     Route::get('delete-event-eo/{id}', [EventEOController::class, 'deleteEventEO'])->name('delete-event-eo');
+
+    // Route:Payment Method
+    Route::get('payment-method', [PaymentMethodController::class, 'indexPaymentMethodEO'])->name('payment-method');
+    Route::get('create-payment-method', [PaymentMethodController::class, 'createPaymentMethodEO'])->name('create-payment-method');
+    Route::post('create-payment-method', [PaymentMethodController::class, 'storePaymentMethodEO'])->name('create-payment-method');
+    Route::get('edit-payment-method/{id}', [PaymentMethodController::class, 'editPaymentMethodEO'])->name('edit-payment-method');
+    Route::put('update-payment-method/{id}', [PaymentMethodController::class, 'updatePaymentMethodEO'])->name('update-payment-method');
+    Route::get('updateStatusPaymentMethodEO', [PaymentMethodController::class, 'updateStatusPaymentMethodEO'])->name('updateStatusPaymentMethodEO');
+    Route::get('delete-payment-method/{id}', [PaymentMethodController::class, 'deletePaymentMethodEO'])->name('delete-payment-method');
 
 });
 
