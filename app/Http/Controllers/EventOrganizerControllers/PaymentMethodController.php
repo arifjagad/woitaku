@@ -5,6 +5,7 @@ namespace App\Http\Controllers\EventOrganizerControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PaymentMethods;
+use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
 {
@@ -47,6 +48,17 @@ class PaymentMethodController extends Controller
         $data->account_number = request('account_number');
         $data->account_holder_name = request('account_holder_name');
         $data->save();
+
+        toast('Payment Method Updated!','success');
+        return redirect()->route('payment-method');
+    }
+
+    public function updateStatusPaymentMethodEO(Request $request){
+
+        $data = PaymentMethods::find($request->id);
+        $data->status = $request->status;
+        $data->save();
+
 
         toast('Payment Method Updated!','success');
         return redirect()->route('payment-method');

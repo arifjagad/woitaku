@@ -38,6 +38,7 @@
                                             <th>Bank Name</th>
                                             <th>Account Number</th>
                                             <th>Account Holder Name</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,6 +51,33 @@
                                             <td>{{ $data->bank_name }}</td>
                                             <td>{{ $data->account_number }}</td>
                                             <td>{{ $data->account_holder_name }}</td>
+                                            <td>
+                                                
+                                                <div class="custom-control custom-switch">
+                                                    <input 
+                                                        data-id="{{$data->id}}"
+                                                        class="custom-control-input toggle-class"
+                                                        type="checkbox"
+                                                        data-onstyle="success"
+                                                        data-offstyle="danger"
+                                                        data-toggle="toggle"
+                                                        data-on="Active"
+                                                        data-off="InActive"
+                                                        {{ $data->status ? 'checked' : '' }}
+                                                        id="customSwitch{{ $data->id }}"
+                                                    >
+                                                    <label 
+                                                        class="custom-control-label" 
+                                                        for="customSwitch{{ $data->id }}"
+                                                        id="statusLabel{{ $data->id }}">
+                                                        @if($data->status == 1)
+                                                            Active
+                                                        @else
+                                                            Inactive
+                                                        @endif
+                                                    </label>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('edit-payment-method', $data->id) }}" class="btn btn-primary">Edit</a>
                                                 <a href="{{ route('delete-payment-method', $data->id) }}" class="btn btn-danger">Delete</a>
@@ -75,4 +103,33 @@
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    $(function () {
+    $('.toggle-class').change(function () {
+        var status = $(this).prop('checked') == true
+            ? 1
+            : 0;
+        var id = $(this).data('id');
+
+        var label = $('#statusLabel' + id);
+        label.text(status ? 'Active' : 'Inactive');
+
+        console.log(status);
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: '/updateStatusPaymentMethodEO',
+            data: {
+                'status': status,
+                'id': id
+            },
+            success: function (data) {
+                console.log(data.success)
+            }
+        });
+    })
+})
+</script>
+
 @endpush
