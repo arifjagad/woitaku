@@ -51,8 +51,8 @@
                                             </th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Created At</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,12 +64,14 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>
-                                                {{ $user->created_at->format('d-m-Y H:i:s') }}
+                                                @if($user->email_verified_at == null)
+                                                    <div class="badge badge-danger">Inactive</div>
+                                                    @else
+                                                    <div class="badge badge-success">Active</div>
+                                                @endif    
                                             </td>
                                             <td>
-                                                <div class="badge {{ $user->status === 'active' ? 'badge-success' : 'badge-danger' }}">
-                                                    {{ $user->status }}
-                                                </div>
+                                                {{ $user->created_at->format('d-m-Y H:i:s') }}
                                             </td>
                                         </tr>
                                         @endforeach
