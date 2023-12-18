@@ -122,6 +122,7 @@
                                                 name="featured_image"
                                                 class="custom-file-input @error('featured_image') is-invalid @enderror"
                                                 id="featured_image"
+                                                accept=".jpg, .jpeg, .png"
                                                 required
                                                 >
                                             <label class="custom-file-label">Choose File</label>

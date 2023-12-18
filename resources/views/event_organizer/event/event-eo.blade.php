@@ -41,8 +41,7 @@
                             <div class="col-12 col-md-4 col-lg-4">
                                 <article class="article article-style-c">
                                     <div class="article-header">
-                                        <div class="article-image"
-                                            data-background="{{ asset('img/news/img13.jpg') }}">
+                                        <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                         </div>
                                         <div class="article-badge">
                                             @if ($data->verification == 'accepted')
