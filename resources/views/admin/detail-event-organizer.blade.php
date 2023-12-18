@@ -13,7 +13,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Event Organizer - {{ $datas->first()->name }}</h1>
+            <h1>Event Organizer - {{ $dataProfile->first()->name }}</h1>
         </div>
         <div class="section-body">
             <div class="row mt-sm-4">
@@ -26,7 +26,7 @@
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Created At</div>
-                                    <div class="profile-widget-item-value">{{ \Carbon\Carbon::parse($datas->first()->created_at)->format('d-m-Y') }}</div>
+                                    <div class="profile-widget-item-value">{{ \Carbon\Carbon::parse($dataProfile->first()->created_at)->format('d-m-Y') }}</div>
                                 </div>
                                 <div class="profile-widget-item">
                                     <div class="profile-widget-item-label">Events</div>
@@ -40,10 +40,10 @@
                         </div>
                         <div class="profile-widget-description">
                             <p class="profile-widget-name">
-                                {{ $datas->first()->name }}
+                                {{ $dataProfile->first()->name }}
                             </p>
                             <p class="text-justify">
-                                {{ $datas->first()->description }}
+                                {{ $dataProfile->first()->description }}
                             </p>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                                         </thead>
                                         <tbody>
                                             @php $id = 1; @endphp
-                                            @foreach ($datas as $data)
+                                            @foreach ($dataEvent as $data)
                                                 <tr>
                                                     <td class="text-center">{{ $id++ }}</td>
                                                     <td>{{ $data->event_name }}</td>
@@ -99,6 +99,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- List Competitions -->
                     <div>
                         <div class="card">
                             <div class="card-header">
@@ -122,13 +124,12 @@
                                         </thead>
                                         <tbody>
                                             @php $id = 1; @endphp
-                                            @foreach ($datas as $data)
+                                            @foreach ($dataCompetition as $data)
                                                 <tr>
                                                     <td class="text-center">{{ $id++ }}</td>
                                                     <td>{{ $data->competition_name }}</td>
                                                     <td>{{ $data->event_name }}</td>
                                                     <td>{{ $data->competition_category }}</td>
-
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -138,9 +139,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- List Competitions -->
-                
             </div>
         </div>
     </section>

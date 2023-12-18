@@ -4,43 +4,44 @@ namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\EventOrganizer;
+use App\Models\DetailEvent;
+use App\Models\DetailCompetition;
 
 class UserController extends Controller
 {
     public function indexMember()
     {
-        $datas = DB::table('detail_member')
-            ->join('users', 'detail_member.id', '=', 'users.id')
-            ->get();
+        $data = User::where('usertype', 'member')->get();
 
-        return view('admin.users.member', ['datas' => $datas], ['type_menu' => 'member']);
+        return view('admin.member', compact('data'), ['type_menu' => 'member']);
     }
 
     public function indexEventOrganizer(){
-        $datas = DB::table('event_organizer')
+        $data = DB::table('event_organizer')
             ->join('users', 'event_organizer.id_user', '=', 'users.id')
-            ->get();
-
-        return view('admin.users.event-organizer', ['datas' => $datas], ['type_menu' => 'event-organizer']);
-    }
-
-    public function indexEventOrganizerDetail($id){
-        $datas = DB::table('event_organizer')
-            ->join('users', 'event_organizer.id_user', '=', 'users.id')
-            ->join('detail_event', 'event_organizer.id_user', '=', 'detail_event.id_eo')
-            ->join('detail_competition', 'detail_competition.id_event', '=', 'detail_event.id')
-            ->where('users.id', $id)
             ->get();
             
-        $eventCount = DB::table('detail_event')
-            ->where('id_eo', $id)
-            ->count();
+        return view('admin.event-organizer', compact('data'), ['type_menu' => 'event-organizer']);
+    }
 
-        $competitionCount = DB::table('detail_competition')
-            ->join('detail_event', 'detail_competition.id_event', '=', 'detail_event.id')
-            ->where('id_eo', $id)
-            ->count();
+    public function indexEventOrganizerDetail(){
+        $dataProfile = DB::table('event_organizer')
+            ->join('users', 'event_organizer.id_user', '=', 'users.id')
+            ->get();
+            
+        $dataEvent = DB::table('detail_event')
+            ->join('event_organizer', 'detail_event.id_eo', '=', 'event_organizer.id_user')
+            ->get();
 
-        return view('admin.users.detail-event-organizer', compact('eventCount', 'competitionCount'), ['datas' => $datas], ['type_menu' => 'event-organizer']);
+        $dataCompetition = DB::table('detail_competition')
+            ->join('event_organizer', 'detail_competition.id_event', '=', 'event_organizer.id')
+            ->get();
+
+        $eventCount = DetailEvent::count();
+        $competitionCount = DetailCompetition::count();
+
+        return view('admin.detail-event-organizer', compact('dataProfile', 'dataEvent', 'dataCompetition', 'eventCount', 'competitionCount'), ['type_menu' => 'event-organizer']);
     }
 }
