@@ -25,7 +25,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href=" {{ route('create-payment-method') }} " class="btn btn-primary">Create New Competition</a>
+                            <a href=" {{ route('create-competition-eo') }} " class="btn btn-primary">Create New Competition</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,31 +35,40 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Bank Name</th>
-                                            <th>Account Number</th>
-                                            <th>Account Holder Name</th>
-                                            <th>Status</th>
+                                            <th>Competition Name</th>
+                                            <th>Event Name</th>
+                                            <th>Competition Start Date</th>
+                                            <th>Competition Category</th>
+                                            <th>Competition Fee</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($data as $data)
+                                        @php $id = 1; @endphp
+                                        @foreach($dataCompetition as $data)
                                         <tr>
                                             <td class="text-center">
-                                                @php for ($i=0; $i < 1; $i++) { echo $i+1; } @endphp
+                                                {{ $id++ }}
                                             </td>
-                                            <td>{{ $data->bank_name }}</td>
-                                            <td>{{ $data->account_number }}</td>
-                                            <td>{{ $data->account_holder_name }}</td>
+                                            <td>{{ $data->competition_name }}</td>
+                                            <td>{{ $data->event_name }}</td>
+                                            <td>{{ $data->competition_start_date }}</td>
                                             <td>
-                                                
+                                                {{$data->category_name}}
                                             </td>
                                             <td>
-                                                <a href="{{ route('edit-payment-method', $data->id) }}" class="btn btn-primary">Edit</a>
+                                                @if ($data->competition_fee == 0)
+                                                    Free
+                                                @else
+                                                    IDR {{ $data->competition_fee }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('edit-competition-eo', $data->id) }}" class="btn btn-primary">Edit</a>
                                                 <a href="{{ route('delete-payment-method', $data->id) }}" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
