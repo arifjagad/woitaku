@@ -65,7 +65,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('edit-competition-eo', $data->id) }}" class="btn btn-primary">Edit</a>
-                                                <a href="{{ route('delete-payment-method', $data->id) }}" class="btn btn-danger">Delete</a>
+                                                <a href="{{ route('delete-competition-eo', $data->id) }}" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                         @endforeach

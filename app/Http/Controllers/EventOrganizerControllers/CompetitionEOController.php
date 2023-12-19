@@ -90,10 +90,8 @@ class CompetitionEOController extends Controller
                 'id_category' => 2
             ]);
 
-            dd($request->all());
 
-
-            toast('Event Successfully Created!', 'success');
+            toast('Competition Successfully Created!', 'success');
             return redirect()->route('competition-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -103,12 +101,11 @@ class CompetitionEOController extends Controller
     }
 
     public function editCompetitionEO($id){
-        $data = DetailCompetition::findOrFail($id);
-        // dd($data->competition_name);
 
-        $dataAllEvent = DB::table('detail_event')
-            ->select('id', 'event_name')
-            ->where('id_eo', '=', Auth::id())
+        $dataCompetition = DetailCompetition::find($id);
+
+        $dataEvent = DetailEvent::select('id', 'event_name')
+            ->where('id_eo', Auth::id())
             ->get();
 
         $selectedEvent = DB::table('detail_competition')
@@ -116,25 +113,90 @@ class CompetitionEOController extends Controller
             ->where('detail_competition.id', '=', $id)
             ->get();
 
-        $dataAllCompetitionCategory = DB::table('competition_category')
-            ->select('id', 'category_name')
-            ->get();
+        $dataCompetitionCategory = CompetitionCategory::all();
 
-        $selectedCompetitionCategory = DB::table('detail_competition')
+        $selectCompetitionCategory = DB::table('detail_competition')
             ->join('competition_category', 'detail_competition.id_competition_category', '=', 'competition_category.id')
             ->where('detail_competition.id', '=', $id)
             ->get();
-            
+
         return view(
             'event_organizer.competition.edit-competition-eo', 
             compact(
-                'data', 
-                'dataAllEvent',
-                'selectedEvent', 
-                'dataAllCompetitionCategory',
-                'selectedCompetitionCategory'
+                'dataCompetition',
+                'dataEvent',
+                'selectedEvent',
+                'dataCompetitionCategory',
+                'selectCompetitionCategory'
             ), 
             ['type_menu' => 'competition-eo']
         );
+    }
+    
+    public function updateCompetitionEO(Request $request){
+        $selectedEventId = $request->input('event_name');
+        $selectedCompetitionCategoryId = $request->input('competition_category');
+            
+        try {
+            $this->validate($request, [
+                'competition_name' => 'required|max:50',
+                'competition_category' => 'required',
+                'competition_description' => 'required',
+                'competition_start_date' => 'required',
+                'competition_end_date' => 'required',
+                'competition_fee' => 'required',
+                'participant_qty' => 'required',
+                'event_name' => 'required',
+            ]);
+
+            // Upload data dari summernote untuk deskripsi event
+            $competition_description = $request->competition_description;
+            $dom = new DOMDocument();
+            if (!empty($competition_description)) {
+                $dom->loadHTML($competition_description, 9);
+            }
+
+            $images = $dom->getElementsByTagName('img');
+
+            foreach ($images as $key => $img) {
+                $data = base64_decode(explode(',',explode(';',$img->getAttribute('src'))[1])[1]);
+                $image_name = "/upload/" . time(). $key.'.png';
+                file_put_contents(public_path().$image_name,$data);
+
+                $img->removeAttribute('src');
+                $img->setAttribute('src',$image_name);
+            }
+
+            $competition_description = $dom->saveHTML();
+
+            // Post ke database
+            DetailCompetition::create([
+                'id_event' => $selectedEventId,
+                'competition_name' => $request->competition_name,
+                'id_competition_category' => $selectedCompetitionCategoryId,
+                'competition_description' => $competition_description,
+                'competition_start_date' => $request->competition_start_date,
+                'competition_end_date' => $request->competition_end_date,
+                'competition_fee' => $request->competition_fee,
+                'participant_qty' => $request->participant_qty,
+                'id_category' => 2
+            ]);
+
+
+            toast('Competition Successfully Updated!', 'success');
+            return redirect()->route('competition-eo');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            toast('Validation Failed!', 'error');
+            return redirect()->back()->withErrors($e->errors())->withInput($request->all());
+        }
+    }
+
+    public function deleteCompetitionEO($id){
+        $dataCompetition = DetailCompetition::find($id);
+        $dataCompetition->delete();
+
+        toast('Competition Successfully Deleted!', 'success');
+        return redirect()->route('competition-eo');
     }
 }

@@ -88,6 +88,8 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('create-competition-eo', [CompetitionEOController::class, 'createCompetitionEO'])->name('create-competition-eo');
     Route::post('create-competition-eo', [CompetitionEOController::class, 'storeCompetitionEO'])->name('create-competition-eo');
     Route::get('edit-competition-eo/{id}', [CompetitionEOController::class, 'editCompetitionEO'])->name('edit-competition-eo');
+    Route::put('update-competition-eo/{id}', [CompetitionEOController::class, 'updateCompetitionEO'])->name('update-competition-eo');
+    Route::get('delete-competition-eo/{id}', [CompetitionEOController::class, 'deleteCompetitionEO'])->name('delete-competition-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
