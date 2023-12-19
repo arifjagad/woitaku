@@ -16,6 +16,7 @@ use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
 use App\Http\Controllers\EventOrganizerControllers\EventEOController;
 use App\Http\Controllers\EventOrganizerControllers\PaymentMethodController;
 use App\Http\Controllers\EventOrganizerControllers\CompetitionEOController;
+use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -90,6 +91,14 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('edit-competition-eo/{id}', [CompetitionEOController::class, 'editCompetitionEO'])->name('edit-competition-eo');
     Route::put('update-competition-eo/{id}', [CompetitionEOController::class, 'updateCompetitionEO'])->name('update-competition-eo');
     Route::get('delete-competition-eo/{id}', [CompetitionEOController::class, 'deleteCompetitionEO'])->name('delete-competition-eo');
+
+    // Route:Booth
+    Route::get('booth-eo', [BoothEOController::class, 'indexBoothEO'])->name('booth-eo');
+    Route::get('create-booth-eo', [BoothEOController::class, 'createBoothEO'])->name('create-booth-eo');
+    Route::post('create-booth-eo', [BoothEOController::class, 'storeBoothEO'])->name('create-booth-eo');
+    Route::get('edit-booth-eo/{id}', [BoothEOController::class, 'editBoothEO'])->name('edit-booth-eo');
+    Route::put('update-booth-eo/{id}', [BoothEOController::class, 'updateBoothEO'])->name('update-booth-eo');
+    Route::get('delete-booth-eo/{id}', [BoothEOController::class, 'deleteBoothEO'])->name('delete-booth-eo');
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
