@@ -55,9 +55,10 @@
                         class="needs-validation"
                         novalidate=""
                         method="POST"
-                        action="#"
+                        action="{{ route('update-competition-eo', ['id' => $dataCompetition->id]) }}"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="row">
@@ -72,7 +73,7 @@
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="event_name" name="event_name">
-                                            @foreach($dataAllEvent as $data)
+                                            @foreach($dataEvent as $data)
                                                 <option 
                                                     value="{{ $data->id }}"
                                                     {{ ($selectedEvent && $selectedEvent->contains('id', $data->id)) ? 'selected' : '' }}                                                    >
@@ -88,6 +89,7 @@
                                             type="text"
                                             class="form-control @error('competition_name') is-invalid @enderror"
                                             name="competition_name"
+                                            value="{{$dataCompetition->competition_name}}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_name')
@@ -107,10 +109,10 @@
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="competition_category" name="competition_category">
-                                            @foreach($dataAllCompetitionCategory as $data)
+                                            @foreach($dataCompetitionCategory as $data)
                                                 <option 
                                                     value="{{ $data->id }}"
-                                                    {{ ($selectedCompetitionCategory && $selectedCompetitionCategory->contains('id', $data->id)) ? 'selected' : '' }}                                                    >
+                                                    {{ ($selectCompetitionCategory && $selectCompetitionCategory->contains('id', $data->id)) ? 'selected' : '' }}                                                    >
                                                     {{ $data->category_name }}
                                                 </option>
                                             @endforeach
@@ -123,7 +125,7 @@
                                             name="competition_description"
                                             id="competition_description"
                                             required>
-                                            
+                                            {{ $dataCompetition->competition_description }}
                                         </textarea>
                                         <!-- Error Message -->
                                         @error('competition_description')
@@ -138,7 +140,9 @@
                                             name="competition_start_date"
                                             id="competition_start_date"
                                             class="form-control datepicker @error('competition_start_date') is-invalid @enderror"
-                                            required>
+                                            required
+                                            value="{{ $dataCompetition->competition_start_date }}"
+                                            >
                                         <!-- Error Message -->
                                         @error('competition_start_date')
                                             <div class="invalid-feedback">
@@ -152,7 +156,9 @@
                                             name="competition_end_date"
                                             id="competition_end_date"
                                             class="form-control datepicker @error('competition_end_date') is-invalid @enderror"
-                                            required>
+                                            required
+                                            value="{{ $dataCompetition->competition_end_date }}"
+                                            >
                                         <!-- Error Message -->
                                         @error('competition_end_date')
                                             <div class="invalid-feedback">
@@ -175,6 +181,7 @@
                                             type="number"
                                             class="form-control @error('competition_fee') is-invalid @enderror"
                                             name="competition_fee"
+                                            value="{{ $dataCompetition->competition_fee }}"
                                             >
                                         <!-- Error Message -->
                                         @error('competition_fee')
@@ -198,6 +205,7 @@
                                             type="number"
                                             class="form-control @error('participant_qty') is-invalid @enderror"
                                             name="participant_qty"
+                                            value="{{ $dataCompetition->participant_qty }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('participant_qty')

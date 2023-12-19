@@ -1,4 +1,4 @@
-@extends('layouts.app') @section('title', 'Competition')
+@extends('layouts.app') @section('title', 'Booth')
 
 @push('style')
 <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
@@ -9,11 +9,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Competition</h1>
+            <h1>Booth</h1>
         </div>
-        <h2 class="section-title">Explore the List of Competitions!</h2>
+        <h2 class="section-title">Explore the List of Booth!</h2>
         <p class="section-lead">
-            You can view all provided Competitions here.
+            You can view all provided Booth here.
         </p>
         
         <div class="section-body">
@@ -25,7 +25,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href=" {{ route('create-competition-eo') }} " class="btn btn-primary">Create New Competition</a>
+                            <a href=" {{ route('create-booth-eo') }} " class="btn btn-primary">Create New Booth</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,37 +35,31 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Competition Name</th>
+                                            <th>Booth Name</th>
                                             <th>Event Name</th>
-                                            <th>Competition Start Date</th>
-                                            <th>Competition Category</th>
-                                            <th>Competition Fee</th>
+                                            <th>Rental Price</th>
+                                            <th>Availability Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php $id = 1; @endphp
-                                        @foreach($dataCompetition as $data)
+                                        @foreach($dataBooth as $data)
                                         <tr>
                                             <td class="text-center">
                                                 {{ $id++ }}
                                             </td>
-                                            <td>{{ $data->competition_name }}</td>
+                                            <td>{{ $data->booth_code }}</td>
                                             <td>{{ $data->event_name }}</td>
-                                            <td>{{ $data->competition_start_date }}</td>
                                             <td>
-                                                {{$data->category_name}}
+                                                {{$data->rental_price}}
                                             </td>
                                             <td>
-                                                @if ($data->competition_fee == 0)
-                                                    Free
-                                                @else
-                                                    IDR {{ $data->competition_fee }}
-                                                @endif
+                                                {{$data->availability_status}}
                                             </td>
                                             <td>
-                                                <a href="{{ route('edit-competition-eo', $data->id) }}" class="btn btn-primary">Edit</a>
-                                                <a href="{{ route('delete-competition-eo', $data->id) }}" class="btn btn-danger">Delete</a>
+                                                <a href="{{ route('edit-booth-eo', $data->id) }}" class="btn btn-primary">Edit</a>
+                                                <a href="{{ route('delete-booth-eo', $data->id) }}" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                         @endforeach

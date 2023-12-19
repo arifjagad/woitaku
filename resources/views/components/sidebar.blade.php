@@ -64,7 +64,7 @@
                         href="{{ url('dashboard-eo') }}"><i class="fa-solid fa-cube"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="menu-header">Management</li>
-                <li class="nav-item dropdown {{ Request::is('event-eo') || Request::is('payment-method') || Request::is('competition-eo') ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ Request::is('event-eo') || Request::is('payment-method') || Request::is('competition-eo') || Request::is('booth-eo') ? 'active' : '' }}">
                     <a href="#"
                         class="nav-link has-dropdown"
                         data-toggle="dropdown"><i class="fa-solid fa-sliders"></i> <span>Managing Events</span>
@@ -77,9 +77,9 @@
                             <a class="nav-link"
                                 href="{{ url('competition-eo') }}">Competition</a>
                         </li>
-                        <li class="{{ Request::is('booth') ? 'active' : '' }}">
+                        <li class="{{ Request::is('booth-eo') ? 'active' : '' }}">
                             <a class="nav-link"
-                                href="{{ url('booth') }}">Booth</a>
+                                href="{{ url('booth-eo') }}">Booth</a>
                         </li>
                         <li class="{{ Request::is('payment-method') ? 'active' : '' }}">
                             <a class="nav-link"
