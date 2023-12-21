@@ -21,9 +21,8 @@ use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 
-Route::get('/', function () {
-    return view('member.index', ['type_menu' => 'index']);
-});
+Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
+Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('dashboard', [DashboardController::class, 'indexDashboard'])->name('dashboard');
@@ -102,6 +101,6 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
-    Route::get('member.index', [Index_Member::class, 'index'])->name('index');
+    
 });
 
