@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\BoothRental;
 use DOMDocument;
+use HTMLPurifier_Config;
+use HTMLPurifier;
 
 class BoothEOController extends Controller
 {
@@ -48,25 +50,32 @@ class BoothEOController extends Controller
                 'terms_and_conditions' => 'required',
             ]);
 
-            // Upload data dari summernote untuk deskripsi booth
-            $competition_description = $request->competition_description;
+            // Upload data dari summernote untuk deskripsi event
+            $providedFacilities = $request->providedFacilities;
+
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
+            $providedFacilities = $purifier->purify($providedFacilities);
+
             $dom = new DOMDocument();
-            if (!empty($competition_description)) {
-                $dom->loadHTML($competition_description, 9);
+            if (!empty($providedFacilities)) {
+                $dom->loadHTML($providedFacilities, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             }
 
             $images = $dom->getElementsByTagName('img');
 
             foreach ($images as $key => $img) {
-                $data = base64_decode(explode(',',explode(';',$img->getAttribute('src'))[1])[1]);
-                $image_name = "/upload/" . time(). $key.'.png';
-                file_put_contents(public_path().$image_name,$data);
+                if (strpos($img->getAttribute('src'),'data:image/') === 0) {
+                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+                    $image_name = "/upload/" . time() . $key . '.png';
+                    file_put_contents(public_path() . $image_name, $data);
 
-                $img->removeAttribute('src');
-                $img->setAttribute('src',$image_name);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $image_name);
+                }
             }
 
-            $competition_description = $dom->saveHTML();
+            $providedFacilities = $dom->saveHTML();
 
             // Post ke database
             BoothRental::create([
@@ -115,25 +124,32 @@ class BoothEOController extends Controller
                 'terms_and_conditions' => 'required',
             ]);
 
-            // Upload data dari summernote untuk deskripsi booth
-            $competition_description = $request->competition_description;
+            // Upload data dari summernote untuk deskripsi event
+            $providedFacilities = $request->providedFacilities;
+
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
+            $providedFacilities = $purifier->purify($providedFacilities);
+
             $dom = new DOMDocument();
-            if (!empty($competition_description)) {
-                $dom->loadHTML($competition_description, 9);
+            if (!empty($providedFacilities)) {
+                $dom->loadHTML($providedFacilities, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             }
 
             $images = $dom->getElementsByTagName('img');
 
             foreach ($images as $key => $img) {
-                $data = base64_decode(explode(',',explode(';',$img->getAttribute('src'))[1])[1]);
-                $image_name = "/upload/" . time(). $key.'.png';
-                file_put_contents(public_path().$image_name,$data);
+                if (strpos($img->getAttribute('src'),'data:image/') === 0) {
+                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+                    $image_name = "/upload/" . time() . $key . '.png';
+                    file_put_contents(public_path() . $image_name, $data);
 
-                $img->removeAttribute('src');
-                $img->setAttribute('src',$image_name);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $image_name);
+                }
             }
 
-            $competition_description = $dom->saveHTML();
+            $providedFacilities = $dom->saveHTML();
 
             // Post ke database
             BoothRental::create([

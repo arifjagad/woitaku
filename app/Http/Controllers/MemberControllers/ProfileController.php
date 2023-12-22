@@ -22,10 +22,6 @@ class ProfileController extends Controller
         $authId = auth()->user()->id;
 
         $dataMember = DetailMember::where('id_member', $authId)->first();
-        /* $dataDetail = DB::table('detail_member')
-            ->join('users', 'detail_member.id_member', '=', 'users.id')
-            ->get(); */
-
         return view('member.detail.profile', compact('dataMember', 'indonesiaCities'), ['type_menu' => 'profile']);
     }
 

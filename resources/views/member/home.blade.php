@@ -93,7 +93,7 @@
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                     </div>
                                     <div class="article-badge">
-                                        <div class="article-badge-item bg-danger text-uppercase">
+                                        <div class="article-badge-item bg-success text-uppercase">
                                             @if ($data->ticket_price == 0)
                                                 GRATIS
                                             @else
@@ -111,9 +111,11 @@
                                         </a>
                                     </div>
                                     <div class="article-title">
-                                        <h2><a href="#">{{ $data->event_name }}</a></h2>
+                                        <h2>
+                                            <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->event_name }}</a>
+                                        </h2>
                                     </div>
-                                    <p>
+                                    <p class="text-justify">
                                         {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                     </p>
                                     <div class="article-user">
