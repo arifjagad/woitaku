@@ -111,7 +111,9 @@
                                         </a>
                                     </div>
                                     <div class="article-title">
-                                        <h2><a href="#">{{ $data->event_name }}</a></h2>
+                                        <h2>
+                                            <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->event_name }}</a>
+                                        </h2>
                                     </div>
                                     <p>
                                         {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}

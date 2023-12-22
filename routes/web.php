@@ -21,10 +21,13 @@ use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 use App\Http\Controllers\MemberControllers\ProfileController;
+use App\Http\Controllers\MemberControllers\DetailEventController;
 
-Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
-Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 
+
+
+
+// Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('dashboard', [DashboardController::class, 'indexDashboard'])->name('dashboard');
 
@@ -58,6 +61,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
 });
 
+// Route untuk usertype Event Organizer
 Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
     // Route:Dashboard
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
@@ -101,10 +105,16 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('delete-booth-eo/{id}', [BoothEOController::class, 'deleteBoothEO'])->name('delete-booth-eo');
 });
 
+// Route untuk usertype Member
 Route::group(['middleware' => ['auth', 'role:member']], function () {
     // Detail
     Route::get('profile', [ProfileController::class, 'indexProfile'])->name('profile');
     Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
+
 });
 
+// Route untuk semua (bisa diakses sebelum login)
+Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
+Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
+Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
