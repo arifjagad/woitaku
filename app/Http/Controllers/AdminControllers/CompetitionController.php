@@ -11,9 +11,10 @@ class CompetitionController extends Controller
     {
         $datas = DB::table('detail_competition')
             ->join('detail_event', 'detail_competition.id_event', '=', 'detail_event.id')
+            ->join('competition_category', 'detail_competition.id_competition_category', '=', 'competition_category.id')
             ->join('users', 'detail_event.id_eo', '=', 'users.id')
             ->get();
-
-        return view('admin.competition', ['datas' => $datas], ['type_menu' => 'competition']);
+            
+        return view('admin.competition', compact('datas'), ['type_menu' => 'competition']);
     }
 }

@@ -50,7 +50,7 @@
                                             <td class="text-center">{{ $id++ }}</td>
                                             <td>{{$data->competition_name}}</td>
                                             <td>{{$data->event_name}}</td>
-                                            <td>{{$data->competition_category}}</td>
+                                            <td>{{$data->id_competition_category}}</td>
                                             <td>IDR {{ number_format($data->competition_fee, 0, ',', '.') }}</td>
                                             <td>{{$data->participant_qty}} peserta</td>
                                             <td>
@@ -59,18 +59,15 @@
                                                         '{{ $data->competition_name }}',
                                                         '{{ $data->event_name }}',
                                                         '{{ $data->name }}',
-                                                        '{{ $data->competition_category }}',
+                                                        '{{ $data->id_competition_category }}',
                                                         '{{ number_format($data->competition_fee, 0, ',', '.') }}',
                                                         '{{ $data->participant_qty }}',
                                                         '{{ addslashes(htmlspecialchars($data->competition_description)) }}',
-                                                        '{{ $data->registration_date}}',
-                                                        '{{ $data->registration_deadline}}',
                                                         '{{ $data->competition_start_date}}',
                                                         '{{ $data->competition_end_date}}',
                                                     )">
                                                     Detail
                                                 </button>
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -118,7 +115,7 @@
                     <tr>
                         <td>Competition Category</td>
                         <td>:</td>
-                        <td id="competitionCategory"></td>
+                        <td id="idCompetitionCategory"></td>
                     </tr>
                     <tr>
                         <td>Competition Fee</td>
@@ -134,13 +131,6 @@
                         <td>Competition Description</td>
                         <td>:</td>
                         <td id="competitionDescription" class="text-justify"></td>
-                    </tr>
-                    <tr>
-                        <td>Registration Peroid</td>
-                        <td>:</td>
-                        <td>
-                            <span id="registrationDate"></span> - <span id="registrationDeadline"></span>
-                        </td>
                     </tr>
                     <tr>
                         <td>Competition Period</td>
@@ -174,25 +164,21 @@
         competitionName, 
         name, 
         eventName, 
-        competitionCategory, 
+        idCompetitionCategory, 
         competitionFee, 
         participantQty, 
         competitionDescription,
-        registrationDate,
-        registrationDeadline,
         competitionStartDate,
         competitionEndDate
     ) {
         $('#competitionName').text(competitionName);
         $('#eventName').text(name);
-        $('#eoName').text(eventName);
-        $('#competitionCategory').text(competitionCategory);
+        $('#eoName').text(eoName);
+        $('#idCompetitionCategory').text(idCompetitionCategory);
         var competitionFeeFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(competitionFee);
         $('#competitionFee').text(competitionFeeFormatted);
         $('#participantQty').text(participantQty + ' peserta');
         $('#competitionDescription').text(competitionDescription);
-        $('#registrationDate').text(registrationDate);
-        $('#registrationDeadline').text(registrationDeadline);
         $('#competitionStartDate').text(competitionStartDate);
         $('#competitionEndDate').text(competitionEndDate);
         $('#detailsModal').modal('show');

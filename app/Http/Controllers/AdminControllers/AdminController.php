@@ -47,13 +47,22 @@ class AdminController extends Controller
         $data->name = $request->name;
         $data->email = $request->email;
         
+        $data->save();
+
+        toast('Profile berhasil diupdate.', 'success');
+        return redirect()->route('profile-admin');
+    }
+
+    public function updatePasswordAdmin(Request $request, $id){
+        $data = User::find($id);
+
         if($request->password != null){
             $data->password = Hash::make($request->password);
         }
 
         $data->save();
 
-        Session::flash('success', 'Profile berhasil diupdate.');
+        toast('Password berhasil diupdate.', 'success');
         return redirect()->route('profile-admin');
     }
 }
