@@ -42,7 +42,7 @@
 </head>
 </head>
 
-<body style="background-color: white;">
+<body style="background-color: #fafdfb;">
     <div id="app">
         <div class="main-wrapper">
             <!-- Header -->

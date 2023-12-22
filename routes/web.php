@@ -20,6 +20,7 @@ use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
+use App\Http\Controllers\MemberControllers\ProfileController;
 
 Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
@@ -101,6 +102,9 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
 });
 
 Route::group(['middleware' => ['auth', 'role:member']], function () {
-    
+    // Detail
+    Route::get('profile', [ProfileController::class, 'indexProfile'])->name('profile');
+    Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
+    Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
 });
 
