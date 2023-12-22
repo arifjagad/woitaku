@@ -73,6 +73,32 @@
                                             @enderror
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Update Admin</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {{-- <div class="card-footer bg-whitesmoke">
+                    This is card footer
+                </div> --}}
+            </div>
+            <div class="card">
+                {{-- <div class="card-header">
+                        <h4>Example Card</h4>
+                    </div> --}}
+                <div class="card-body">
+                    <form class="needs-validation" novalidate="" method="POST" action="{{ route('update-password-admin', ['id' => $data->id]) }}">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <div class="card-header">
+                                <h4>Update Password</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label>Password</label>
@@ -107,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary">Update Admin</button>
+                                <button class="btn btn-primary">Update Password</button>
                             </div>
                         </div>
                     </form>
@@ -142,12 +168,5 @@
             }
         });
     });
-
-    // Setelah 3 detik, sembunyikan atau hapus elemen alert
-    setTimeout(function() {
-        $('#success-alert').alert('close'); // Menggunakan metode 'close' dari Bootstrap
-        // atau
-        // $('#success-alert').remove(); // Untuk menghapus elemen dari DOM
-    }, 1500);
 </script>
 @endpush

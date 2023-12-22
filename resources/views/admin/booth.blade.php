@@ -37,7 +37,6 @@
                                         </th>
                                         <th>Booth Name</th>
                                         <th>Event Name</th>
-                                        <th>Event Organizer Phone</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -49,9 +48,8 @@
                                         <td>
                                             {{ $id++ }}
                                         </td>
-                                        <td>{{ $data->booth_name }}</td>
+                                        <td>{{ $data->booth_code }}</td>
                                         <td>{{ $data->event_name }}</td>
-                                        <td>{{ $data->admin_phone }}</td>
                                         <td>
                                             @php if ($data->availability_status == 'available') {
                                                 echo '<span class="badge badge-success">Available</span>';
@@ -62,15 +60,12 @@
                                         <td>
                                             <button class="btn btn-primary" 
                                                 onclick="showDetailsModal(
-                                                    '{{ $data->booth_name }}',
+                                                    '{{ $data->booth_code }}',
                                                     '{{ $data->event_name }}',
                                                     '{{ $data->booth_size }}',
-                                                    '{{ $data->booth_location }}',
                                                     '{{ $data->provided_facilities }}',
-                                                    '{{ addslashes(htmlspecialchars($data->booth_description)) }}',
+                                                    '{{ addslashes(htmlspecialchars($data->terms_and_conditions)) }}',
                                                     '{{ number_format($data->rental_price, 0, ',', '.') }}',
-                                                    '{{ $data->rental_time_limit}}',
-                                                    '{{ $data->admin_phone}}',
                                                     '{{ $data->availability_status}}',
                                                 )">
                                                 Detail
@@ -107,7 +102,7 @@
                     <tr>
                         <td>Booth Name</td>
                         <td>:</td>
-                        <td id="boothName"></td>
+                        <td id="boothCode"></td>
                     </tr>
                     <tr>
                         <td>Event Name</td>
@@ -120,34 +115,19 @@
                         <td id="boothSize"></td>
                     </tr>
                     <tr>
-                        <td>Booth Location</td>
-                        <td>:</td>
-                        <td id="boothLocation"></td>
-                    </tr>
-                    <tr>
                         <td>Provided Facilities</td>
                         <td>:</td>
                         <td id="providedFacilities"></td>
                     </tr>
                     <tr>
-                        <td>Booth Description</td>
+                        <td>Terms and Condition</td>
                         <td>:</td>
-                        <td id="boothDescription"></td>
+                        <td id="termsAndCondition"></td>
                     </tr>
                     <tr>
                         <td>Rental Price</td>
                         <td>:</td>
                         <td id="rentalPrice"></td>
-                    </tr>
-                    <tr>
-                        <td>Rental Time Limit</td>
-                        <td>:</td>
-                        <td id="rentalTimeLimit"></td>
-                    </tr>
-                    <tr>
-                        <td>Admin Phone</td>
-                        <td>:</td>
-                        <td id="adminPhone"></td>
                     </tr>
                     <tr>
                         <td>Availability Status</td>
@@ -179,27 +159,21 @@
 <!-- Show Modal -->
 <script>
     function showDetailsModal(
-        boothName, 
+        boothCode, 
         eventName, 
         boothSize, 
-        boothLocation, 
         providedFacilities,
-        boothDescription,
+        termsAndCondition,
         rentalPrice,
-        rentalTimeLimit,
-        adminPhone,
         availabilityStatus
     ) {
-        $('#boothName').text(boothName);
+        $('#boothCode').text(boothCode);
         $('#eventName').text(eventName);
         $('#boothSize').text(boothSize);
-        $('#boothLocation').text(boothLocation);
         $('#providedFacilities').text(providedFacilities);
-        $('#boothDescription').text(boothDescription);
+        $('#termsAndCondition').text(termsAndCondition);
         var rentalPriceFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(rentalPrice);
         $('#rentalPrice').text(rentalPriceFormatted);
-        $('#rentalTimeLimit').text(rentalTimeLimit);
-        $('#adminPhone').text(adminPhone);
         $('#availabilityStatus').text(availabilityStatus);
         $('#detailsModal').modal('show');
     }

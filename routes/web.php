@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('create-admin', [AdminController::class, 'storeAdmin'])  -> name('create-admin');
     Route::get('profile-admin', [AdminController::class, 'profileAdmin'])->name('profile-admin');
     Route::put('update-admin/{id}', [AdminController::class, 'updateAdmin'])->name('update-admin');
+    Route::put('update-password-admin/{id}', [AdminController::class, 'updatePasswordAdmin'])->name('update-password-admin');
 
     // Route:User
     Route::get('member', [UserController::class, 'indexMember'])->name('member');
