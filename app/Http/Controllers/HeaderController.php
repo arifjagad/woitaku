@@ -13,6 +13,16 @@ class HeaderController extends Controller
             ->select('users.*', 'event_organizer.*')
             ->where('users.id', auth()->id())
             ->first();
+            
+        return $data;
+    }
+
+    public function headerMember(){
+        $data = DB::table('users')
+            ->join('detail_member', 'users.id', '=', 'detail_member.id_member')
+            ->select('users.*', 'detail_member.*')
+            ->where('users.id', auth()->id())
+            ->first();
 
         return $data;
     }

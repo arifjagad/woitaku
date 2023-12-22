@@ -3651,3 +3651,62 @@ body.layout-3 .main-wrapper {
     opacity: 0;
   }
 }
+
+
+/* Custom CSS */
+.heading-hero-text {
+  word-spacing: 16px;
+  font-size: 48px;
+}
+
+.subheading-hero-text {
+  font-size: 20px;
+  margin-top: 20px;
+  word-spacing: 10px;
+}
+
+.padding-main{
+  padding: 20px 0px;
+}
+
+.home-icon{
+  font-size: 24px;
+}
+
+/* Tablet styles - contoh untuk lebar layar maksimum 768px */
+@media only screen and (max-width: 768px) {
+  .heading-hero-text {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .subheading-hero-text {
+    font-size: 18px; 
+    margin-top: 15px;
+    word-spacing: 8px;
+    text-align: center;
+  }
+
+  .padding-main{
+    padding: 20px 15px;
+  }
+}
+
+/* Mobile styles - contoh untuk lebar layar maksimum 480px */
+@media only screen and (max-width: 480px) {
+  .heading-hero-text {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .subheading-hero-text {
+    font-size: 16px;
+    margin-top: 10px;
+    word-spacing: 6px;
+    text-align: center;
+  }
+
+  .padding-main{
+    padding: 20px 15px;
+  }
+}
