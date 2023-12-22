@@ -11,6 +11,8 @@ use App\Models\DetailEvent;
 use DOMDocument;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use HTMLPurifier_Config;
+use HTMLPurifier;
 
 class EventEOController extends Controller
 {
@@ -150,29 +152,38 @@ class EventEOController extends Controller
             ]);
 
             // Upload data dari summernote untuk deskripsi event
-            $event_description = $request->event_description;
-            $dom = new DOMDocument();
-            if (!empty($event_description)) {
-                $dom->loadHTML($event_description, 9);
-            }
+$event_description = $request->event_description;
 
-            $images = $dom->getElementsByTagName('img');
+// Clean and validate HTML using HtmlPurifier
+$config = HTMLPurifier_Config::createDefault();
+// Add the import statement for HTMLPurifier
+// Instantiate the HTMLPurifier class
+$purifier = new HTMLPurifier($config);
+$event_description = $purifier->purify($event_description);
 
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'),'data:image/') ===0) {
-                    $data = base64_decode(explode(',',explode(';',$img->getAttribute('src'))[1])[1]);
-                    $image_name = "/upload/" . time(). $key.'.png';
-                    file_put_contents(public_path().$image_name,$data);
-                    
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src',$image_name);
-                }
-            }
+$dom = new DOMDocument();
+if (!empty($event_description)) {
+    // Load cleaned and validated HTML
+    $dom->loadHTML($event_description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+}
 
-            $event_description = $dom->saveHTML();
+$images = $dom->getElementsByTagName('img');
+
+foreach ($images as $key => $img) {
+    if (strpos($img->getAttribute('src'),'data:image/') === 0) {
+        $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+        $image_name = "/upload/" . time() . $key . '.png';
+        file_put_contents(public_path() . $image_name, $data);
+
+        $img->removeAttribute('src');
+        $img->setAttribute('src', $image_name);
+    }
+}
+
+$event_description = $dom->saveHTML();
+
 
             // Upload featured image
-
             if ($request->hasFile('featured_image')) {
                 $file = $request->file('featured_image');
                 $fileName = time() . '_' . $file->getClientOriginalName();
