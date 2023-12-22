@@ -17,13 +17,12 @@ class DetailEventController extends Controller
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.id', '=', $id)
             ->first();
+
+        $detailCompetition = DB::table('detail_event')
+            ->join('detail_competition', 'detail_event.id', '=', 'detail_competition.id_event')
+            ->where('detail_competition.id_event', '=', $id)
+            ->get();
         
-        
-        /* $detailEvent = DetailEvent::findorFail($id); */
-
-        // dd($detailEvent->id, $detailEvent->event_name, $detailEvent->city, $id);
-
-
-        return view('member.detail-event', compact('detailEvent'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'detailCompetition'), ['type_menu' => 'detail-event']);
     }
 }
