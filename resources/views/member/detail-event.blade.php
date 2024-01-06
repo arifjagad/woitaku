@@ -76,7 +76,7 @@
                                         @if ($detailEvent->ticket_price == 0)
                                             
                                         @else
-                                            <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
+                                            <a href="#" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
                                         @endif
                         
                                         <!-- Detail Event -->
@@ -157,22 +157,46 @@
                                 aria-labelledby="perlombaan-tab">
                                 
                                 <div class="row">
-                                    @foreach($detailCompetition as $data)
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="card card-primary">
-                                            <div class="card-header">
-                                                <h4>{{ $data->competition_name }}</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                {!! \Illuminate\Support\Str::limit(strip_tags($data->competition_description), 50) !!}
-                                            </div>
-                                            <div class="card-footer">
-                                                <a href="#" class="btn btn-primary">Detail</a>
-                                                <a href="#" class="btn btn-success">Daftar</a>
+                                    @forelse($detailCompetition as $data)
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h4>{{ $data->competition_name }}</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    {!! \Illuminate\Support\Str::limit(strip_tags($data->competition_description), 50) !!}
+                                                </div>
+                                                <div class="card-footer">
+                                                    {{-- <a href="#" class="btn btn-primary">Detail</a> --}}
+                                                    <button class="btn btn-primary" 
+                                                        onclick="showDetailsModal(
+                                                            '{{ $data->competition_name }}',
+                                                            '{{ number_format($data->competition_fee, 0, ',', '.') }}',
+                                                            '{{ $data->participant_qty }}',
+                                                            '{{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}',
+                                                            '{{ \Carbon\Carbon::parse($data->competition_end_date)->format('d F Y') }}',
+                                                            '{{ trim(addslashes(html_entity_decode(strip_tags($data->competition_description)))) }}'
+                                                        )">
+                                                        Detail
+                                                    </button>
+                                                    <a href="#" id="btnDaftarPerlombaan" class="btnTransaksi btn btn-success">Daftar</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="col-12">
+                                            <div class="empty-state"
+                                                data-height="400">
+                                                <div class="empty-state-icon">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <h2>Maaf, event ini tidak memiliki perlombaan.</h2>
+                                                <p class="lead">
+                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan perlombaan baru.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforelse
                                 </div>
                             </div>
                             <div class="tab-pane fade"
@@ -193,7 +217,18 @@
                                             </div>
                                         </div>
                                     @empty
-                                        <p>No data available</p>
+                                        <div class="col-12">
+                                            <div class="empty-state"
+                                                data-height="400">
+                                                <div class="empty-state-icon">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <h2>Maaf, event ini tidak memiliki booth.</h2>
+                                                <p class="lead">
+                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
+                                                </p>
+                                            </div>
+                                        </div>
                                     @endforelse
                                 </div>
                             </div>
@@ -204,34 +239,94 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Detail Perlombaan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between">
+                    <h3 id="competitionName" class="text-primary"></h3>
+                    <h3 id="competitionFee" class="text-primary"></h3>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6>Sisa partisipan: <span id="participantQty">10</span> peserta</h6>
+                    <div>
+                        <h6>
+                            <span id="competitionStartDate"></span> - <span id="competitionEndDate"></span>
+                        </h6>
+                    </div>
+                </div>
+
+                <p id="competitionDescription" class="text-justify mt-3"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection @push('scripts')
 <!-- JS Libraies -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 
 <!-- Custom JS -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var passwordInput = document.getElementById('password');
-        var passwordConfirmationInput = document.getElementById('password_confirmation');
-        var initialPasswordValue = passwordInput.value;
+    // Mengecek apakah user sudah login atau tidak agar bisa bertransaksi
+    document.querySelectorAll('.btnTransaksi').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
 
-        passwordInput.addEventListener('input', function () {
-            if (passwordInput.value !== initialPasswordValue) {
-                // Jika kata sandi utama berubah, atur kembali nilai konfirmasi kata sandi
-                passwordConfirmationInput.value = initialPasswordValue;
-            }
-        });
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Anda harus login terlebih dahulu untuk melakukan pendaftaran!',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
 
-        passwordConfirmationInput.addEventListener('input', function () {
-            if (passwordInput.value !== passwordConfirmationInput.value) {
-                passwordConfirmationInput.setCustomValidity("Passwords do not match");
-            } else {
-                passwordConfirmationInput.setCustomValidity('');
+                return false;
             }
         });
     });
+
+    // Menampilkan modal detail perlombaan
+    function showDetailsModal(
+        competitionName, 
+        competitionFee,
+        participantQty,
+        competitionStartDate,
+        competitionEndDate,
+        competitionDescription
+    ) {
+        $('#competitionName').text(competitionName);
+        var competitionFeeFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(competitionFee);
+        $('#competitionFee').text(competitionFeeFormatted);
+        $('#participantQty').text(participantQty);
+        $('#competitionStartDate').text(competitionStartDate);
+        $('#competitionEndDate').text(competitionEndDate);
+        $('#competitionDescription').text(competitionDescription);
+        $('#detailsModal').modal('show');
+
+        if(
+            competitionFee == 0
+        ){
+            $('#competitionFee').text('GRATIS');
+        }
+    }
 </script>
 @endpush
