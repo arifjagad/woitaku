@@ -74,9 +74,9 @@
                                     </div>
                                     <div class="col-4">
                                         @if ($detailEvent->ticket_price == 0)
-                                            
+                                            <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
                                         @else
-                                            <a href="#" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
+                                            <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
                                         @endif
                         
                                         <!-- Detail Event -->
