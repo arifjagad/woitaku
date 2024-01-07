@@ -45,7 +45,7 @@
 
                 </div>
                 <div class="text-center mt-5">
-                    <a href="#" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('history-transaction') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>

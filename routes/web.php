@@ -113,6 +113,11 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
 
+    // Transaksi
+    Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
+    Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
+    Route::post('daftar-sekarang', [DetailEventController::class, 'transactionTiketFree'])->name('daftar-sekarang');
+
 });
 
 // Route untuk semua (bisa diakses sebelum login)
@@ -122,8 +127,7 @@ Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
 
-Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
-Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
+
 
 
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');

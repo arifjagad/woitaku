@@ -75,15 +75,16 @@
                                     <div class="col-4">
                                         @if ($detailEvent->ticket_price == 0)
                                             @if(Auth::check())
-                                                {{-- <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a> --}}
-                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
+                                                <form action="{{ route('daftar-sekarang') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</button>
+                                                </form>
                                             @else
                                                 <a href="#" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
                                             @endif
                                         @else
                                             @if(Auth::check())
                                                 @php session(['event_id' => $detailEvent->id]); @endphp
-                                                {{-- <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a> --}}
                                                 <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#beliTiketModal">
                                                     Beli Tiket
                                                 </a>

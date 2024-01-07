@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 
 class DetailEventController extends Controller
 {
@@ -52,6 +53,7 @@ class DetailEventController extends Controller
         $selectedDate = $request->input('selected_date');
         $paymentMethodId = $request->input('payment_method');
         $ticketQuantity = $request->input('ticket_quantity');
+        $transactionId = strtoupper(Str::random(6));
 
         // Simpan data transaksi ke database
         $transaction = new Transaction();
@@ -62,9 +64,46 @@ class DetailEventController extends Controller
         $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
         $transaction->transaction_status = 'pending';
         $transaction->id_payment_methods = $paymentMethodId;
+        $transaction->id_transaction = $transactionId;
         
         $transaction->save();
         // Redirect ke route payment dengan membawa ID transaksi
         return redirect()->route('invoice', ['transaction_id' => $transaction->id]);
     }
+
+    public function transactionTiketFree() {
+        $event_id = session('event_id');
+    
+        // Cek apakah pengguna sudah terdaftar untuk event gratis ini
+        $existingTransaction = Transaction::where('id_member', auth()->user()->id)
+            ->where('id_event', $event_id)
+            ->where('transaction_amout', '0')
+            ->first();
+    
+        if ($existingTransaction) {
+            // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan Anda
+            toast('Anda sudah terdaftar untuk event ini.', 'info');
+            return redirect()->back();
+        }
+    
+        // Jika belum terdaftar, lakukan proses pendaftaran
+        $transactionId = strtoupper(Str::random(6));
+    
+        // Simpan data transaksi ke database
+        $transaction = new Transaction();
+        $transaction->id_member = auth()->user()->id;
+        $transaction->id_event = $event_id;
+        $transaction->transaction_date = now();
+        $transaction->id_category = 1;
+        $transaction->transaction_amout = '0';
+        $transaction->transaction_status = 'success';
+        $transaction->id_payment_methods = null;
+        $transaction->id_transaction = $transactionId;
+    
+        $transaction->save();
+    
+        toast('Selamat, kamu sudah terdaftar!', 'success');
+        return redirect()->back();
+    }
+    
 }

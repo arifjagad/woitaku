@@ -50,7 +50,11 @@
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>
-                                                    IDR. {{ number_format($data->transaction_amout, 0, ',', '.') }}
+                                                    @if($data->transaction_amout === 0 || null)
+                                                        GRATIS
+                                                    @else
+                                                        IDR. {{ number_format($data->transaction_amout, 0, ',', '.') }}
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($data->created_at)->format('d F Y') }}
@@ -69,7 +73,7 @@
 
                                                     @if($data->transaction_status == 'pending' || $data->transaction_status == 'failed')
                                                         <a href="{{ route('invoice', $data->id) }}" class="btn btn-primary">Detail</a>
-                                                    @elseif($data->transaction_status == 'pending')
+                                                    @elseif($data->transaction_status == 'success')
                                                         <a href="#" class="btn btn-success">Download Tiket</a>
                                                     @endif
                                                 </td>
