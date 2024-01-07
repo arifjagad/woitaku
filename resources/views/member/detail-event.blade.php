@@ -11,159 +11,322 @@
 <div class="main-content" style="padding: 80px 0px;">
     <div class="container">
         <div class="row">
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        <img src="{{
-                            asset('storage/'.$detailEvent->featured_image)
-                        }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
-                        <span style="position: absolute; top: 30px; right: 40px;" class="badge badge-success text-uppercase py-2 px-4">
-                            @if ($detailEvent->ticket_price == 0)
-                                GRATIS
-                            @else
-                                BERBAYAR
-                            @endif
-                        </span>
-                    </div>
+            <div class="col-12">
+                <div class="card mt-4">
                     <div class="card-body">
-                        <h3 class="text-primary">  {{ $detailEvent->event_name }} </h3>
-                        <p>
-                            {!! $detailEvent->event_description !!}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- List Competition -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">List Perlombaan Event - {{ $detailEvent->event_name }}</h4>
-                    </div>
-                    <div class="card-body">
-                        @foreach ($detailCompetition as $data)
-                                <h5 class="text-primary">{{ $data->competition_name }}</h5>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- List Booth -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">List Booth Event - {{ $detailEvent->event_name }}</h4>
-                    </div>
-                    <div class="card-body">
-                        List Booth
-                    </div>
-                </div>
-            </div>
-            <!-- Sidebar -->
-            <div class="col-4">
-                @if ($detailEvent->ticket_price == 0)
-                    
-                @else
-                    <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
-                @endif
-
-                <!-- Detail Event -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Informasi Event</h4>
-                    </div>
-                    <div>
-                        <table class="table">
-                            <tr>
-                                <td class="col-6"><b>Tanggal mulai:</b></td>
-                                <td>{{ \Carbon\Carbon::parse($detailEvent->start_date)->format('d F Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Tanggal berakhir:</b></td>
-                                <td>{{ \Carbon\Carbon::parse($detailEvent->end_date)->format('d F Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Lokasi:</b></td>
-                                <td>{{ $detailEvent->kota . ', Indonesia' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Alamat:</b></td>
-                                <td>{{ $detailEvent->address }}</td>
-                            </tr>
-                            @if ($detailEvent->ticket_price == 0)
+                        <h3 class="text-primary mb-4">{{ $detailEvent->event_name }} </h3>
+                        <ul class="nav nav-pills nav-fill" id="myTab3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                    id="detail-event-tab"
+                                    data-toggle="tab" 
+                                    href="#detail-event" 
+                                    role="tab" 
+                                    aria-controls="detail-event" 
+                                    aria-selected="true">Detail Event</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" 
+                                    id="perlombaan-tab" 
+                                    data-toggle="tab" 
+                                    href="#perlombaan" 
+                                    role="tab" 
+                                    aria-controls="perlombaan" 
+                                    aria-selected="false">List Perlombaan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" 
+                                    id="booth-tab" 
+                                    data-toggle="tab" 
+                                    href="#booth" 
+                                    role="tab" 
+                                    aria-controls="booth" 
+                                    aria-selected="false">List Booth</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-4" id="myTabContent2">
+                            <!-- Isi konten tab di sini -->
+                            <div class="tab-pane fade show active"
+                                id="detail-event"
+                                role="tabpanel"
+                                aria-labelledby="detail-event-tab">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <img src="{{
+                                                    asset('storage/'.$detailEvent->featured_image)
+                                                }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                                <span style="position: absolute; top: 30px; right: 40px;" class="badge badge-success text-uppercase py-2 px-4">
+                                                    @if ($detailEvent->ticket_price == 0)
+                                                        GRATIS
+                                                    @else
+                                                        BERBAYAR
+                                                    @endif
+                                                </span>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>
+                                                    {!! $detailEvent->event_description !!}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        @if ($detailEvent->ticket_price == 0)
+                                            <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
+                                        @else
+                                            <a href="{{ route('transaction') }}" id="btnBeliTiket" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
+                                        @endif
+                        
+                                        <!-- Detail Event -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Informasi Event</h4>
+                                            </div>
+                                            <div>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td class="col-6"><b>Tanggal mulai:</b></td>
+                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->start_date)->format('d F Y') }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Tanggal berakhir:</b></td>
+                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->end_date)->format('d F Y') }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Lokasi:</b></td>
+                                                        <td>{{ $detailEvent->kota . ', Indonesia' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Alamat:</b></td>
+                                                        <td>{{ $detailEvent->address }}</td>
+                                                    </tr>
+                                                    @if ($detailEvent->ticket_price == 0)
+                                                        
+                                                    @else
+                                                        <tr>
+                                                            <td class="col-6"><b>Harga tiket:</b></td>
+                                                            <td>IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-6"><b>Sisa tiket:</b></td>
+                                                            <td>{{$detailEvent->ticket_qty }} tiket</td>
+                                                        </tr>
+                                                    @endif
+                                                </table>
+                                            </div>
+                                        </div>
+                        
+                                        <!-- Detail Organizer -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Informasi Penyelenggara</h4>
+                                            </div>
+                                            <div>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td class="col-6"><b>Nama:</b></td>
+                                                        <td>{{ $detailEvent->name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Email:</b></td>
+                                                        <td>{{ $detailEvent->email }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>WhatsApp:</b></td>
+                                                        <td>{{ $detailEvent->nomor_whatsapp }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Alamat:</b></td>
+                                                        <td>{{ $detailEvent->address }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-6"><b>Deskripsi:</b></td>
+                                                        <td>{!! $detailEvent->description !!}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade"
+                                id="perlombaan"
+                                role="tabpanel"
+                                aria-labelledby="perlombaan-tab">
                                 
-                            @else
-                                <tr>
-                                    <td class="col-6"><b>Harga tiket:</b></td>
-                                    <td>IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-6"><b>Sisa tiket:</b></td>
-                                    <td>{{$detailEvent->ticket_qty }} tiket</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div>
+                                <div class="row">
+                                    @forelse($detailCompetition as $data)
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h4>{{ $data->competition_name }}</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    {!! \Illuminate\Support\Str::limit(strip_tags($data->competition_description), 50) !!}
+                                                </div>
+                                                <div class="card-footer">
+                                                    {{-- <a href="#" class="btn btn-primary">Detail</a> --}}
+                                                    <button class="btn btn-primary" 
+                                                        onclick="showDetailsModal(
+                                                            '{{ $data->competition_name }}',
+                                                            '{{ number_format($data->competition_fee, 0, ',', '.') }}',
+                                                            '{{ $data->participant_qty }}',
+                                                            '{{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}',
+                                                            '{{ \Carbon\Carbon::parse($data->competition_end_date)->format('d F Y') }}',
+                                                            '{{ trim(addslashes(html_entity_decode(strip_tags($data->competition_description)))) }}'
+                                                        )">
+                                                        Detail
+                                                    </button>
+                                                    <a href="#" id="btnDaftarPerlombaan" class="btnTransaksi btn btn-success">Daftar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="col-12">
+                                            <div class="empty-state"
+                                                data-height="400">
+                                                <div class="empty-state-icon">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <h2>Maaf, event ini tidak memiliki perlombaan.</h2>
+                                                <p class="lead">
+                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan perlombaan baru.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                            <div class="tab-pane fade"
+                                id="booth"
+                                role="tabpanel"
+                                aria-labelledby="booth-tab">
 
-                <!-- Detail Organizer -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Informasi Penyelenggara</h4>
-                    </div>
-                    <div>
-                        <table class="table">
-                            <tr>
-                                <td class="col-6"><b>Nama:</b></td>
-                                <td>{{ $detailEvent->name }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Email:</b></td>
-                                <td>{{ $detailEvent->email }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>WhatsApp:</b></td>
-                                <td>{{ $detailEvent->nomor_whatsapp }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Alamat:</b></td>
-                                <td>{{ $detailEvent->address }}</td>
-                            </tr>
-                            <tr>
-                                <td class="col-6"><b>Deskripsi:</b></td>
-                                <td>{!! $detailEvent->description !!}</td>
-                            </tr>
-                        </table>
+                                <div class="row">
+                                    @forelse($detailBooth as $data)
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h4>{{ $data->booth_code }}</h4>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="#" class="btn btn-primary btn-block">Daftar produk booth</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="col-12">
+                                            <div class="empty-state"
+                                                data-height="400">
+                                                <div class="empty-state-icon">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <h2>Maaf, event ini tidak memiliki booth.</h2>
+                                                <p class="lead">
+                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Detail Perlombaan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between">
+                    <h3 id="competitionName" class="text-primary"></h3>
+                    <h3 id="competitionFee" class="text-primary"></h3>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6>Sisa partisipan: <span id="participantQty">10</span> peserta</h6>
+                    <div>
+                        <h6>
+                            <span id="competitionStartDate"></span> - <span id="competitionEndDate"></span>
+                        </h6>
+                    </div>
+                </div>
+
+                <p id="competitionDescription" class="text-justify mt-3"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection @push('scripts')
 <!-- JS Libraies -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 
 <!-- Custom JS -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var passwordInput = document.getElementById('password');
-        var passwordConfirmationInput = document.getElementById('password_confirmation');
-        var initialPasswordValue = passwordInput.value;
+    // Mengecek apakah user sudah login atau tidak agar bisa bertransaksi
+    document.querySelectorAll('.btnTransaksi').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
 
-        passwordInput.addEventListener('input', function () {
-            if (passwordInput.value !== initialPasswordValue) {
-                // Jika kata sandi utama berubah, atur kembali nilai konfirmasi kata sandi
-                passwordConfirmationInput.value = initialPasswordValue;
-            }
-        });
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Anda harus login terlebih dahulu untuk melakukan pendaftaran!',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
 
-        passwordConfirmationInput.addEventListener('input', function () {
-            if (passwordInput.value !== passwordConfirmationInput.value) {
-                passwordConfirmationInput.setCustomValidity("Passwords do not match");
-            } else {
-                passwordConfirmationInput.setCustomValidity('');
+                return false;
             }
         });
     });
+
+    // Menampilkan modal detail perlombaan
+    function showDetailsModal(
+        competitionName, 
+        competitionFee,
+        participantQty,
+        competitionStartDate,
+        competitionEndDate,
+        competitionDescription
+    ) {
+        $('#competitionName').text(competitionName);
+        var competitionFeeFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(competitionFee);
+        $('#competitionFee').text(competitionFeeFormatted);
+        $('#participantQty').text(participantQty);
+        $('#competitionStartDate').text(competitionStartDate);
+        $('#competitionEndDate').text(competitionEndDate);
+        $('#competitionDescription').text(competitionDescription);
+        $('#detailsModal').modal('show');
+
+        if(
+            competitionFee == 0
+        ){
+            $('#competitionFee').text('GRATIS');
+        }
+    }
 </script>
 @endpush

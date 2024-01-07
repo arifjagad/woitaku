@@ -22,7 +22,13 @@ class DetailEventController extends Controller
             ->join('detail_competition', 'detail_event.id', '=', 'detail_competition.id_event')
             ->where('detail_competition.id_event', '=', $id)
             ->get();
+
+        $detailBooth = DB::table('detail_event')
+            ->join('booth_rental', 'detail_event.id', '=', 'booth_rental.id_event')
+            ->where('booth_rental.id_event', '=', $id)
+            ->get();
+
         
-        return view('member.detail-event', compact('detailEvent', 'detailCompetition'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'detailCompetition', 'detailBooth'), ['type_menu' => 'detail-event']);
     }
 }

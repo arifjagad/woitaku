@@ -22,6 +22,8 @@ use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 use App\Http\Controllers\MemberControllers\ProfileController;
 use App\Http\Controllers\MemberControllers\DetailEventController;
+use App\Http\Controllers\MemberControllers\MemberTransactionController;
+use App\Http\Controllers\MemberControllers\ListEventController;
 
 
 
@@ -118,4 +120,8 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
 // Route untuk semua (bisa diakses sebelum login)
 Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
+Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
+Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
+Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
+Route::get('transaction', [MemberTransactionController::class, 'indexMemberTransaction'])->name('transaction');
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
