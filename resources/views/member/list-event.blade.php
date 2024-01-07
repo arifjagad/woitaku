@@ -25,11 +25,13 @@
                     <div class="form-group">
                         <label>Kota Event</label>
                         <select class="form-control select2" id="city" name="city">
+                            <option value="">Pilih Kota</option>
                             @foreach ($dataEventCity as $data)
                                 <option value="{{ $data->city }}">{{ $data->city }}</option>
                             @endforeach
                         </select>
                     </div>
+                    
                     <button type="submit" class="btn btn-primary btn-block">Filter</button>
                 </form>
             </div>
