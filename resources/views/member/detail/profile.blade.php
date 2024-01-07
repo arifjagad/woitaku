@@ -19,7 +19,7 @@
                 <div class="row">
                     <!-- Panggil Components Sidebar-Profile.blade.php -->
                     @include('components.sidebar-profile')
-                    <div class="col-12 col-md-6 col-lg-8">
+                    <div class="col-12 col-md-6 col-lg-9">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Your Profile</h4>
