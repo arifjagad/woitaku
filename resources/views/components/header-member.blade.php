@@ -24,9 +24,9 @@
                 <a class="nav-link"
                     href="#">About</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('list-event') ? 'active' : '' }}">
                 <a class="nav-link"
-                    href="#">Event</a>
+                    href="{{ route('list-event') }}">Event</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
