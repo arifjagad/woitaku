@@ -24,6 +24,7 @@ use App\Http\Controllers\MemberControllers\ProfileController;
 use App\Http\Controllers\MemberControllers\DetailEventController;
 use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
+use App\Http\Controllers\MemberControllers\HistoryTransactionController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -110,6 +111,7 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('profile', [ProfileController::class, 'indexProfile'])->name('profile');
     Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
+    Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
 
 });
 
@@ -122,4 +124,6 @@ Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('
 
 Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
 Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
+
+
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
