@@ -294,84 +294,85 @@
 <div class="modal fade" id="beliTiketModal" tabindex="-1" role="dialog" aria-labelledby="beliTiketModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="beliTiketModalLabel">Pembelian Tiket</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <form action="{{ route('beli-tiket') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beliTiketModalLabel">Pembelian Tiket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td class="col-5"><b>Nama Event:</b></td>
+                            <td>{{ $detailEvent->event_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5"><b>Pilih Tanggal:</b></td>
+                            <td>
+                                <div class="input-group">
+                                    <select class="form-control select2" name="selected_date">
+                                        @for ($i = 0; $i <= $daysDifference; $i++)
+                                            @php
+                                                $currentDate = $start_date_event->copy()->addDays($i);
+                                            @endphp
+                                            <option value="{{ $currentDate->format('Y-m-d') }}">
+                                                {{ $currentDate->format('d F Y') }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-5"><b>Harga Tiket:</b></td>
+                            <td>
+                                IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-5"><b>Jumlah Tiket:</b></td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" value="1" min="1" max="{{ $detailEvent->ticket_qty }}" id="ticketQuantity" name="ticket_quantity">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr class="my-4">
+                    <table class="table">
+                        <tr>
+                            <td class="col-5"><b>Total Pembayaran:</b></td>
+                            <td id="totalPayment">IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}</td>
+                        </tr>
+                    </table>
+                    <hr class="my-4">
+                    <table class="table">
+                        <tr>
+                            <td class="col-5"><b>Metode Pembayaran:</b></td>
+                            <td>
+                                <div class="input-group">
+                                    <select class="form-control select2" name="payment_method">
+                                        @foreach ($detailPaymentMethod as $method)
+                                            <option value="{{ $method->id }}">Transfer {{ $method->bank_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    @php session(['event_id' => $detailEvent->id]); @endphp
+                    <button type="submit" class="btn btn-success">Beli Tiket</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <table class="table">
-                    <tr>
-                        <td class="col-5"><b>Nama Event:</b></td>
-                        <td>{{ $detailEvent->event_name }}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-5"><b>Pilih Tanggal:</b></td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-control select2">
-                                    @for ($i = 0; $i <= $daysDifference; $i++)
-                                        @php
-                                            $currentDate = $start_date_event->copy()->addDays($i);
-                                        @endphp
-                                        <option value="{{ $currentDate->format('Y-m-d') }}">
-                                            {{ $currentDate->format('d F Y') }}
-                                        </option>
-                                    @endfor
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-5"><b>Harga Tiket:</b></td>
-                        <td>
-                            IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-5"><b>Jumlah Tiket:</b></td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1" min="1" max="{{ $detailEvent->ticket_qty }}" id="ticketQuantity">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <hr class="my-4">
-                <table class="table">
-                    <tr>
-                        <td class="col-5"><b>Total Pembayaran:</b></td>
-                        <td id="totalPayment">IDR. {{ number_format($detailEvent->ticket_price, 0, ',', '.') }}</td>
-                    </tr>
-                </table>
-                <hr class="my-4">
-                <table class="table">
-                    <tr>
-                        <td class="col-5"><b>Metode Pembayaran:</b></td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-control select2" name="payment_method">
-                                    @foreach ($detailPaymentMethod as $method)
-                                        <option value="{{ $method->id }}">Transfer {{ $method->bank_name }}</option>
-                                    @endforeach
-                                </select>
-                                
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Beli Tiket</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
-<!-- Modal Beli Tiket -->
+<!-- Modal Daftar Perlombaan -->
 <div class="modal fade" id="daftarPerlombaanModal" tabindex="-1" role="dialog" aria-labelledby="daftarPerlombaanModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

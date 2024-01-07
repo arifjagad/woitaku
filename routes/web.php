@@ -22,12 +22,8 @@ use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
 use App\Http\Controllers\MemberControllers\ProfileController;
 use App\Http\Controllers\MemberControllers\DetailEventController;
-use App\Http\Controllers\MemberControllers\MemberTransactionController;
+use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
-
-
-
-
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -123,5 +119,7 @@ Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
-Route::get('transaction', [MemberTransactionController::class, 'indexMemberTransaction'])->name('transaction');
+
+Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
+Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
