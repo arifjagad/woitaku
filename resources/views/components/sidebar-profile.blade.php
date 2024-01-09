@@ -12,6 +12,9 @@
                     <a class="nav-link {{ Request::is('history-transaction') ? 'active' : '' }}" href="{{ url('history-transaction') }}">Histori Transaksi</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ Request::is('download-ticket') ? 'active' : '' }}" href="{{ url('download-ticket') }}">Download Tiket</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ Request::is('setting-booth') ? 'active' : '' }}" href="{{ url('setting-booth') }}">Pengaturan Booth</a>
                 </li>
             </ul>

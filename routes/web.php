@@ -25,6 +25,7 @@ use App\Http\Controllers\MemberControllers\DetailEventController;
 use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
 use App\Http\Controllers\MemberControllers\HistoryTransactionController;
+use App\Http\Controllers\MemberControllers\DownloadTicketController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -112,6 +113,8 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
+
+    Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');

@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use App\Models\Ticket;
 
 class DetailEventController extends Controller
 {
@@ -95,6 +96,12 @@ class DetailEventController extends Controller
         $transaction->id_payment_methods = null;
     
         $transaction->save();
+
+        $ticket = new Ticket();
+        $ticket->id_transaction = $transaction->id;
+        $ticket->ticket_identifier = strtoupper(Str::random(6));
+        $ticket->active_date = now();
+        $ticket->save();
     
         toast('Selamat, kamu sudah terdaftar!', 'success');
         return redirect()->back();
