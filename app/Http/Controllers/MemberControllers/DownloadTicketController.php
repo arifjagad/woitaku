@@ -5,6 +5,8 @@ namespace App\Http\Controllers\MemberControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
+use Intervention\Image\Facades\Image;
+
 
 class DownloadTicketController extends Controller
 {
