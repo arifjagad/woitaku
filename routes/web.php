@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
 
     // Transaksi
-    Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
+    Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');
     Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
     Route::post('daftar-sekarang', [DetailEventController::class, 'transactionTiketFree'])->name('daftar-sekarang');
 
@@ -126,8 +126,5 @@ Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
-
-
-
 
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');

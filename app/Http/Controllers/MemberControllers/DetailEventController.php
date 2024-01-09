@@ -53,7 +53,6 @@ class DetailEventController extends Controller
         $selectedDate = $request->input('selected_date');
         $paymentMethodId = $request->input('payment_method');
         $ticketQuantity = $request->input('ticket_quantity');
-        $transactionId = strtoupper(Str::random(6));
 
         // Simpan data transaksi ke database
         $transaction = new Transaction();
@@ -64,11 +63,10 @@ class DetailEventController extends Controller
         $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
         $transaction->transaction_status = 'pending';
         $transaction->id_payment_methods = $paymentMethodId;
-        $transaction->id_transaction = $transactionId;
         
         $transaction->save();
         // Redirect ke route payment dengan membawa ID transaksi
-        return redirect()->route('invoice', ['transaction_id' => $transaction->id]);
+        return redirect()->route('invoice', ['id' => $transaction->id]);
     }
 
     public function transactionTiketFree() {
@@ -86,9 +84,6 @@ class DetailEventController extends Controller
             return redirect()->back();
         }
     
-        // Jika belum terdaftar, lakukan proses pendaftaran
-        $transactionId = strtoupper(Str::random(6));
-    
         // Simpan data transaksi ke database
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
@@ -98,7 +93,6 @@ class DetailEventController extends Controller
         $transaction->transaction_amout = '0';
         $transaction->transaction_status = 'success';
         $transaction->id_payment_methods = null;
-        $transaction->id_transaction = $transactionId;
     
         $transaction->save();
     

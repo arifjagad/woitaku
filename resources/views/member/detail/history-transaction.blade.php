@@ -70,9 +70,8 @@
                                                     
                                                 </td>
                                                 <td class="text-center">
-
                                                     @if($data->transaction_status == 'pending' || $data->transaction_status == 'failed')
-                                                        <a href="{{ route('invoice', $data->id) }}" class="btn btn-primary">Detail</a>
+                                                        <a href="{{ route('invoice', ['id' => $data->id]) }}" class="btn btn-primary">Detail</a>
                                                     @elseif($data->transaction_status == 'success')
                                                         <a href="#" class="btn btn-success">Download Tiket</a>
                                                     @endif
@@ -81,6 +80,9 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    {{-- @foreach($dataTransaksi as $data)
+                                        {{ $data->id }}
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>
