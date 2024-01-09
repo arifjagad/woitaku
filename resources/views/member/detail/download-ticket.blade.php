@@ -22,67 +22,56 @@
                     <div class="col-12 col-md-6 col-lg-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Histori Transaksi</h4>
+                                <h4>Download Tiket</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table-striped table" id="table-1">
+                                    <table class="table table-striped" id="table-1">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
                                                     #
                                                 </th>
+                                                <th>Id Tiket</th>
                                                 <th>Nama Event</th>
-                                                <th>Jenis Transaksi</th>
-                                                <th>Total</th>
-                                                <th>Tanggal</th>
+                                                <th>Jenis Tiket</th>
+                                                <th>Tanggal Aktif Tiket</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Download</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $id = 1; @endphp
-                                            @foreach($dataTransaction as $data)
+                                            @foreach ($dataTicket as $data)
                                             <tr>
                                                 <td class="text-center">
-                                                    {{ $id++ }}
+                                                    {{ $loop->iteration }}
                                                 </td>
+                                                <td>{{ $data->ticket_identifier }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
                                                 <td>
-                                                    @if($data->transaction_amout === 0 || null)
-                                                        GRATIS
+                                                    @if ($data->transaction_amout == 0 )
+                                                        <div class="badge badge-success">GRATIS</div>
+                                                    @elseif (($data->transaction_amout != 0 || $data->transaction_amout != null) && $data->status == 'unused')
+                                                        <div class="badge badge-danger">Belum dipakai</div>
                                                     @else
-                                                        IDR. {{ number_format($data->transaction_amout, 0, ',', '.') }}
+                                                        <div class="badge badge-success">Sudah dipakai</div>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ \Carbon\Carbon::parse($data->created_at)->format('d F Y') }}
-                                                </td>
-                                                <td class="text-center">
-                                                    @if($data->transaction_status == 'pending')
-                                                        <span class="badge badge-warning">{{ $data->transaction_status }}</span>
-                                                    @elseif($data->transaction_status == 'success')
-                                                        <span class="badge badge-success">{{ $data->transaction_status }}</span>
-                                                    @elseif($data->transaction_status == 'failed')
-                                                        <span class="badge badge-danger">{{ $data->transaction_status }}</span>
-                                                    @endif
-                                                    
-                                                </td>
-                                                <td class="text-center">
-                                                    @if($data->transaction_status == 'pending' || $data->transaction_status == 'failed')
-                                                        <a href="{{ route('invoice', ['id' => $data->id]) }}" class="btn btn-primary">Detail</a>
-                                                    @elseif($data->transaction_status == 'success')
-                                                        <a href="#" class="btn btn-success">Download Tiket</a>
+                                                    @if ($data->transaction_amout == 0)
+                                                    {{ $data->id }}
+                                                        <a href="#" id="btnDownloadTicketFree" class="btn btn-success">Download</a>
+                                                    @else
+                                                        {{ $data->id }}
+                                                        <a href="{{ route('download-ticket', ['id' => $data->id]) }}" id="btnDownloadTicket" class="btn btn-success">Download</a>
                                                     @endif
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{-- @foreach($dataTransaksi as $data)
-                                        {{ $data->id }}
-                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>
@@ -96,10 +85,21 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <!-- Custom JS -->
+<script>
+    document.getElementById('btnDownloadTicketFree').addEventListener('click', function() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Event Gratis',
+            text: 'Event gratis tidak memiliki tiket masuk, kamu bisa langsung datang saja ke lokasi event.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    });
+    </script>
 
 @endpush

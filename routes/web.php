@@ -25,6 +25,7 @@ use App\Http\Controllers\MemberControllers\DetailEventController;
 use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
 use App\Http\Controllers\MemberControllers\HistoryTransactionController;
+use App\Http\Controllers\MemberControllers\DownloadTicketController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -112,9 +113,11 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
+    Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
+    Route::get('download-ticket/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket');
 
     // Transaksi
-    Route::get('invoice', [InvoiceController::class, 'indexInvoice'])->name('invoice');
+    Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');
     Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
     Route::post('daftar-sekarang', [DetailEventController::class, 'transactionTiketFree'])->name('daftar-sekarang');
 
@@ -126,8 +129,5 @@ Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
-
-
-
 
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');

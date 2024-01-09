@@ -88,7 +88,7 @@
                 <div class="row py-3">
                     @foreach ($dataEvent->take(3) as $data)
                         <div class="col-12 col-md-4 col-lg-4">
-                            <article class="article article-style-c">
+                            <article class="article article-style-c d-flex flex-column h-100">
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                     </div>
@@ -102,8 +102,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="article-details">
+                                <div class="article-details flex-grow-1 d-flex flex-column align-items-start">
                                     <div class="article-category">
+                                        <a>{{ $data->city }}</a>
+                                        <br>
                                         <a>Date</a>
                                         <div class="bullet"></div> 
                                         <a>
@@ -118,7 +120,7 @@
                                     <p class="text-justify">
                                         {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                     </p>
-                                    <div class="article-user">
+                                    <div class="article-user mt-auto">
                                         <img alt="image"
                                             src="{{ asset('storage/' . $data->foto_profile) }}">
                                         <div class="article-user-details">
@@ -134,7 +136,7 @@
                     @endforeach
                 </div>
                 <div class="text-center">
-                    <a href="#" target="_blank" class="btn btn-primary">Lihat semua event</a>
+                    <a href="{{ route('list-event') }}" target="_blank" class="btn btn-primary">Lihat semua event</a>
                 </div>
             </div>
         </div>
@@ -146,13 +148,13 @@
                 <p class="lead">Bergabunglah sekarang dengan Woitaku untuk mengeksplorasi dunia event jejepangan. Dapatkan akses eksklusif ke informasi terupdate, penuh fitur, dan nikmati kemudahan pengalaman tanpa batas!</p>
                 <div class="mt-4">
                     @auth
-                        <a href="#"
+                        <a href="{{ route('profile') }}"
                         class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>
-                        Setup Account</a>
+                        Atur Akun</a>
                     @else
                         <a href="{{ route('register') }}"
                         class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>
-                        Setup Account</a>
+                        Buat Akun</a>
                     @endauth
                 </div>
             </div>

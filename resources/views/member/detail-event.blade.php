@@ -85,7 +85,7 @@
                                         @else
                                             @if(Auth::check())
                                                 @php session(['event_id' => $detailEvent->id]); @endphp
-                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#beliTiketModal">
+                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
                                                     Beli Tiket
                                                 </a>
                                             @else
@@ -292,13 +292,13 @@
 </div>
 
 <!-- Modal Beli Tiket -->
-<div class="modal fade" id="beliTiketModal" tabindex="-1" role="dialog" aria-labelledby="beliTiketModalLabel" aria-hidden="true">
+<div class="modal fade" id="ticketModal" tabindex="-1" role="dialog" aria-labelledby="ticketModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form action="{{ route('beli-tiket') }}" method="POST">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="beliTiketModalLabel">Pembelian Tiket</h5>
+                    <h5 class="modal-title" id="ticketModalLabel">Pembelian Tiket</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -378,7 +378,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="beliTiketModalLabel">Pendaftaran Lomba</h5>
+                <h5 class="modal-title" id="ticketModalLabel">Pendaftaran Lomba</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
