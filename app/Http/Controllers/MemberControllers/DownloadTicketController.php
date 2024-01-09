@@ -19,6 +19,11 @@ class DownloadTicketController extends Controller
             ->join('detail_event', 'transaction.id_event', '=', 'detail_event.id')
             ->get();
 
+        $checkTransaction = DB::table('ticket')
+            ->join('transaction', 'ticket.id_transaction', '=', 'transaction.id')
+            ->where('transaction.id_member', '=', auth()->user()->id)
+            ->get();
+
         return view ('member.detail.download-ticket', compact('dataTicket'), ['type_menu' => 'download-ticket']);
     }
 }

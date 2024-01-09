@@ -49,18 +49,23 @@
                                                 <td>{{ $data->ticket_identifier }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data->active_date)->format('d F Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
                                                 <td>
-                                                    @if ($data->status == 'used')
-                                                        <div class="badge badge-success">Sudah dipakai</div>
-                                                    @else
+                                                    @if ($data->transaction_amout == 0 )
+                                                        <div class="badge badge-success">GRATIS</div>
+                                                    @elseif (($data->transaction_amout != 0 || $data->transaction_amout != null) && $data->status == 'unused')
                                                         <div class="badge badge-danger">Belum dipakai</div>
+                                                    @else
+                                                        <div class="badge badge-success">Sudah dipakai</div>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="#" class="btn btn-success">Download</a>
+                                                    @if ($data->transaction_amout == 0)
+                                                        <a href="#" id="btnDownloadTicketFree" class="btn btn-success">Download</a>
+                                                    @else
+                                                        <a href="#" id="btnDownloadTicket" class="btn btn-success">Download</a>
+                                                    @endif
                                                 </td>
-                                                
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -78,10 +83,21 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <!-- Custom JS -->
+<script>
+    document.getElementById('btnDownloadTicketFree').addEventListener('click', function() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Event Gratis',
+            text: 'Event gratis tidak memiliki tiket masuk, kamu bisa langsung datang saja ke lokasi event.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    });
+    </script>
 
 @endpush

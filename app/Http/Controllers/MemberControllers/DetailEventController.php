@@ -59,7 +59,7 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
-        $transaction->transaction_date = Carbon::now();
+        $transaction->preferred_date = $selectedDate;
         $transaction->id_category = 1;
         $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
         $transaction->transaction_status = 'pending';
@@ -89,7 +89,7 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
-        $transaction->transaction_date = now();
+        $transaction->preferred_date = now();
         $transaction->id_category = 1;
         $transaction->transaction_amout = '0';
         $transaction->transaction_status = 'success';
@@ -100,7 +100,6 @@ class DetailEventController extends Controller
         $ticket = new Ticket();
         $ticket->id_transaction = $transaction->id;
         $ticket->ticket_identifier = strtoupper(Str::random(6));
-        $ticket->active_date = now();
         $ticket->save();
     
         toast('Selamat, kamu sudah terdaftar!', 'success');
