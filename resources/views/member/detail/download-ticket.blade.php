@@ -61,9 +61,11 @@
                                                 </td>
                                                 <td>
                                                     @if ($data->transaction_amout == 0)
+                                                    {{ $data->id }}
                                                         <a href="#" id="btnDownloadTicketFree" class="btn btn-success">Download</a>
                                                     @else
-                                                        <a href="#" id="btnDownloadTicket" class="btn btn-success">Download</a>
+                                                        {{ $data->id }}
+                                                        <a href="{{ route('download-ticket', ['id' => $data->id]) }}" id="btnDownloadTicket" class="btn btn-success">Download</a>
                                                     @endif
                                                 </td>
                                             </tr>

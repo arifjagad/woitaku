@@ -113,8 +113,8 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
-
     Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
+    Route::get('download-ticket/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket');
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');

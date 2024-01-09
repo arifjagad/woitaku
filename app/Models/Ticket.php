@@ -16,7 +16,6 @@ class Ticket extends Model
     protected $fillable = [
         'id_transaction',
         'ticket_identifier',
-        'active_date',
         'status',
     ];
 
