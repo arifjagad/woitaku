@@ -92,16 +92,25 @@ class EventEOController extends Controller
             if ($request->hasFile('featured_image')) {
                 $file = $request->file('featured_image');
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = 'event_organizer/detail_event/' . $fileName;
+                $filePathFeaturedImage = 'event_organizer/detail_event/' . $fileName;
 
-                Storage::disk('public')->put($filePath, File::get($file));
+                Storage::disk('public')->put($filePathFeaturedImage, File::get($file));
+            }
+
+            // Upload featured image
+            if ($request->hasFile('booth_layout')) {
+                $file = $request->file('booth_layout');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePathBoothLayout = 'event_organizer/detail_event/' . $fileName;
+
+                Storage::disk('public')->put($filePathBoothLayout, File::get($file));
             }
 
             // Post ke database
             DetailEvent::create([
                 'id_eo' => auth()->user()->id,
                 'event_name' => $request->event_name,
-                'featured_image' => $filePath,
+                'featured_image' => $filePathFeaturedImage,
                 'event_description' => $event_description,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
@@ -109,6 +118,7 @@ class EventEOController extends Controller
                 'address' => $request->event_address,
                 'ticket_price' => $request->ticket_price,
                 'ticket_qty' => $request->ticket_qty,
+                'booth_layout' => $filePathBoothLayout,
                 'document' => $request->document,
                 'verification' => 'pending',
                 'id_category' => '1',
@@ -154,6 +164,7 @@ class EventEOController extends Controller
                 'end_date' => 'required|date',
                 'ticket_price' => 'nullable',
                 'ticket_qty' => 'nullable',
+                'booth_layout' => 'nullable',
                 'document' => 'required|string',
                 'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
@@ -190,16 +201,25 @@ class EventEOController extends Controller
             if ($request->hasFile('featured_image')) {
                 $file = $request->file('featured_image');
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = 'event_organizer/detail_event/' . $fileName;
+                $filePathFeaturedImage = 'event_organizer/detail_event/' . $fileName;
 
-                Storage::disk('public')->put($filePath, File::get($file));
+                Storage::disk('public')->put($filePathFeaturedImage, File::get($file));
+            }
+
+            // Upload featured image
+            if ($request->hasFile('booth_layout')) {
+                $file = $request->file('booth_layout');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePathBoothLayout = 'event_organizer/detail_event/' . $fileName;
+
+                Storage::disk('public')->put($filePathBoothLayout, File::get($file));
             }
 
             // Update ke database
             $event = DetailEvent::findOrFail($eventId);
             $event->update([
                 'event_name' => $request->event_name,
-                'featured_image' => $filePath ?? $event->featured_image,
+                'featured_image' => $filePathFeaturedImage ?? $event->featured_image,
                 'event_description' => $event_description,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
@@ -207,6 +227,7 @@ class EventEOController extends Controller
                 'address' => $request->event_address,
                 'ticket_price' => $request->ticket_price,
                 'ticket_qty' => $request->ticket_qty,
+                'booth_layout' => $filePathBoothLayout ?? $event->booth_layout,
                 'document' => $request->document,
             ]);
 
