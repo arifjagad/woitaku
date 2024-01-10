@@ -16,7 +16,6 @@ class BoothRental extends Model
         'booth_code',
         'booth_size',
         'provided_facilities',
-        'terms_and_conditions',
         'rental_price',
         'rental_time_limit',
         'availability_status',
