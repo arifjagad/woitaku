@@ -43,6 +43,15 @@
                                     aria-controls="booth" 
                                     aria-selected="false">List Booth</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" 
+                                    id="pendaftaran-booth-tab" 
+                                    data-toggle="tab" 
+                                    href="#pendaftaran-booth" 
+                                    role="tab" 
+                                    aria-controls="pendaftaran-booth" 
+                                    aria-selected="false">Pendaftaran Booth</a>
+                            </li>
                         </ul>
                         <div class="tab-content mt-4" id="myTabContent2">
                             <!-- Isi konten tab di sini -->
@@ -176,8 +185,6 @@
                                         @php session(['competition_id' => $data->id]); @endphp
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary">
-                                                {{ $data->id }}
-
                                                 <div class="card-header">
                                                     <h4>{{ $data->competition_name }}</h4>
                                                 </div>
@@ -346,6 +353,110 @@
                                                     <i class="fas fa-question"></i>
                                                 </div>
                                                 <h2>Maaf, event ini tidak memiliki booth.</h2>
+                                                <p class="lead">
+                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                            <!-- Tampilan Pendaftaran Booth -->
+                            <div class="tab-pane fade"
+                                id="pendaftaran-booth"
+                                role="tabpanel"
+                                aria-labelledby="pendaftaraan-booth-tab">
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <img src="{{
+                                            asset('storage/'.$detailEvent->booth_layout)
+                                        }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                    </div>
+                                    @forelse($detailBooth as $key => $data)
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="card card-primary">
+                                                <div class="d-flex justify-content-between card-header">
+                                                    <h4>{{ $data->booth_code }}</h4>
+                                                    @if ($data->availability_status == 'available')
+                                                        <span class="badge badge-success text-uppercase py-2 px-4">
+                                                            Tersedia
+                                                        </span>
+                                                    @else
+                                                        <span class="badge badge-danger text-uppercase py-2 px-4">
+                                                            Tidak Tersedia
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="card-body">
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
+                                                    <a href="#" class="btn btn-success">Pesan Booth</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Detail Booth -->
+                                        <div class="modal fade" id="detailRentalBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailRentalBoothModalLabel" aria-hidden="true">
+                                            <!-- Modal content -->
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="detailRentalBoothModalLabel">Detail Booth</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td class="col-4"><b>Kode Booth:</b></td>
+                                                                <td>{{ $data->booth_code }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-4"><b>Ukuran:</b></td>
+                                                                <td>{{ $data->booth_size }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-4"><b>Harga:</b></td>
+                                                                <td>IDR. {{ number_format($data->rental_price, 0, ',', '.') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-4"><b>Fasilitas:</b></td>
+                                                                <td>{!! $data->provided_facilities !!}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="col-4"><b>Status:</b></td>
+                                                                <td>
+                                                                    @if ($data->availability_status == 'available')
+                                                                        <span class="badge badge-success text-uppercase py-2 px-4">
+                                                                            Tersedia
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="badge badge-danger text-uppercase py-2 px-4">
+                                                                            Tidak Tersedia
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    @empty
+                                        <div class="col-12">
+                                            <div class="empty-state"
+                                                data-height="400">
+                                                <div class="empty-state-icon">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <h2>Maaf, event ini tidak menyewakan booth.</h2>
                                                 <p class="lead">
                                                     Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
                                                 </p>
