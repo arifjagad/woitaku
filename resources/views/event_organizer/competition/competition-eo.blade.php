@@ -38,7 +38,6 @@
                                             <th>Competition Name</th>
                                             <th>Event Name</th>
                                             <th>Competition Start Date</th>
-                                            <th>Competition Category</th>
                                             <th>Competition Fee</th>
                                             <th>Action</th>
                                         </tr>
@@ -53,9 +52,6 @@
                                             <td>{{ $data->competition_name }}</td>
                                             <td>{{ $data->event_name }}</td>
                                             <td>{{ $data->competition_start_date }}</td>
-                                            <td>
-                                                {{$data->category_name}}
-                                            </td>
                                             <td>
                                                 @if ($data->competition_fee == 0)
                                                     Free

@@ -77,7 +77,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-lg-6">
+                                    <div class="form-group col-lg-12">
                                         <label>Competition Name</label>
                                         <input
                                             id="competition_name"
@@ -92,22 +92,7 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <label>Competition Category</label>
-                                        <div 
-                                            class="float-right"
-                                            data-toggle="tooltip"
-                                            title="Pilih kategori yang sesuai">
-                                            <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
-                                            </label>
-                                        </div>
-                                        <select class="form-control select2" id="competition_category" name="competition_category">
-                                            @foreach($dataCompetitionCategory as $data)
-                                                <option value="{{$data->id}}">{{ $data->category_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    
                                     <div class="form-group col-lg-12">
                                         <label>Competition Description</label>
                                         <textarea
