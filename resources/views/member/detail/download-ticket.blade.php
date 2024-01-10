@@ -37,7 +37,7 @@
                                                 <th>Jenis Tiket</th>
                                                 <th>Tanggal Aktif Tiket</th>
                                                 <th>Status</th>
-                                                <th>Download</th>
+                                                <th>Download Tiket</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,10 +61,8 @@
                                                 </td>
                                                 <td>
                                                     @if ($data->transaction_amout == 0)
-                                                    {{ $data->id }}
                                                         <a href="#" id="btnDownloadTicketFree" class="btn btn-success">Download</a>
                                                     @else
-                                                        {{ $data->id }}
                                                         <a href="{{ route('download-ticket', ['id' => $data->id]) }}" id="btnDownloadTicket" class="btn btn-success">Download</a>
                                                     @endif
                                                 </td>

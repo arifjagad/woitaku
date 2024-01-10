@@ -17,6 +17,7 @@ class Transaction extends Model
         'id_event',
         'transaction_date',
         'id_category',
+        'qty',
         'transaction_amout',
         'transaction_status',
         'id_payment_methods',

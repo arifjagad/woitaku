@@ -60,6 +60,7 @@ class DetailEventController extends Controller
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
         $transaction->preferred_date = $selectedDate;
+        $transaction->qty = $ticketQuantity;
         $transaction->id_category = 1;
         $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
         $transaction->transaction_status = 'pending';
@@ -91,6 +92,7 @@ class DetailEventController extends Controller
         $transaction->id_event = $event_id;
         $transaction->preferred_date = now();
         $transaction->id_category = 1;
+        $transaction->qty = 1;
         $transaction->transaction_amout = '0';
         $transaction->transaction_status = 'success';
         $transaction->id_payment_methods = null;
