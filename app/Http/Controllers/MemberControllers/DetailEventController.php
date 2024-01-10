@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use App\Models\Ticket;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DetailEventController extends Controller
 {
@@ -35,12 +36,11 @@ class DetailEventController extends Controller
             ->where('detail_event.id', '=', $id)
             ->get();
             
-        // 
         $start_date_event = Carbon::parse($detailEvent->start_date);
         $end_date_event = Carbon::parse($detailEvent->end_date);
         $daysDifference = $end_date_event->diffInDays($start_date_event);
         
-        return view('member.detail-event', compact('detailEvent', 'detailCompetition', 'listCompetition', 'detailBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
     }
     
     public function transactionTiket(Request $request){
@@ -107,5 +107,69 @@ class DetailEventController extends Controller
         toast('Selamat, kamu sudah terdaftar!', 'success');
         return redirect()->back();
     }
+
+    public function transactionCompetition(Request $request){
+        $event_id = session('event_id');
+        
+        $competitionId = $request->input('competition_id');
+        $detailCompetition = DB::table('detail_event')
+            ->join('detail_competition', 'detail_event.id', '=', 'detail_competition.id_event')
+            ->where('detail_competition.id', '=', $competitionId)
+            ->first();
+
+        if($detailCompetition->competition_fee != 0 || $detailCompetition->competition_fee != null){
+            $paymentMethodId = $request->input('payment_method');
+
+            // Simpan data transaksi ke database
+            $transaction = new Transaction();
+            $transaction->id_member = auth()->user()->id;
+            $transaction->id_event = $event_id;
+            $transaction->preferred_date = null;
+            $transaction->qty = 1;
+            $transaction->id_category = 2;
+            $transaction->transaction_amout = $detailCompetition->competition_fee;
+            $transaction->transaction_status = 'pending';
+            $transaction->id_payment_methods = $paymentMethodId;
+            
+            $transaction->save();
+            // Redirect ke route payment dengan membawa ID transaksi
+            return redirect()->route('invoice', ['id' => $transaction->id]);
+        }else{
+            // Cek apakah pengguna sudah terdaftar untuk perlombaan ini
+            $existingTransaction = Transaction::join('detail_competition', 'transaction.id_event', '=', 'detail_competition.id_event')
+                ->where('transaction.id_member', auth()->user()->id)
+                ->where('transaction.id_event', $event_id)
+                ->where('transaction.transaction_amout', 0)
+                ->first();
+
+            if ($existingTransaction) {
+                // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan Anda
+                toast('Anda sudah terdaftar untuk perlombaan ini.', 'info');
+                return redirect()->back();
+            }
+
+            // Simpan data transaksi ke database
+            $transaction = new Transaction();
+            $transaction->id_member = auth()->user()->id;
+            $transaction->id_event = $event_id;
+            $transaction->preferred_date = null;
+            $transaction->qty = 1;
+            $transaction->id_category = 2;
+            $transaction->transaction_amout = null;
+            $transaction->transaction_status = 'success';
+            $transaction->id_payment_methods = null;
+            
+            $transaction->save();
     
+            // Simpan data transaksi ke database
+            $ticket = new Ticket();
+            $ticket->id_transaction = $transaction->id;
+            $ticket->ticket_identifier = strtoupper(Str::random(6));
+    
+            $ticket->save();
+        
+            toast('Selamat, kamu sudah terdaftar!', 'success');
+            return redirect()->route('history-transaction');
+        }
+    }
 }

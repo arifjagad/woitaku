@@ -51,19 +51,25 @@
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
                                                 <td>
-                                                    @if ($data->transaction_amout == 0 )
+                                                    @if ($data->transaction_amout == 0 && $data->id_category == 1)
                                                         <div class="badge badge-success">GRATIS</div>
-                                                    @elseif (($data->transaction_amout != 0 || $data->transaction_amout != null) && $data->status == 'unused')
+                                                    @elseif ($data->status == 'unused')
                                                         <div class="badge badge-danger">Belum dipakai</div>
                                                     @else
                                                         <div class="badge badge-success">Sudah dipakai</div>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($data->transaction_amout == 0)
+                                                    @if ($data->transaction_amout == 0 && $data->id_category == 1)
                                                         <a href="#" id="btnDownloadTicketFree" class="btn btn-success">Download</a>
                                                     @else
-                                                        <a href="{{ route('download-ticket', ['id' => $data->id]) }}" id="btnDownloadTicket" class="btn btn-success">Download</a>
+                                                        @if ($data->id_category == 1)
+                                                            <a href="{{ route('download-ticket-event', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
+                                                        @elseif ($data->id_category == 2)
+                                                            <a href="{{ route('download-ticket-competition', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
+                                                        @elseif ($data->id_category == 3)
+                                                            <a href="{{ route('download-ticket', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
+                                                        @endif
                                                     @endif
                                                 </td>
                                             </tr>

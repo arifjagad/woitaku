@@ -69,7 +69,7 @@
                 <tr>
                     <td>Tanggal Event</td>
                     <td>:</td>
-                    <td>{{ \Carbon\Carbon::parse($dataTicket->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($dataTicket->end_date)->format('d F Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($dataTicket->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($dataTicket->end_date)->translatedFormat('d F Y') }}</td>
                 </tr>
                 <tr>
                     <td>Lokasi</td>
@@ -84,14 +84,60 @@
                 <tr>
                     <td>Tanggal Pembelian</td>
                     <td>:</td>
-                    <td>{{ $dataTicketBuy->created_at }}</td>
+                    <td>{{ \Carbon\Carbon::parse($dataTicket->preferred_date)->translatedFormat('d F Y H:i:s') }}</td>
+                </tr>
+            </table>
+
+            <h4 class="mt-4">Informasi Tiket</h4>
+            <table class="event-table">
+                
+                <tr>
+                    <td>Jenis Tiket</td>
+                    <td>:</td>
+                    <td>{{ $dataTicket->category_name }}</td>
+                </tr>
+                <tr>
+                    <td>Nama Perlombaan</td>
+                    <td>:</td>
+                    <td>{{ $dataTicket->competition_name }}</td>
+                </tr>
+                @if($dataTicket->competition_fee == 0)
+                    <tr>
+                        <td>Harga Tiket</td>
+                        <td>:</td>
+                        <td>GRATIS</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td>Harga Tiket</td>
+                        <td>:</td>
+                        <td>IDR {{ number_format($dataTicket->competition_fee, 0, ',', '.') }}</td>
+                    </tr>
+                @endif
+                <tr>
+                    <td>Tanggal Aktif Tiket</td>
+                    <td>:</td>
+                    <td>{{ \Carbon\Carbon::parse($dataTicket->competition_start_date)->translatedFormat('d F Y') }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>:</td>
+                    <td>
+                        @if ($dataTicket->transaction_amout == 0 )
+                            <div class="badge badge-success">GRATIS</div>
+                        @elseif (($dataTicket->transaction_amout != 0 || $dataTicket->transaction_amout != null) && $dataTicket->status == 'unused')
+                            <div class="badge badge-danger">Belum dipakai</div>
+                        @else
+                            <div class="badge badge-success">Sudah dipakai</div>
+                        @endif
+                    </td>
                 </tr>
             </table>
 
             <h4 class="mt-4">Ketentuan Penggunaan Tiket</h4>
             <p class="text-justify">Tiket ini merupakan bukti pembelian tiket acara. Tiket hanya berlaku pada Hari
-                <strong>{{ \Carbon\Carbon::parse($dataTicket->preferred_date)->format('l') }}</strong>,
-                <strong>{{ \Carbon\Carbon::parse($dataTicket->preferred_date)->format('d F Y') }}</strong>. Tiket ini tidak akan aktif (tidak dapat
+                <strong>{{ \Carbon\Carbon::parse($dataTicket->competition_start_date)->translatedFormat('l') }}</strong>,
+                <strong>{{ \Carbon\Carbon::parse($dataTicket->competition_start_date)->translatedFormat('d F Y') }}</strong>. Tiket ini tidak akan aktif (tidak dapat
                 digunakan) jika tidak sesuai dengan harinya. Pastikan menggunakan tiket ini pada
                 hari yang telah Anda pilih. Tiket akan kadaluarsa setelah melewati tanggal yang
                 telah dipilih.
