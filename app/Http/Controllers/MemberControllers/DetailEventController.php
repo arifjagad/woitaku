@@ -172,4 +172,32 @@ class DetailEventController extends Controller
             return redirect()->route('history-transaction');
         }
     }
+
+    public function transactionBooth(Request $request){
+        $event_id = session('event_id');
+        $rentalBoothId = $request->input('rentalBooth_id');
+
+        $detailEvent = DB::table('detail_event')
+            ->join('event_organizer', 'detail_event.id_eo', '=', 'event_organizer.id_user')
+            ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
+            ->where('booth_rental.id', '=', $rentalBoothId)
+            ->first();
+        
+        $paymentMethodId = $request->input('payment_method');
+
+        // Simpan data transaksi ke database
+        $transaction = new Transaction();
+        $transaction->id_member = auth()->user()->id;
+        $transaction->id_event = $event_id;
+        $transaction->preferred_date = null;
+        $transaction->qty = 1;
+        $transaction->id_category = 3;
+        $transaction->transaction_amout = $detailEvent->rental_price;
+        $transaction->transaction_status = 'pending';
+        $transaction->id_payment_methods = $paymentMethodId;
+        
+        $transaction->save();
+        // Redirect ke route payment dengan membawa ID transaksi
+        return redirect()->route('invoice', ['id' => $transaction->id]);
+    }
 }

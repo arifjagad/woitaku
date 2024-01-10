@@ -375,7 +375,8 @@
                                     </div>
                                     @forelse($detailBooth as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="card card-primary">
+                                        {{ $data->id }}
+                                        <div class="card card-primary">
                                                 <div class="d-flex justify-content-between card-header">
                                                     <h4>{{ $data->booth_code }}</h4>
                                                     @if ($data->availability_status == 'available')
@@ -392,7 +393,11 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
-                                                    <a href="#" class="btn btn-success">Pesan Booth</a>
+                                                    @if(Auth::check())
+                                                        <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
+                                                    @else
+                                                        <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -400,7 +405,7 @@
                                         <!-- Modal Detail Booth -->
                                         <div class="modal fade" id="detailRentalBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailRentalBoothModalLabel" aria-hidden="true">
                                             <!-- Modal content -->
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="detailRentalBoothModalLabel">Detail Booth</h5>
@@ -409,38 +414,22 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table class="table">
-                                                            <tr>
-                                                                <td class="col-4"><b>Kode Booth:</b></td>
-                                                                <td>{{ $data->booth_code }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-4"><b>Ukuran:</b></td>
-                                                                <td>{{ $data->booth_size }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-4"><b>Harga:</b></td>
-                                                                <td>IDR. {{ number_format($data->rental_price, 0, ',', '.') }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-4"><b>Fasilitas:</b></td>
-                                                                <td>{!! $data->provided_facilities !!}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-4"><b>Status:</b></td>
-                                                                <td>
-                                                                    @if ($data->availability_status == 'available')
-                                                                        <span class="badge badge-success text-uppercase py-2 px-4">
-                                                                            Tersedia
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="badge badge-danger text-uppercase py-2 px-4">
-                                                                            Tidak Tersedia
-                                                                        </span>
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h3 class="text-primary">{{ $data->booth_code }}</h3>
+                                                            <h3 class="text-primary">IDR {{ number_format($data->rental_price, 0, ',', '.') }}</h3>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h6>Ukuran: <span>{{ $data->booth_size }} m<sup>2</sup></span></h6>
+                                                            <div>
+                                                                <h6>
+                                                                    {{ \Carbon\Carbon::parse($data->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->end_date)->translatedFormat('d F Y') }}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="mt-5">Fasilitas:</h6>
+                                                        <p class="text-justify mt-2">
+                                                            {!! $data->provided_facilities !!}
+                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -449,6 +438,51 @@
                                             </div>
                                         </div>
 
+                                        <!-- Modal Pemesanan Booth -->
+                                        <div class="modal fade" id="daftarRentalBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="daftarRentalBoothModalLabel" aria-hidden="true">
+                                            <!-- Modal content -->
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('payment-booth') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="rentalBooth_id" value="{{ $data->id }}" />
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="daftarRentalBoothModalLabel">Pendaftaran Booth</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <td class="col-5"><b>Code Booth:</b></td>
+                                                                    <td>{{ $data->booth_code }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Biaya pendaftaran:</b></td>
+                                                                    <td>IDR {{ number_format($data->rental_price, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Metode Pembayaran:</b></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <select class="form-control select2" name="payment_method">
+                                                                                @foreach ($detailPaymentMethod as $method)
+                                                                                    <option value="{{ $method->id }}">Transfer {{ $method->bank_name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success">Pesan Booth</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @empty
                                         <div class="col-12">
                                             <div class="empty-state"

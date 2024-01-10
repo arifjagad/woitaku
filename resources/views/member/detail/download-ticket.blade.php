@@ -68,7 +68,7 @@
                                                         @elseif ($data->id_category == 2)
                                                             <a href="{{ route('download-ticket-competition', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
                                                         @elseif ($data->id_category == 3)
-                                                            <a href="{{ route('download-ticket', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
+                                                            <a href="{{ route('download-ticket-booth', ['id' => $data->id]) }}" class="btn btn-success">Download</a>
                                                         @endif
                                                     @endif
                                                 </td>
