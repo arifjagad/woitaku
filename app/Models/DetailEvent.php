@@ -23,6 +23,7 @@ class DetailEvent extends Model
         'address',
         'ticket_price',
         'ticket_qty',
+        'booth_layout',
         'document',
         'verification',
         'id_category',

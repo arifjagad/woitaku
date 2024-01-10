@@ -324,6 +324,9 @@
                                 aria-labelledby="booth-tab">
 
                                 <div class="row">
+                                    <img src="{{
+                                        asset('storage/'.$detailEvent->booth_layout)
+                                    }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
                                     @forelse($detailBooth as $data)
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary">

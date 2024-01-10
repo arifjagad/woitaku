@@ -166,6 +166,29 @@
                                             <span class="float-right">{{basename($data->featured_image)}}</span>
                                         </div>
                                     </div>
+                                    <div class="form-group col-12">
+                                        <label>Denah Lokasi Booth</label>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                name="booth_layout"
+                                                class="custom-file-input @error('booth_layout') is-invalid @enderror"
+                                                id="booth_layout"
+                                                accept=".jpg, .jpeg, .png"
+                                                value="{{$data->booth_layout}}"
+                                                >
+                                            <label class="custom-file-label">Choose File</label>
+                                            <!-- Error Message -->
+                                            @error('booth_layout')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-text text-muted">
+                                            The image must have a maximum size of 300kb
+                                            <span class="float-right">{{basename($data->booth_layout)}}</span>
+                                        </div>
+                                    </div>
                                     <div class="form-group col-lg-6">
                                         <label>Start Date</label>
                                         <input type="text"
