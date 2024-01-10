@@ -20,7 +20,7 @@ class DetailEventController extends Controller
             ->where('detail_event.id', '=', $id)
             ->first();
 
-        $detailCompetition = DB::table('detail_event')
+        $listCompetition = DB::table('detail_event')
             ->join('detail_competition', 'detail_event.id', '=', 'detail_competition.id_event')
             ->where('detail_competition.id_event', '=', $id)
             ->get();
@@ -40,7 +40,7 @@ class DetailEventController extends Controller
         $end_date_event = Carbon::parse($detailEvent->end_date);
         $daysDifference = $end_date_event->diffInDays($start_date_event);
         
-        return view('member.detail-event', compact('detailEvent', 'detailCompetition', 'detailBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'detailCompetition', 'listCompetition', 'detailBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
     }
     
     public function transactionTiket(Request $request){
@@ -60,6 +60,7 @@ class DetailEventController extends Controller
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
         $transaction->preferred_date = $selectedDate;
+        $transaction->qty = $ticketQuantity;
         $transaction->id_category = 1;
         $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
         $transaction->transaction_status = 'pending';
@@ -91,6 +92,7 @@ class DetailEventController extends Controller
         $transaction->id_event = $event_id;
         $transaction->preferred_date = now();
         $transaction->id_category = 1;
+        $transaction->qty = 1;
         $transaction->transaction_amout = '0';
         $transaction->transaction_status = 'success';
         $transaction->id_payment_methods = null;
