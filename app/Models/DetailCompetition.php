@@ -18,7 +18,6 @@ class DetailCompetition extends Model
         'competition_description',
         'competition_start_date',
         'competition_end_date',
-        'id_competition_category',
         'competition_fee',
         'participant_qty',
         'id_category',
