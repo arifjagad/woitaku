@@ -165,13 +165,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Tampilan Detail Perlombaan -->
                             <div class="tab-pane fade"
                                 id="perlombaan"
                                 role="tabpanel"
                                 aria-labelledby="perlombaan-tab">
                                 
                                 <div class="row">
-                                    @forelse($detailCompetition as $data)
+                                    @forelse($listCompetition as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary">
                                                 <div class="card-header">
@@ -181,23 +182,52 @@
                                                     {!! \Illuminate\Support\Str::limit(strip_tags($data->competition_description), 50) !!}
                                                 </div>
                                                 <div class="card-footer">
-                                                    {{-- <a href="#" class="btn btn-primary">Detail</a> --}}
-                                                    <button class="btn btn-primary" 
-                                                        onclick="showDetailsModal(
-                                                            '{{ $data->competition_name }}',
-                                                            '{{ number_format($data->competition_fee, 0, ',', '.') }}',
-                                                            '{{ $data->participant_qty }}',
-                                                            '{{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}',
-                                                            '{{ \Carbon\Carbon::parse($data->competition_end_date)->format('d F Y') }}',
-                                                            '{{ trim(addslashes(html_entity_decode(strip_tags($data->competition_description)))) }}'
-                                                        )">
-                                                        Detail
-                                                    </button>
+                                                    <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetitionModal{{ $key }}">Detail</a>
                                                     @if(Auth::check())
                                                         <a href="#" class="btn btn-success" data-toggle="modal" data-target="#daftarPerlombaanModal">Daftar</a>
                                                     @else
                                                         <a href="#" class="btnTransaksi btn btn-success">Daftar</a>
                                                     @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Daftar Perlombaan -->
+                                        <div class="modal fade" id="detailCompetitionModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailCompetitionModalLabel" aria-hidden="true">
+                                            <!-- Modal content -->
+                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="detailCompetitionModalLabel">Detail Perlombaan</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h3 class="text-primary">{{ $data->competition_name }}</h3>
+                                                            @if ($data->competition_fee == 0)
+                                                                <h3 class="text-primary">GRATIS</h3>
+                                                            @else
+                                                                <h3 class="text-primary">IDR. {{ number_format($data->competition_fee, 0, ',', '.') }}</h3>
+                                                            @endif
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h6>Sisa partisipan: <span>{{ $data->participant_qty }}</span> peserta</h6>
+                                                            <div>
+                                                                <h6>
+                                                                    {{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                        
+                                                        <p class="text-justify mt-3">
+                                                            {!! $data->competition_description !!}
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,6 +247,8 @@
                                     @endforelse
                                 </div>
                             </div>
+
+                            <!-- Tampilan List Booth -->
                             <div class="tab-pane fade"
                                 id="booth"
                                 role="tabpanel"
@@ -253,39 +285,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Detail Perlombaan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-between">
-                    <h3 id="competitionName" class="text-primary"></h3>
-                    <h3 id="competitionFee" class="text-primary"></h3>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h6>Sisa partisipan: <span id="participantQty">10</span> peserta</h6>
-                    <div>
-                        <h6>
-                            <span id="competitionStartDate"></span> - <span id="competitionEndDate"></span>
-                        </h6>
-                    </div>
-                </div>
-
-                <p id="competitionDescription" class="text-justify mt-3"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -373,35 +372,29 @@
     </div>
 </div>
 
-<!-- Modal Daftar Perlombaan -->
-<div class="modal fade" id="daftarPerlombaanModal" tabindex="-1" role="dialog" aria-labelledby="daftarPerlombaanModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="detailCompetitionModal" tabindex="-1" role="dialog" aria-labelledby="detailCompetitionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ticketModalLabel">Pendaftaran Lomba</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <tr>
-                        <td class="col-5"><b>Nama Event:</b></td>
-                        <td>{{ $detailEvent->event_name }}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-5"><b>Nama Perlombaan:</b></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-
-            </div>
+            <form action="{{ route('beli-tiket') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailCompetitionModal">Detail Perlombaan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="text-primary">{{ $detailCompetition->competition_name }}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-
 
 @endsection @push('scripts')
 <!-- JS Libraies -->
@@ -414,6 +407,7 @@
 
 <!-- Custom JS -->
 <script>
+    // Sweetalert untuk user yg belum login
     document.querySelectorAll('.btnTransaksi').forEach(function(button) {
         button.addEventListener('click', function() {
             Swal.fire({
@@ -426,33 +420,7 @@
         });
     });
 
-    // Menampilkan modal detail perlombaan
-    function showDetailsModal(
-        competitionName, 
-        competitionFee,
-        participantQty,
-        competitionStartDate,
-        competitionEndDate,
-        competitionDescription
-    ) {
-        $('#competitionName').text(competitionName);
-        var competitionFeeFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(competitionFee);
-        $('#competitionFee').text(competitionFeeFormatted);
-        $('#participantQty').text(participantQty);
-        $('#competitionStartDate').text(competitionStartDate);
-        $('#competitionEndDate').text(competitionEndDate);
-        $('#competitionDescription').text(competitionDescription);
-        $('#detailsModal').modal('show');
-
-        if(
-            competitionFee == 0
-        ){
-            $('#competitionFee').text('GRATIS');
-        }
-    }
-</script>
-
-<script>
+    // Menghitung total harga secara live untuk pembelian tiket event
     $(document).ready(function() {
         function updateTotalPayment() {
             var ticketPrice = parseFloat({{ $detailEvent->ticket_price }});
@@ -469,6 +437,10 @@
             updateTotalPayment();
         });
     });
+</script>
+
+<script>
+    
 </script>
 
 @endpush
