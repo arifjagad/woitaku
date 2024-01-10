@@ -75,7 +75,7 @@
                                     <div class="col-4">
                                         @if ($detailEvent->ticket_price == 0)
                                             @if(Auth::check())
-                                                <form action="{{ route('daftar-sekarang') }}" method="POST">
+                                                <form action="{{ route('payment-ticket-free') }}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</button>
                                                 </form>
@@ -102,11 +102,11 @@
                                                 <table class="table">
                                                     <tr>
                                                         <td class="col-6"><b>Tanggal mulai:</b></td>
-                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->start_date)->format('d F Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->start_date)->translatedFormat('d F Y') }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="col-6"><b>Tanggal berakhir:</b></td>
-                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->end_date)->format('d F Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($detailEvent->end_date)->translatedFormat('d F Y') }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="col-6"><b>Lokasi:</b></td>
@@ -173,8 +173,11 @@
                                 
                                 <div class="row">
                                     @forelse($listCompetition as $key => $data)
+                                        @php session(['competition_id' => $data->id]); @endphp
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary">
+                                                {{ $data->id }}
+
                                                 <div class="card-header">
                                                     <h4>{{ $data->competition_name }}</h4>
                                                 </div>
@@ -184,7 +187,7 @@
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetitionModal{{ $key }}">Detail</a>
                                                     @if(Auth::check())
-                                                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#daftarPerlombaanModal">Daftar</a>
+                                                        <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarCompetitionModal{{ $key }}">Daftar</a>
                                                     @else
                                                         <a href="#" class="btnTransaksi btn btn-success">Daftar</a>
                                                     @endif
@@ -192,7 +195,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Modal Daftar Perlombaan -->
+                                        <!-- Modal Detail Perlombaan -->
                                         <div class="modal fade" id="detailCompetitionModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailCompetitionModalLabel" aria-hidden="true">
                                             <!-- Modal content -->
                                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -216,7 +219,7 @@
                                                             <h6>Sisa partisipan: <span>{{ $data->participant_qty }}</span> peserta</h6>
                                                             <div>
                                                                 <h6>
-                                                                    {{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}
+                                                                    {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }}
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -228,6 +231,72 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Daftar Perlombaan -->
+                                        <div class="modal fade" id="daftarCompetitionModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="daftarCompetitionModalLabel" aria-hidden="true">
+                                            <!-- Modal content -->
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('payment-competition') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="competition_id" value="{{ $data->id }}" />
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="daftarCompetitionModalLabel">Pendaftaran Perlombaan</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <td class="col-5"><b>Nama Perlombaan:</b></td>
+                                                                    <td>{{ $data->competition_name }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Tanggal mulai:</b></td>
+                                                                    <td>{{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('l, d F Y') }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Tanggal berakhir:</b></td>
+                                                                    <td>{{ \Carbon\Carbon::parse($data->competition_end_date)->translatedFormat('l, d F Y') }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Sisa partisipan:</b></td>
+                                                                    <td>{{ $data->participant_qty }} peserta</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="col-5"><b>Biaya pendaftaran:</b></td>
+                                                                    <td>
+                                                                        @if ($data->competition_fee == 0)
+                                                                            GRATIS
+                                                                        @else
+                                                                            IDR. {{ number_format($data->competition_fee, 0, ',', '.') }}
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                                @if ($data->competition_fee != 0)
+                                                                    <tr>
+                                                                        <td class="col-5"><b>Metode Pembayaran:</b></td>
+                                                                        <td>
+                                                                            <div class="input-group">
+                                                                                <select class="form-control select2" name="payment_method">
+                                                                                    @foreach ($detailPaymentMethod as $method)
+                                                                                        <option value="{{ $method->id }}">Transfer {{ $method->bank_name }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success">Daftar Sekarang</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +363,7 @@
 <div class="modal fade" id="ticketModal" tabindex="-1" role="dialog" aria-labelledby="ticketModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{ route('beli-tiket') }}" method="POST">
+            <form action="{{ route('payment-ticket') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="ticketModalLabel">Pembelian Tiket</h5>
@@ -317,8 +386,8 @@
                                             @php
                                                 $currentDate = $start_date_event->copy()->addDays($i);
                                             @endphp
-                                            <option value="{{ $currentDate->format('Y-m-d') }}">
-                                                {{ $currentDate->format('d F Y') }}
+                                            <option value="{{ $currentDate->translatedFormat('Y-m-d') }}">
+                                                {{ $currentDate->translatedFormat('d F Y') }}
                                             </option>
                                         @endfor
                                     </select>
@@ -369,30 +438,6 @@
                 </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div class="modal fade" id="detailCompetitionModal" tabindex="-1" role="dialog" aria-labelledby="detailCompetitionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <form action="{{ route('beli-tiket') }}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailCompetitionModal">Detail Perlombaan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="text-primary">{{ $detailCompetition->competition_name }}</h3>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 

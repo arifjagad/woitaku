@@ -114,13 +114,15 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
     Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
-    Route::get('download-ticket/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket');
+    Route::get('download-ticket-event/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket-event');
+    Route::get('download-ticket-competition/{id}', [DownloadTicketController::class, 'downloadTicketCompetition'])->name('download-ticket-competition');
+
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');
-    Route::post('beli-tiket', [DetailEventController::class, 'transactionTiket'])->name('beli-tiket');
-    Route::post('daftar-sekarang', [DetailEventController::class, 'transactionTiketFree'])->name('daftar-sekarang');
-
+    Route::post('payment-ticket', [DetailEventController::class, 'transactionTiket'])->name('payment-ticket');
+    Route::post('payment-ticket-free', [DetailEventController::class, 'transactionTiketFree'])->name('payment-ticket-free');
+    Route::post('payment-competition', [DetailEventController::class, 'transactionCompetition'])->name('payment-competition');
 });
 
 // Route untuk semua (bisa diakses sebelum login)
