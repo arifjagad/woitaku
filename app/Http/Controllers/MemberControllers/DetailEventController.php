@@ -59,6 +59,7 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
+        $transaction->id_booth_rental = null;
         $transaction->preferred_date = $selectedDate;
         $transaction->qty = $ticketQuantity;
         $transaction->id_category = 1;
@@ -71,9 +72,10 @@ class DetailEventController extends Controller
         return redirect()->route('invoice', ['id' => $transaction->id]);
     }
 
-    public function transactionTiketFree() {
+    public function transactionTiketFree(Request $request) {
         $event_id = session('event_id');
-    
+        $competitionId = $request->input('competition_id');
+
         // Cek apakah pengguna sudah terdaftar untuk event gratis ini
         $existingTransaction = Transaction::where('id_member', auth()->user()->id)
             ->where('id_event', $event_id)
@@ -90,6 +92,7 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
+        $transaction->id_competition = $competitionId;
         $transaction->preferred_date = now();
         $transaction->id_category = 1;
         $transaction->qty = 1;
@@ -109,6 +112,7 @@ class DetailEventController extends Controller
     }
 
     public function transactionCompetition(Request $request){
+        $userId = auth()->user()->id;
         $event_id = session('event_id');
         
         $competitionId = $request->input('competition_id');
@@ -117,13 +121,30 @@ class DetailEventController extends Controller
             ->where('detail_competition.id', '=', $competitionId)
             ->first();
 
+        // Cek apakah pengguna sudah mendaftar untuk event atau kompetisi tertentu
+        $existingTransaction = Transaction::where('id_member', $userId)
+        ->where(function ($query) use ($event_id, $competitionId) {
+            $query->where('id_event', $event_id)
+                ->orWhere('id_competition', $competitionId);
+        })
+        ->first();
+
+        // Jika transaksi sudah ada, berikan pesan kesalahan atau ambil tindakan lain
+        if ($existingTransaction) {
+            toast('Anda sudah terdaftar untuk perlombaan ini.', 'info');
+            return redirect()->back();
+        }
+        
         if($detailCompetition->competition_fee != 0 || $detailCompetition->competition_fee != null){
+            
+
             $paymentMethodId = $request->input('payment_method');
 
             // Simpan data transaksi ke database
             $transaction = new Transaction();
             $transaction->id_member = auth()->user()->id;
             $transaction->id_event = $event_id;
+            $transaction->id_competition = $competitionId;
             $transaction->preferred_date = null;
             $transaction->qty = 1;
             $transaction->id_category = 2;
@@ -189,6 +210,7 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
+        $transaction->id_booth_rental = $rentalBoothId;
         $transaction->preferred_date = null;
         $transaction->qty = 1;
         $transaction->id_category = 3;

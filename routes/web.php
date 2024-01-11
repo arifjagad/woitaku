@@ -26,6 +26,7 @@ use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
 use App\Http\Controllers\MemberControllers\HistoryTransactionController;
 use App\Http\Controllers\MemberControllers\DownloadTicketController;
+use App\Http\Controllers\MemberControllers\SettingBoothController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -117,8 +118,7 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('download-ticket-event/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket-event');
     Route::get('download-ticket-competition/{id}', [DownloadTicketController::class, 'downloadTicketCompetition'])->name('download-ticket-competition');
     Route::get('download-ticket-booth/{id}', [DownloadTicketController::class, 'downloadTicketBooth'])->name('download-ticket-booth');
-
-
+    Route::get('setting-booth', [SettingBoothController::class, 'indexSettingBooth'])->name('setting-booth');
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');

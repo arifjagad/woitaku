@@ -375,7 +375,6 @@
                                     </div>
                                     @forelse($detailBooth as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
-                                        {{ $data->id }}
                                         <div class="card card-primary">
                                                 <div class="d-flex justify-content-between card-header">
                                                     <h4>{{ $data->booth_code }}</h4>

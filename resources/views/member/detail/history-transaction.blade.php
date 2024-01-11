@@ -50,10 +50,10 @@
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>
-                                                    @if($data->transaction_amout === 0 || null)
+                                                    @if($data->transaction_amout == 0 || null)
                                                         GRATIS
                                                     @else
-                                                        IDR. {{ number_format($data->transaction_amout, 0, ',', '.') }}
+                                                        IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}
                                                     @endif
                                                 </td>
                                                 <td>

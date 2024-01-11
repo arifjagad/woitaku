@@ -15,6 +15,8 @@ class Transaction extends Model
     protected $fillable = [
         'id_member',
         'id_event',
+        'id_competition',
+        'id_booth_rental',
         'transaction_date',
         'id_category',
         'qty',
