@@ -18,11 +18,11 @@
         id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ Request::is('/') || Request::is('home') ? 'active' : '' }}">
-                <a href="{{ route('home') }}" class="nav-link">Home</a>
+                <a href="{{ route('home') }}" class="nav-link">Beranda</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                    href="#">About</a>
+                    href="#">Tentang</a>
             </li>
             <li class="nav-item {{ Request::is('list-event') ? 'active' : '' }}">
                 <a class="nav-link"
@@ -30,7 +30,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                    href="#">Blog</a>
+                    href="#">Artikel</a>
             </li>
         </ul>
         <span class="navbar-text">
@@ -56,10 +56,22 @@
                             <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="{{ route('profile')}}" class="dropdown-item has-icon">
-                                    <i class="far fa-user"></i>
-                                    Profile
-                                </a>
+                                @if(auth()->user()->usertype == 'admin')
+                                    <a href="{{ route('dashboard') }}" class="dropdown-item has-icon">
+                                        <i class="fas fa-home"></i>
+                                        Dashboard
+                                    </a>
+                                @elseif(auth()->user()->usertype == 'event organizer')
+                                    <a href="{{ route('dashboard-eo') }}" class="dropdown-item has-icon">
+                                        <i class="fas fa-home"></i>
+                                        Dashboard
+                                    </a>
+                                @else
+                                    <a href="{{ route('profile')}}" class="dropdown-item has-icon">
+                                        <i class="far fa-user"></i>
+                                        Profile
+                                    </a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <a
                                     href="{{route('logout')}}"

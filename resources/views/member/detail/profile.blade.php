@@ -13,7 +13,7 @@
         <section class="section">
             <h2 class="section-title">Hi, {{auth()->user()->name}}!</h2>
             <p class="section-lead">
-                You can adjust all general settings here.
+                Kamu bisa menemukan semua pengaturan utama di sini.
             </p>
             <div class="section-body">
                 <div class="row">
@@ -22,7 +22,7 @@
                     <div class="col-12 col-md-6 col-lg-9">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Your Profile</h4>
+                                <h4>Informasi Pribadi</h4>
                             </div>
                             <form
                                 class="needs-validation"
@@ -36,7 +36,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="form-group col-6">
-                                                <label>Name</label>
+                                                <label>Nama</label>
                                                 <input
                                                     id="name"
                                                     type="text"
@@ -68,7 +68,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-12">
-                                                <label>Your Profile Picture</label>
+                                                <label>Foto Profil</label>
                                                 <div class="custom-file">
                                                     <input type="file"
                                                         name="foto_profile"
@@ -86,12 +86,12 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-text text-muted">
-                                                    The image must have a maximum size of 300kb 
+                                                    Gambar harus memiliki ukuran maksimal 300 KB
                                                     <span class="float-right">{{basename($dataMember->foto_profile)}}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-12">
-                                                <label>Address</label>
+                                                <label>Alamat</label>
                                                 <input
                                                     id="address"
                                                     type="text"
@@ -107,7 +107,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-6">
-                                                <label>City</label>
+                                                <label>Kota</label>
                                                 <select class="form-control select2" id="city" name="city">
                                                     @foreach ($indonesiaCities as $city)
                                                         <option value="{{ $city }}" @if ($city == $dataMember->kota) selected @endif>{{ $city }}</option>
@@ -115,7 +115,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-6">
-                                                <label>WhatsApp Number (628xx)</label>
+                                                <label>Nomor Whatsapp (628xx)</label>
                                                 <input
                                                     id="whatsappNumber"
                                                     type="text"
@@ -135,14 +135,14 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button class="btn btn-primary">Update Profile</button>
+                                    <button class="btn btn-primary">Update</button>
                                 </div>
                             </form>
                         </div>
 
                         <div class="card">
                             <div class="card-header">
-                                <h4>Update Password</h4>
+                                <h4>Perbaharui Password</h4>
                             </div>
                             <form
                                 class="needs-validation"
@@ -156,7 +156,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="form-group col-6">
-                                                <label>New Password</label>
+                                                <label>Password Baru</label>
                                                 <input
                                                     id="password"
                                                     type="password"
@@ -171,7 +171,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-6">
-                                                <label>Password Confirmation</label>
+                                                <label>Konfirmasi Password</label>
                                                 <input
                                                     id="password_confirmation"
                                                     type="password"
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button class="btn btn-primary">Update Password</button>
+                                    <button class="btn btn-primary">Update</button>
                                 </div>
                             </form>
                         </div>

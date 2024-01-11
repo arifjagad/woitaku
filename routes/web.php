@@ -26,6 +26,7 @@ use App\Http\Controllers\MemberControllers\InvoiceController;
 use App\Http\Controllers\MemberControllers\ListEventController;
 use App\Http\Controllers\MemberControllers\HistoryTransactionController;
 use App\Http\Controllers\MemberControllers\DownloadTicketController;
+use App\Http\Controllers\MemberControllers\SettingBoothController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -116,13 +117,16 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
     Route::get('download-ticket-event/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket-event');
     Route::get('download-ticket-competition/{id}', [DownloadTicketController::class, 'downloadTicketCompetition'])->name('download-ticket-competition');
-
+    Route::get('download-ticket-booth/{id}', [DownloadTicketController::class, 'downloadTicketBooth'])->name('download-ticket-booth');
+    Route::get('setting-booth', [SettingBoothController::class, 'indexSettingBooth'])->name('setting-booth');
+    Route::put('update-detail-booth', [SettingBoothController::class, 'updateDetailBooth'])->name('update-detail-booth');
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');
     Route::post('payment-ticket', [DetailEventController::class, 'transactionTiket'])->name('payment-ticket');
     Route::post('payment-ticket-free', [DetailEventController::class, 'transactionTiketFree'])->name('payment-ticket-free');
     Route::post('payment-competition', [DetailEventController::class, 'transactionCompetition'])->name('payment-competition');
+    Route::post('payment-booth', [DetailEventController::class, 'transactionBooth'])->name('payment-booth');
 });
 
 // Route untuk semua (bisa diakses sebelum login)

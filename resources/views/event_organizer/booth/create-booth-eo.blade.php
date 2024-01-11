@@ -121,42 +121,16 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Facilities</label>
-                                        <div 
-                                            class="float-right"
-                                            data-toggle="tooltip"
-                                            title="Pisahkan dengan koma untuk setiap fasilitas">
-                                            <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
-                                            </label>
-                                        </div>
+                                        <label>Fasilitas Booth</label>
                                         <textarea
-                                            id="provided_facilities"
-                                            type="text"
-                                            class="form-control @error('provided_facilities') is-invalid @enderror"
+                                            class="summernote-simple @error('provided_facilities') is-invalid @enderror"
                                             name="provided_facilities"
-                                            data-height="80"
+                                            id="provided_facilities"
                                             required>
-                                            
+                                                1. Gratis Tiket Masuk Untuk 3 Orang
                                         </textarea>
                                         <!-- Error Message -->
                                         @error('provided_facilities')
-                                            <div class="invalid-feedback">
-                                                {{$message}}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-12">
-                                        <label>Terms and Conditions</label>
-                                        <textarea
-                                            class="summernote @error('terms_and_conditions') is-invalid @enderror"
-                                            name="terms_and_conditions"
-                                            id="terms_and_conditions"
-                                            required>
-                                            
-                                        </textarea>
-                                        <!-- Error Message -->
-                                        @error('terms_and_conditions')
                                             <div class="invalid-feedback">
                                                 {{$message}}
                                             </div>

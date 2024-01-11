@@ -38,7 +38,6 @@ class BoothEOController extends Controller
 
     public function storeBoothEO(Request $request){
         $selectedEventId = $request->input('event_name');
-        $providedFacilities = explode(', ', $request->provided_facilities);
 
         try {
             $this->validate($request, [
@@ -47,35 +46,7 @@ class BoothEOController extends Controller
                 'booth_size' => 'required',
                 'rental_price' => 'required',
                 'provided_facilities' => 'required',
-                'terms_and_conditions' => 'required',
             ]);
-
-            // Upload data dari summernote untuk deskripsi event
-            $providedFacilities = $request->providedFacilities;
-
-            $config = HTMLPurifier_Config::createDefault();
-            $purifier = new HTMLPurifier($config);
-            $providedFacilities = $purifier->purify($providedFacilities);
-
-            $dom = new DOMDocument();
-            if (!empty($providedFacilities)) {
-                $dom->loadHTML($providedFacilities, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            }
-
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'),'data:image/') === 0) {
-                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                    $image_name = "/upload/" . time() . $key . '.png';
-                    file_put_contents(public_path() . $image_name, $data);
-
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $image_name);
-                }
-            }
-
-            $providedFacilities = $dom->saveHTML();
 
             // Post ke database
             BoothRental::create([
@@ -83,8 +54,7 @@ class BoothEOController extends Controller
                 'booth_code' => $request->booth_code,
                 'booth_size' => $request->booth_size,
                 'rental_price' => $request->rental_price,
-                'provided_facilities' => $providedFacilities,
-                'terms_and_conditions' => $request->terms_and_conditions,
+                'provided_facilities' => $request->provided_facilities,
             ]);
 
             toast('Booth Successfully Created!', 'success');
@@ -112,7 +82,6 @@ class BoothEOController extends Controller
 
     public function updateBoothEO(Request $request){
         $selectedEventId = $request->input('event_name');
-        $providedFacilities = explode(', ', $request->provided_facilities);
 
         try {
             $this->validate($request, [
@@ -121,35 +90,7 @@ class BoothEOController extends Controller
                 'booth_size' => 'required',
                 'rental_price' => 'required',
                 'provided_facilities' => 'required',
-                'terms_and_conditions' => 'required',
             ]);
-
-            // Upload data dari summernote untuk deskripsi event
-            $providedFacilities = $request->providedFacilities;
-
-            $config = HTMLPurifier_Config::createDefault();
-            $purifier = new HTMLPurifier($config);
-            $providedFacilities = $purifier->purify($providedFacilities);
-
-            $dom = new DOMDocument();
-            if (!empty($providedFacilities)) {
-                $dom->loadHTML($providedFacilities, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            }
-
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'),'data:image/') === 0) {
-                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                    $image_name = "/upload/" . time() . $key . '.png';
-                    file_put_contents(public_path() . $image_name, $data);
-
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $image_name);
-                }
-            }
-
-            $providedFacilities = $dom->saveHTML();
 
             // Post ke database
             BoothRental::create([
@@ -157,8 +98,7 @@ class BoothEOController extends Controller
                 'booth_code' => $request->booth_code,
                 'booth_size' => $request->booth_size,
                 'rental_price' => $request->rental_price,
-                'provided_facilities' => $providedFacilities,
-                'terms_and_conditions' => $request->terms_and_conditions,
+                'provided_facilities' => $request->provided_facilities,
             ]);
 
             toast('Booth Successfully Update!', 'success');

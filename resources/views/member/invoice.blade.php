@@ -13,6 +13,26 @@
             </div>
             <div class="card-body">
                 <div>
+                    <h6>Informasi Pembelian</h6>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mt-3">Nama Event</h6>
+                        <h6 class="text-primary mt-3">{{ $dataTransactionEvent->event_name}}</h6>
+                    </div>
+                    @if($dataTransaction->id_event != null && $dataTransaction->id_competition != null)
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mt-3">Nama Perlombaan</h6>
+                            <h6 class="text-primary mt-3">{{ $dataTransactionCompetition->competition_name}}</h6>
+                        </div>
+                    @elseif($dataTransaction->id_event != null && $dataTransaction->id_booth_rental != null)
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mt-3">Kode Booth</h6>
+                            <h6 class="text-primary mt-3">{{ $dataTransactionBooth->booth_code}}</h6>
+                        </div>
+                    @endif
+                </div>
+                <div>
+                    <hr>
                     <div class="d-flex justify-content-between">
                         <h6 class="mt-3">Bank Tujuan</h6>
                         <h6 class="text-primary mt-3">{{ $dataTransaction->bank_name}}</h6>
@@ -33,7 +53,7 @@
                         <div class="alert alert-info my-4">
                             <p class="text-center">Transfer ke rekening <strong>{{ $dataTransaction->account_holder_name }}</strong> <br>sebesar <strong>IDR. {{ number_format($dataTransaction->transaction_amout, 0, ',', '.') }}</strong></p>
                         </div>
-                    @elseif($dataTransaction->transaction_status == 'failed')
+                    @elseif($dataTransaction->transaction_status == 'expired')
                         <div class="alert alert-danger my-4">
                             <p class="text-center">Pembayaran gagal</p>
                         </div>

@@ -50,10 +50,10 @@
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>
-                                                    @if($data->transaction_amout === 0 || null)
+                                                    @if($data->transaction_amout == 0 || null)
                                                         GRATIS
                                                     @else
-                                                        IDR. {{ number_format($data->transaction_amout, 0, ',', '.') }}
+                                                        IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}
                                                     @endif
                                                 </td>
                                                 <td>
@@ -64,13 +64,13 @@
                                                         <span class="badge badge-warning">{{ $data->transaction_status }}</span>
                                                     @elseif($data->transaction_status == 'success')
                                                         <span class="badge badge-success">{{ $data->transaction_status }}</span>
-                                                    @elseif($data->transaction_status == 'failed')
+                                                    @elseif($data->transaction_status == 'expired')
                                                         <span class="badge badge-danger">{{ $data->transaction_status }}</span>
                                                     @endif
                                                     
                                                 </td>
                                                 <td class="text-center">
-                                                    @if($data->transaction_status == 'pending' || $data->transaction_status == 'failed')
+                                                    @if($data->transaction_status == 'pending' || $data->transaction_status == 'expired')
                                                         <a href="{{ route('invoice', ['id' => $data->id]) }}" class="btn btn-primary">Detail</a>
                                                     @elseif($data->transaction_status == 'success')
                                                         <a href="#" class="btn btn-success">Download Tiket</a>
