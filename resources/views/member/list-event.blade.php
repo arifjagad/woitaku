@@ -31,16 +31,22 @@
                             @endforeach
                         </select>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ route('list-event') }}" class="btn btn-primary btn-block">Reset</a>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="col-9">
                 <form action="{{ route('search-event') }}" method="GET" class="mb-4">
                     <div class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="Search events...">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama event...">
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary">Cari</button>
                         </div>
                     </div>
                 </form>
@@ -65,7 +71,7 @@
                                     <div class="article-category">
                                         <a>{{$data->city}}</a><br>
                                         <a>
-                                            {{ \Carbon\Carbon::parse($data->start_date)->format('l, d F Y') }}
+                                            {{ \Carbon\Carbon::parse($data->start_date)->translatedFormat('l, d F Y') }}
                                         </a>
                                     </div>
                                     <div class="article-title">

@@ -72,6 +72,7 @@
     </div>
 </div>
 
+@foreach ($dataBooth as $key => $data)
 <!-- Modal Detail Booth -->
 <div class="modal fade" id="tambahProdukBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="tambahProdukBoothModalLabel" aria-hidden="true">
     <!-- Modal content -->
@@ -169,6 +170,7 @@
         </div>
     </div>
 </div>
+@endforeach
 
 @endsection @push('scripts')
 <!-- JS Libraies -->

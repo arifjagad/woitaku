@@ -41,7 +41,7 @@
                                     href="#perlombaan" 
                                     role="tab" 
                                     aria-controls="perlombaan" 
-                                    aria-selected="false">List Perlombaan</a>
+                                    aria-selected="false">Daftar Perlombaan</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" 
@@ -50,7 +50,7 @@
                                     href="#booth" 
                                     role="tab" 
                                     aria-controls="booth" 
-                                    aria-selected="false">List Booth</a>
+                                    aria-selected="false">Daftar Booth</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" 
@@ -173,11 +173,12 @@
                                                         <td class="col-6"><b>Alamat:</b></td>
                                                         <td>{{ $detailEvent->address }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="col-6"><b>Deskripsi:</b></td>
                                                         <td>{!! $detailEvent->description !!}</td>
-                                                    </tr>
+                                                    </tr> --}}
                                                 </table>
+                                                <a href="#" class="btn btn-primary btn-block">Profil Penyelenggara</a>
                                             </div>
                                         </div>
                                     </div>
