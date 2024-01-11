@@ -193,7 +193,7 @@
                                     @forelse($listCompetition as $key => $data)
                                         @php session(['competition_id' => $data->id]); @endphp
                                         <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="card card-primary">
+                                            <div class="card card-primary h-100">
                                                 <div class="card-header">
                                                     <h4>{{ $data->competition_name }}</h4>
                                                 </div>
@@ -347,7 +347,7 @@
                                     </div>
                                     @forelse($listBooth as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="card card-primary">
+                                            <div class="card card-primary h-100">
                                                 <div class="d-flex justify-content-between card-header">
                                                     <h4>{{ $data->booth_code }}</h4>
                                                     <h4>{{ $data->booth_name }}</h4>
@@ -359,6 +359,31 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <button class="btn btn-primary btn-block show-detail" data-toggle="modal" data-target="#listProductBooth{{ $key }}">Lihat Daftar Produk Booth</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal List Produk Booth -->
+                                        <div class="modal fade" id="listProductBooth{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="listProductBoothLabel" aria-hidden="true">
+                                            <!-- Modal content -->
+                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="listProductBoothLabel">Daftar Produk Booth</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body row">
+                                                        @foreach (json_decode($data->booth_image) as $key => $image)
+                                                            <div class="col-4 mb-4">
+                                                                <img src="{{ asset('storage/booth_images/'.$image) }}" class="img-fluid preview-image" alt="Image {{ $key + 1 }}">
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,31 +402,7 @@
                                         </div>
                                     @endforelse
 
-                                    <!-- Modal List Produk Booth -->
-                                    <div class="modal fade" id="listProductBooth{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="listProductBoothLabel" aria-hidden="true">
-                                        <!-- Modal content -->
-                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="listProductBoothLabel">Daftar Produk Booth</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body row">
-                                                    @foreach (json_decode($data->booth_image) as $key => $image)
-                                                        <div class="col-4 mb-4">
-                                                            <img src="{{ asset('storage/booth_images/'.$image) }}" class="img-fluid preview-image" alt="Image {{ $key + 1 }}">
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -418,7 +419,7 @@
                                     </div>
                                     @forelse($detailBooth as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="card card-primary">
+                                        <div class="card card-primary h-100">
                                                 <div class="d-flex justify-content-between card-header">
                                                     <h4>{{ $data->booth_code }}</h4>
                                                     @if ($data->availability_status == 'available')
@@ -435,10 +436,12 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
-                                                    @if(Auth::check())
-                                                        <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
-                                                    @else
-                                                        <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
+                                                    @if($data->availability_status == 'available')
+                                                        @if(Auth::check())
+                                                            <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
+                                                        @else
+                                                            <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </div>

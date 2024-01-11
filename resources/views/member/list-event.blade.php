@@ -46,7 +46,7 @@
                 </form>
                 <div class="row">
                     @forelse($dataEvent as $data)
-                        <div class="col-4">
+                        <div class="col-4 h-100">
                             <article class="article article-style-c">
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">

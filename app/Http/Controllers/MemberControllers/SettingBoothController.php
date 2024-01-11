@@ -17,11 +17,12 @@ class SettingBoothController extends Controller
     {
         $authId = auth()->user()->id;
 
-        $dataBooth = DB::table('detail_booth')
-            ->join('booth_rental', 'booth_rental.id', '=', 'detail_booth.id_booth_rental')
-            ->join('detail_event', 'detail_event.id', '=', 'booth_rental.id_event')
+        $dataBooth = DB::table('transaction')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->join('booth_rental', 'booth_rental.id', '=', 'transaction.id_booth_rental')
+            ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
+            ->where('transaction.transaction_status', '=', 'success')
             ->where('detail_booth.id_member', '=', $authId)
-            ->select('detail_event.*', 'booth_rental.*', 'detail_booth.*')
             ->get();
 
         return view ('member.detail.setting-booth', compact('dataBooth'), ['type_menu' => 'setting-booth']);

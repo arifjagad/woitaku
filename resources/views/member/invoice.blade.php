@@ -53,7 +53,7 @@
                         <div class="alert alert-info my-4">
                             <p class="text-center">Transfer ke rekening <strong>{{ $dataTransaction->account_holder_name }}</strong> <br>sebesar <strong>IDR. {{ number_format($dataTransaction->transaction_amout, 0, ',', '.') }}</strong></p>
                         </div>
-                    @elseif($dataTransaction->transaction_status == 'failed')
+                    @elseif($dataTransaction->transaction_status == 'expired')
                         <div class="alert alert-danger my-4">
                             <p class="text-center">Pembayaran gagal</p>
                         </div>

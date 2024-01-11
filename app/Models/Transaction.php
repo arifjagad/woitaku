@@ -23,5 +23,6 @@ class Transaction extends Model
         'transaction_amout',
         'transaction_status',
         'id_payment_methods',
+        'expiration_time'
     ];
 }
