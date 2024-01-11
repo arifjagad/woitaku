@@ -31,6 +31,12 @@ class DetailEventController extends Controller
             ->where('booth_rental.id_event', '=', $id)
             ->get();
 
+        $listBooth = DB::table('detail_event')
+            ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
+            ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
+            ->where('booth_rental.id_event', '=', $id)
+            ->get();
+
         $detailPaymentMethod = DB::table('detail_event')
             ->join('payment_methods', 'detail_event.id_eo', '=', 'payment_methods.id_eo')
             ->where('detail_event.id', '=', $id)
@@ -40,7 +46,7 @@ class DetailEventController extends Controller
         $end_date_event = Carbon::parse($detailEvent->end_date);
         $daysDifference = $end_date_event->diffInDays($start_date_event);
         
-        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'listBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
     }
     
     public function transactionTiket(Request $request){

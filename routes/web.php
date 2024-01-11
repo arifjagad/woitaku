@@ -119,6 +119,7 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::get('download-ticket-competition/{id}', [DownloadTicketController::class, 'downloadTicketCompetition'])->name('download-ticket-competition');
     Route::get('download-ticket-booth/{id}', [DownloadTicketController::class, 'downloadTicketBooth'])->name('download-ticket-booth');
     Route::get('setting-booth', [SettingBoothController::class, 'indexSettingBooth'])->name('setting-booth');
+    Route::put('update-detail-booth', [SettingBoothController::class, 'updateDetailBooth'])->name('update-detail-booth');
 
     // Transaksi
     Route::get('invoice/{id}', [InvoiceController::class, 'indexInvoice'])->name('invoice');
