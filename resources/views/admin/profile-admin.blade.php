@@ -9,11 +9,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Profile</h1>
+            <h1>Profil Admin</h1>
         </div>
         <h2 class="section-title">Hi, {{auth()->user()->name}}!</h2>
         <p class="section-lead">
-            Change information about yourself on this page.
+            Perbaharui semua data profil Anda disini.
         </p>
         @if (session('success'))
             <div id="success-alert" class="alert alert-success alert-dismissible show fade m">
@@ -37,13 +37,13 @@
                         @method('PUT')
                         <div>
                             <div class="card-header">
-                                <h4>Edit Profile</h4>
+                                <h4>Profil Admin</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
-                                            <label>Your Name</label>
+                                            <label>Nama</label>
                                             <input
                                                 id="name"
                                                 type="text"
@@ -58,7 +58,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>Your Email</label>
+                                            <label>Email</label>
                                             <input
                                                 id="email"
                                                 type="email"
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary">Update Admin</button>
+                                <button class="btn btn-primary">Perbaharui Admin</button>
                             </div>
                         </div>
                     </form>
@@ -95,13 +95,13 @@
                         @method('PUT')
                         <div>
                             <div class="card-header">
-                                <h4>Update Password</h4>
+                                <h4>Perbaharui Password</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
-                                            <label>Password</label>
+                                            <label>Password Baru</label>
                                             <input
                                                 id="password"
                                                 type="password"
@@ -115,7 +115,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>Password Confirmation</label>
+                                            <label>Konfirmasi Password</label>
                                             <input
                                                 id="password_confirmation"
                                                 type="password"
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary">Update Password</button>
+                                <button class="btn btn-primary">Perbaharui Password</button>
                             </div>
                         </div>
                     </form>

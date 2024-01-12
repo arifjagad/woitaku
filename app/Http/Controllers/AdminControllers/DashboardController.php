@@ -57,21 +57,25 @@ class DashboardController extends Controller
             ->whereNotIn('usertype', ['admin'])
             ->count();
 
-        // Hitung Transaksi
-        $monthlyData = DB::table('transaction')
-            ->selectRaw('MONTH(DATE_FORMAT(transaction_date, "%Y-%m-%d")) as month, SUM(transaction_amout) as total_amount')
-            ->where('payment_status', 'paid')
-            ->groupBy('month')
-            ->orderBy('month', 'ASC')
+        // Menghitung jumlah data per bulan dari tabel detail_event
+        $detailEventData = DB::table('detail_event')
+            ->select(DB::raw('MONTH(start_date) as month'), DB::raw('COUNT(*) as count'))
+            ->groupBy(DB::raw('MONTH(start_date)'))
+            ->where('detail_event.verification', '=', 'accepted')
             ->get();
 
-        // Latest Transaction
-        $latestTransactions = DB::table('transaction')
-            ->join('detail_member', 'transaction.id_member', '=', 'detail_member.id')
-            ->join('users', 'detail_member.id', '=', 'users.id')
-            ->join('detail_event', 'transaction.id_event', '=', 'detail_event.id')
-            ->latest('transaction.created_at')
-            ->take(4)
+        // Menghitung jumlah data per bulan dari tabel detail_competition
+        $detailCompetitionData = DB::table('detail_competition')
+            ->join('detail_event', 'detail_event.id', '=', 'detail_competition.id_event')
+            ->select(DB::raw('MONTH(detail_event.start_date) as month'), DB::raw('COUNT(*) as count'))
+            ->groupBy(DB::raw('MONTH(detail_event.start_date)'))
+            ->get();
+
+        // Menghitung jumlah data per bulan dari tabel booth_rental
+        $boothRentalData = DB::table('booth_rental')
+            ->join('detail_event', 'detail_event.id', '=', 'booth_rental.id_event')
+            ->select(DB::raw('MONTH(detail_event.start_date) as month'), DB::raw('COUNT(*) as count'))
+            ->groupBy(DB::raw('MONTH(detail_event.start_date)'))
             ->get();
 
         // Contoh: Mendapatkan total transaksi per bulan
@@ -82,8 +86,6 @@ class DashboardController extends Controller
                 'eventOrganizerCount', 
                 'eventsCount', 
                 'membersCount',
-                'latestTransactions',
-                'monthlyData',
                 'usersTodayCount',
                 'usersThisWeekCount',
                 'usersThisMonthCount',
@@ -91,7 +93,10 @@ class DashboardController extends Controller
                 'usersYesterdayCount',
                 'usersLastWeekCount',
                 'usersLastMonthCount',
-                'usersLastYearCount'
+                'usersLastYearCount',
+                'detailEventData',
+                'detailCompetitionData',
+                'boothRentalData'
             ),
             ['datas' => $datas], 
             ['type_menu' => 'dashboard'],

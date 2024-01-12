@@ -25,17 +25,14 @@
                                 class="rounded-circle profile-widget-picture">
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Created At</div>
+                                    <div class="profile-widget-item-label">Dibuat Pada</div>
                                     <div class="profile-widget-item-value">{{ \Carbon\Carbon::parse($dataProfile->first()->created_at)->format('d-m-Y') }}</div>
                                 </div>
                                 <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Events</div>
+                                    <div class="profile-widget-item-label">Jumlah Event</div>
                                     <div class="profile-widget-item-value">{{$eventCount}}</div>
                                 </div>
-                                <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Competitions</div>
-                                    <div class="profile-widget-item-value">{{$competitionCount}}</div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="profile-widget-description">
@@ -53,10 +50,10 @@
                     <div>
                         <div class="card">
                             <div class="card-header">
-                                <h4>List Events</h4>
+                                <h4>Daftar Event</h4>
                             </div>
                             <div class="card-footer text-right">
-                                <a href="{{route('event')}}" target="_blank" class="btn btn-primary">View All Events</a>
+                                <a href="{{route('event')}}" target="_blank" class="btn btn-primary">Lihat Semua Event</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -66,9 +63,8 @@
                                                 <th class="text-center">
                                                     #
                                                 </th>
-                                                <th>Event Name</th>
-                                                <th>Created At</th>
-                                                <th>Updated At</th>
+                                                <th>Nama Event</th>
+                                                <th>Dibuat Pada</th>
                                                 <th>Verification Status</th>
                                             </tr>
                                         </thead>
@@ -78,8 +74,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $id++ }}</td>
                                                     <td>{{ $data->event_name }}</td>
-                                                    <td>{{ $data->created_at }}</td>
-                                                    <td>{{ $data->updated_at }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
                                                     <td>
                                                         @php if ($data->verification == 'pending') {
                                                             echo '<span class="badge badge-warning">Pending</span>';
@@ -104,10 +99,10 @@
                     <div>
                         <div class="card">
                             <div class="card-header">
-                                <h4>List Competitions</h4>
+                                <h4>Daftar Perlombaan</h4>
                             </div>
                             <div class="card-footer text-right">
-                                <a href="{{route('competition')}}" target="_blank" class="btn btn-primary">View All Competitions</a>
+                                <a href="{{route('competition')}}" target="_blank" class="btn btn-primary">Lihat Semua Perlombaan</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -117,9 +112,8 @@
                                                 <th class="text-center">
                                                     #
                                                 </th>
-                                                <th>Competition Name</th>
-                                                <th>Event Name</th>
-                                                <th>Category</th>
+                                                <th>Nama Event</th>
+                                                <th>Nama Perlombaan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -127,9 +121,8 @@
                                             @foreach ($dataCompetition as $data)
                                                 <tr>
                                                     <td class="text-center">{{ $id++ }}</td>
-                                                    <td>{{ $data->competition_name }}</td>
                                                     <td>{{ $data->event_name }}</td>
-                                                    <td>{{ $data->competition_category }}</td>
+                                                    <td>{{ $data->competition_name }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

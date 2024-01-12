@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Events')
+@section('title', 'Event')
 
 @push('style')
 
@@ -15,11 +15,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Events</h1>
+            <h1>Daftar Event</h1>
         </div>
-        <h2 class="section-title">View All Existing Events Data!</h2>
+        <h2 class="section-title">Daftar Semua Event!</h2>
         <p class="section-lead">
-            You can view all Events here.
+            Anda dapat melihat semua event yang ada.
         </p>
         @if (session('success'))
             <div id="success-alert" class="alert alert-success alert-dismissible show fade m">
@@ -42,19 +42,18 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table  display nowrap" id="table-event">
+                                <table class="table-striped table display nowrap" id="table-event">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Event Name</th>
-                                            <th>Event Organizer</th>
-                                            <th>Event Category</th>
-                                            <th>Location</th>
-                                            <th>Document</th>
-                                            {{-- <th>Event Page</th> --}}
-                                            <th>Verification Status</th>
+                                            <th>Nama Event</th>
+                                            <th>Nama Event Organizer</th>
+                                            <th>Jenis Event</th>
+                                            <th>Kota</th>
+                                            <th>Dokumen</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -67,16 +66,13 @@
                                                 <td>{{ $data->name }}</td>
                                                 <td>
                                                     @if ($data->ticket_price = 0)
-                                                        Free
+                                                        Gratis
                                                     @else
-                                                        Paid
+                                                        Berbayar
                                                     @endif
                                                 </td>
                                                 <td>{{ $data->city }}</td>
                                                 <td><a href="{{ $data->document }}" target="_blank" class="btn btn-primary">View Document</a></td>
-                                                {{-- <td>
-                                                    <a href="#" class="btn btn-info">Preview</a>
-                                                </td> --}}
                                                 <td>
                                                     @php if ($data->verification == 'pending') {
                                                         echo '<span class="badge badge-warning">Pending</span>';
@@ -203,8 +199,6 @@
             $('#modal-review form').attr('action', href);
         });
     });
-    
-
 </script>
 
 
