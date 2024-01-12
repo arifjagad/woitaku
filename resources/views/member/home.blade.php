@@ -86,7 +86,7 @@
                 <h3 class="text-primary text-center">Temukan Semua Event Jejepangan di Sini bersama Woitaku!</h3>
                 <p class="text-center">Jelajahi keasyikan event jejepangan favoritmu. Temukan informasi lengkap, perbarui jadwal, dan nikmati kemudahan bertransaksi—semua dalam satu tempat, Woitaku!</p>
                 <div class="row py-3">
-                    @foreach ($dataEvent->take(3) as $data)
+                    @forelse ($dataEvent->take(3) as $data)
                         <div class="col-12 col-md-4 col-lg-4">
                             <article class="article article-style-c d-flex flex-column h-100">
                                 <div class="article-header">
@@ -125,7 +125,7 @@
                                             src="{{ asset('storage/' . $data->foto_profile) }}">
                                         <div class="article-user-details">
                                             <div class="user-detail-name">
-                                                <a href="#">{{ $data->name }}</a>
+                                                <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->name }}</a>
                                             </div>
                                             <div class="text-job">Verified</div>
                                         </div>
@@ -133,7 +133,14 @@
                                 </div>
                             </article>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="col-12">
+                            <div class="alert alert-danger text-center">
+                                <h4 class="alert-heading">Tidak ada event yang tersedia</h4>
+                                <p class="mb-0">Tidak ada event yang tersedia saat ini. Silahkan coba lagi nanti.</p>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
                 <div class="text-center">
                     <a href="{{ route('list-event') }}" target="_blank" class="btn btn-primary">Lihat semua event</a>
@@ -160,7 +167,7 @@
             </div>
         </div>
     </div>
-    <div class="container padding-main">
+    {{-- <div class="container padding-main">
         <div class="row py-4">
             <div class="col-12 text-center pb-5">
                 <h3 class="text-primary">Temukan Berita Terkini Seputar Jejepangan Hanya di Woitaku!</h3>
@@ -168,7 +175,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 

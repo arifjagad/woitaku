@@ -58,7 +58,7 @@
             </div> --}}
 
             <!-- Footer -->
-            @include('components.footer')
+            @include('components.footer-member')
         </div>
     </div>
 

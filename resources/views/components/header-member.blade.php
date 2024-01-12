@@ -20,18 +20,18 @@
             <li class="nav-item {{ Request::is('/') || Request::is('home') ? 'active' : '' }}">
                 <a href="{{ route('home') }}" class="nav-link">Beranda</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link"
                     href="#">Tentang</a>
-            </li>
+            </li> --}}
             <li class="nav-item {{ Request::is('list-event') ? 'active' : '' }}">
                 <a class="nav-link"
                     href="{{ route('list-event') }}">Event</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link"
                     href="#">Artikel</a>
-            </li>
+            </li> --}}
         </ul>
         <span class="navbar-text">
             @auth
