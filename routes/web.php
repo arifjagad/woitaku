@@ -28,6 +28,7 @@ use App\Http\Controllers\MemberControllers\ListEventController;
 use App\Http\Controllers\MemberControllers\HistoryTransactionController;
 use App\Http\Controllers\MemberControllers\DownloadTicketController;
 use App\Http\Controllers\MemberControllers\SettingBoothController;
+use App\Http\Controllers\MemberControllers\DetailEventOrganizerController;
 
 // Route untuk usertype Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -139,5 +140,5 @@ Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
-
+Route::get('{id}', [DetailEventOrganizerController::class, 'indexDetailEventOrganizer'])->name('detail-event-organizer');
 Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
