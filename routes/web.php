@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminControllers\DashboardController;
 use App\Http\Controllers\AdminControllers\TransactionController;
 use App\Http\Controllers\AdminControllers\AdminController;
 use App\Http\Controllers\AdminControllers\UserController;
+
 //Event Organizer
 use App\Http\Controllers\EventOrganizerControllers\DashboardController as DashboardController_EventOrganizer;
 use App\Http\Controllers\EventOrganizerControllers\ProfileEOController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\EventOrganizerControllers\EventEOController;
 use App\Http\Controllers\EventOrganizerControllers\PaymentMethodController;
 use App\Http\Controllers\EventOrganizerControllers\CompetitionEOController;
 use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
+use App\Http\Controllers\EventOrganizerControllers\TicketCheckController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -105,6 +107,11 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('edit-booth-eo/{id}', [BoothEOController::class, 'editBoothEO'])->name('edit-booth-eo');
     Route::put('update-booth-eo/{id}', [BoothEOController::class, 'updateBoothEO'])->name('update-booth-eo');
     Route::get('delete-booth-eo/{id}', [BoothEOController::class, 'deleteBoothEO'])->name('delete-booth-eo');
+
+    // Route:Ticket Check
+    Route::get('ticket-check', [TicketCheckController::class, 'indexTicketCheck'])->name('ticket-check');
+    Route::post('check-ticket', [TicketCheckController::class, 'checkTicket'])->name('ticket-check');
+    
 });
 
 // Route untuk usertype Member
