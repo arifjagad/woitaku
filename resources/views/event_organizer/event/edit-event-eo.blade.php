@@ -16,14 +16,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Update Event</h1>
+            <h1>Perbaharui Data Event</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4>Event Verification Status</h4>
+                        <h4>Penjelasan Status Verifikasi Event</h4>
                         <div class="text-sm float-right text-right">
                             @if ($data->verification == 'accepted')
                                 <span class="badge badge-success px-4">
@@ -92,7 +92,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Update Event</h4>
+                        <h4>Form Detail Event</h4>
                     </div>
                     <form
                         class="needs-validation"
@@ -106,7 +106,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-6">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <input
                                             id="event_name"
                                             type="text"
@@ -122,7 +122,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Event City</label>
+                                        <label>Kota Event</label>
                                         <select class="form-control select2" id="city" name="city">
                                             @foreach ($indonesiaCities as $city)
                                                 <option value="{{ $city }}" @if ($city == $data->city) selected @endif>{{ $city }}</option>
@@ -130,7 +130,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Event Adress</label>
+                                        <label>Alamat Event</label>
                                         <textarea class="form-control @error('event_address') is-invalid @enderror"
                                             name="event_address"
                                             id="event_address"
@@ -144,7 +144,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-12">
-                                        <label>Featured Image</label>
+                                        <label>Gambar Utama Event</label>
                                         <div class="custom-file">
                                             <input type="file"
                                                 name="featured_image"
@@ -162,7 +162,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-text text-muted">
-                                            The image must have a maximum size of 300kb
+                                            Gambar harus memiliki ukuran maksimal 300 KB.
                                             <span class="float-right">{{basename($data->featured_image)}}</span>
                                         </div>
                                     </div>
@@ -185,12 +185,12 @@
                                             @enderror
                                         </div>
                                         <div class="form-text text-muted">
-                                            The image must have a maximum size of 300kb
+                                            Gambar harus memiliki ukuran maksimal 300 KB.
                                             <span class="float-right">{{basename($data->booth_layout)}}</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Start Date</label>
+                                        <label>Tanggal Mulai Event</label>
                                         <input type="text"
                                             name="start_date"
                                             id="start_date"
@@ -205,7 +205,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>End Date</label>
+                                        <label>Tanggal Berakhir Event</label>
                                         <input type="text"
                                             name="end_date"
                                             id="end_date"
@@ -220,20 +220,20 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Description</label>
+                                        <label>Deskripsi Event (isi secara detail)</label>
                                         <textarea class="summernote"
                                             name="event_description"
                                             id="event_description"
                                             required>{{ $data->event_description }}</textarea>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Ticket Price</label>
+                                        <label>Harga Tiket Masuk</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan harga tiket jika kamu ingin membuat event berbayar">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -251,13 +251,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Ticket Qty</label>
+                                        <label>Jumlah Tiket</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan jumlah tiket jika kamu ingin membuat event berbayar">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <input
@@ -275,13 +275,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-12">
-                                        <label>Upload Dokumen</label>
+                                        <label>Dokumen Pendukung</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
-                                            title="Upload dokumen yang menyatakan bahwa kamu ingin menyelenggarakan event">
+                                            title="Berikan kami dokumen yang menyatakan bahwa kamu menyelenggarakan event ini secara legal dan sah">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <input
@@ -303,7 +303,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Update Event</button>
+                            <button class="btn btn-primary">Perbaharui Event</button>
                         </div>
                     </form>
                 </div>

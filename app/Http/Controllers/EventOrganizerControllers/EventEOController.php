@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\EventOrganizerControllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Models\DetailEvent;
 use DOMDocument;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use HTMLPurifier_Config;
 use HTMLPurifier;
+use Illuminate\Support\Carbon;
 
 class EventEOController extends Controller
 {
@@ -50,15 +49,16 @@ class EventEOController extends Controller
         try {
             // Validasi
             $request->validate([
-                'event_name' => 'required|string|max:50',
+                'event_name' => 'required|string|max:100',
                 'city' => 'required|string',
-                'event_address' => 'required|string',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
-                'ticket_price' => 'nullable',
-                'ticket_qty' => 'nullable',
+                'event_address' => 'required|string|max:150',
+                'start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'ticket_price' => 'nullable|9',
+                'ticket_qty' => 'nullable|9',
+                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
             ]);
             
             // Upload data dari summernote untuk deskripsi event
@@ -97,7 +97,7 @@ class EventEOController extends Controller
                 Storage::disk('public')->put($filePathFeaturedImage, File::get($file));
             }
 
-            // Upload featured image
+            // Upload booth layout
             if ($request->hasFile('booth_layout')) {
                 $file = $request->file('booth_layout');
                 $fileName = time() . '_' . $file->getClientOriginalName();
@@ -157,16 +157,16 @@ class EventEOController extends Controller
         try {
             // Validasi
             $request->validate([
-                'event_name' => 'required|string|max:50',
+                'event_name' => 'required|string|max:100',
                 'city' => 'required|string',
-                'event_address' => 'required|string',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
-                'ticket_price' => 'nullable',
-                'ticket_qty' => 'nullable',
-                'booth_layout' => 'nullable',
+                'event_address' => 'required|string|max:150',
+                'start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'ticket_price' => 'nullable|9',
+                'ticket_qty' => 'nullable|9',
+                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
             ]);
 
             // Upload data dari summernote untuk deskripsi event

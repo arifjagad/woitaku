@@ -1,6 +1,8 @@
 @extends('layouts.app') @section('title', 'Profile')
 
 @push('style')
+<link rel="stylesheet"
+        href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @section('main')
@@ -9,30 +11,19 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Profile Event Organizer</h1>
+            <h1>Profil Event Organizer</h1>
         </div>
         <h2 class="section-title">Hi, {{auth()->user()->name}}!</h2>
         <p class="section-lead">
-            Update your organizer information here.
+            Perbaharui semua data profil event organizer Anda disini.
         </p>
 
         <div class="section-body">
             <div class="row">
-                {{-- <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Guidebook</h4>
-                        </div>
-                        <div class="card-body">
-                            Isi Guide Book
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Organizer Profile</h4>
+                            <h4>Profil Event Organizer</h4>
                         </div>
                         <form
                             class="needs-validation"
@@ -46,7 +37,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
-                                            <label>Name Organizer</label>
+                                            <label>Nama Organizer</label>
                                             <input
                                                 id="name"
                                                 type="text"
@@ -78,7 +69,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-12">
-                                            <label>Description / About Organizer</label>
+                                            <label>Deskripsi / Tentang Organizer</label>
                                             <textarea class="form-control @error('description') is-invalid @enderror"
                                                 name="description"
                                                 id="description"
@@ -92,7 +83,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-12">
-                                            <label>Organizer Profile Picture</label>
+                                            <label>Foto Profile Organizer</label>
                                             <div class="custom-file">
                                                 <input type="file"
                                                     name="foto_profile"
@@ -110,12 +101,12 @@
                                                 @enderror
                                             </div>
                                             <div class="form-text text-muted">
-                                                The image must have a maximum size of 300kb 
+                                                Gambar harus memiliki ukuran maksimal 300 KB.
                                                 <span class="float-right">{{basename($data->foto_profile)}}</span>
                                             </div>
                                         </div>
                                         <div class="form-group col-12">
-                                            <label>Address</label>
+                                            <label>Alamat</label>
                                             <input
                                                 id="address"
                                                 type="text"
@@ -131,23 +122,15 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>City</label>
-                                            <input
-                                                id="city"
-                                                type="text"
-                                                class="form-control @error('address') is-invalid @enderror"
-                                                name="city"
-                                                value="{{$data->kota}}"
-                                                required>
-                                            <!-- Error Message -->
-                                            @error('city')
-                                            <div class="invalid-feedback">
-                                                {{$message}}
-                                            </div>
-                                            @enderror
+                                            <label>Kota</label>
+                                            <select class="form-control select2" id="city" name="city">
+                                                @foreach ($indonesiaCities as $city)
+                                                    <option value="{{ $city }}" @if ($city == $data->kota) selected @endif>{{ $city }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>WhatsApp Number (628xx)</label>
+                                            <label>Nomor Whatsapp (628xx)</label>
                                             <input
                                                 id="whatsappNumber"
                                                 type="text"
@@ -167,14 +150,14 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary">Update Profile</button>
+                                <button class="btn btn-primary">Perbaharui Profil</button>
                             </div>
                         </form>
                     </div>
 
                     <div class="card">
                         <div class="card-header">
-                            <h4>Update Password</h4>
+                            <h4>Perbaharui Password</h4>
                         </div>
                         <form
                             class="needs-validation"
@@ -187,7 +170,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="form-group col-6">
-                                            <label>New Password</label>
+                                            <label>Password Baru</label>
                                             <input
                                                 id="password"
                                                 type="password"
@@ -202,7 +185,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>Password Confirmation</label>
+                                            <label>Konfirmasi Password</label>
                                             <input
                                                 id="password_confirmation"
                                                 type="password"
@@ -214,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary">Update Password</button>
+                                <button class="btn btn-primary">Perbaharui Password</button>
                             </div>
                         </form>
                     </div>
@@ -225,6 +208,8 @@
 </div>
 @endsection @push('scripts')
 <!-- JS Libraies -->
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -1,4 +1,4 @@
-@extends('layouts.app') @section('title', 'Create Booth')
+@extends('layouts.app') @section('title', 'Update Booth')
 
 @push('style')
     <link rel="stylesheet"
@@ -12,14 +12,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new booth</h1>
+            <h1>Perbaharui Data Booth</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <ol class="list-group text-justify ml-2">
@@ -45,7 +45,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Booth</h4>
+                        <h4>Form Detail Booth</h4>
                     </div>
                     
                     <form
@@ -60,13 +60,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-12">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Pilih nama event yang ingin kamu tambahkan booth">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="event_name" name="event_name">
@@ -76,7 +76,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Code</label>
+                                        <label>Kode Booth</label>
                                         <input
                                             id="booth_code"
                                             type="text"
@@ -92,7 +92,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Size</label>
+                                        <label>Ukuran Booth</label>
                                         <input
                                             id="booth_size"
                                             type="text"
@@ -109,7 +109,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Price</label>
+                                        <label>Harga Sewa Booth</label>
                                         <input
                                             id="rental_price"
                                             type="text"
@@ -144,7 +144,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Update Booth</button>
+                            <button class="btn btn-primary">Perbaharui Booth</button>
                         </div>
                     </form>
                 </div>

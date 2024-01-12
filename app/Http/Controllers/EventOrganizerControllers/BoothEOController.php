@@ -7,9 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\BoothRental;
-use DOMDocument;
-use HTMLPurifier_Config;
-use HTMLPurifier;
 
 class BoothEOController extends Controller
 {
@@ -32,8 +29,12 @@ class BoothEOController extends Controller
             ->where('id_eo', '=', $userId)
             ->get();
 
-            
-        return view('event_organizer.booth.create-booth-eo', compact('dataEvent'), ['type_menu' => 'booth-eo']);
+        if($dataEvent->isEmpty()){
+            toast('You must create an event first!', 'error');
+            return redirect()->route('event-eo');
+        }else{
+            return view('event_organizer.booth.create-booth-eo', compact('dataEvent'), ['type_menu' => 'booth-eo']);
+        }
     }
 
     public function storeBoothEO(Request $request){
@@ -42,9 +43,9 @@ class BoothEOController extends Controller
         try {
             $this->validate($request, [
                 'event_name' => 'required',
-                'booth_code' => 'required',
-                'booth_size' => 'required',
-                'rental_price' => 'required',
+                'booth_code' => 'required|string|max:8',
+                'booth_size' => 'required|string|max:30',
+                'rental_price' => 'required|string|max:9',
                 'provided_facilities' => 'required',
             ]);
 

@@ -16,14 +16,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new competition</h1>
+            <h1>Tambah Perlombaan</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <ol class="list-group text-justify ml-2">
@@ -49,7 +49,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Competition</h4>
+                        <h4>Form Detail Perlombaan</h4>
                     </div>
                     <form
                         class="needs-validation"
@@ -62,13 +62,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-12">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Pilih nama event yang ingin kamu tambahkan competition">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="event_name" name="event_name">
@@ -78,12 +78,13 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Competition Name</label>
+                                        <label>Nama Perlombaan</label>
                                         <input
                                             id="competition_name"
                                             type="text"
                                             class="form-control @error('competition_name') is-invalid @enderror"
                                             name="competition_name"
+                                            value="{{ old('competition_name') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_name')
@@ -94,13 +95,13 @@
                                     </div>
                                     
                                     <div class="form-group col-lg-12">
-                                        <label>Competition Description</label>
+                                        <label>Deskripsi Perlombaan</label>
                                         <textarea
                                             class="summernote @error('competition_description') is-invalid @enderror"
                                             name="competition_description"
                                             id="competition_description"
                                             required>
-                                            
+                                            {{ old('competition_description') }}
                                         </textarea>
                                         <!-- Error Message -->
                                         @error('competition_description')
@@ -110,11 +111,12 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition Start Date</label>
+                                        <label>Tanggal Mulai Perlombaan</label>
                                         <input type="text"
                                             name="competition_start_date"
                                             id="competition_start_date"
                                             class="form-control datepicker @error('competition_start_date') is-invalid @enderror"
+                                            value="{{ old('competition_start_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_start_date')
@@ -124,11 +126,12 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition End Date</label>
+                                        <label>Tanggal Berakhir Perlombaan</label>
                                         <input type="text"
                                             name="competition_end_date"
                                             id="competition_end_date"
                                             class="form-control datepicker @error('competition_end_date') is-invalid @enderror"
+                                            value="{{ old('competition_end_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_end_date')
@@ -138,13 +141,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition Fee</label>
+                                        <label>Biaya Pendaftaran</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan harga tiket jika competition ini berbayar">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -152,6 +155,7 @@
                                             type="number"
                                             class="form-control @error('competition_fee') is-invalid @enderror"
                                             name="competition_fee"
+                                            value="{{ old('competition_fee') }}"
                                             >
                                         <!-- Error Message -->
                                         @error('competition_fee')
@@ -161,13 +165,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Participant Qty</label>
+                                        <label>Jumlah Peserta</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan maximal participant">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -175,6 +179,7 @@
                                             type="number"
                                             class="form-control @error('participant_qty') is-invalid @enderror"
                                             name="participant_qty"
+                                            value="{{ old('participant_qty') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('participant_qty')
@@ -187,7 +192,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Create Competition</button>
+                            <button class="btn btn-primary">Tambah Perlombaan</button>
                         </div>
                     </form>
                 </div>

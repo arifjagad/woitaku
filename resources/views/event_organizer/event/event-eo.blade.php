@@ -10,36 +10,32 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Your Event</h1>
+            <h1>Daftar Event</h1>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                
-            </div>
-        </div>
+        <h2 class="section-title">Daftar Semua Event</h2>
+        <p class="section-lead">
+            Anda dapat melihat semua event yang dibuat di sini.
+        </p>
         <div class="section-body">
             <!-- Pengecekan apakah ada data event atau tidak -->
             @if(count($data) > 0)
             <div class="card">
-                <div class="card-header">
-                    <h4>All Events You Have</h4>
-                    <div class="card-header-action">
-                        <a href="{{ route('create-event-eo') }}" class="btn btn-primary">Create New Event</a>
-                    </div>
+                <div class="card-footer text-right">
+                    <a href="{{ route('create-event-eo') }}" class="btn btn-primary">Tambah Event</a>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('event-eo') }}" method="GET" class="mb-4">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search events...">
+                            <input type="text" name="search" class="form-control" placeholder="Cari nama event...">
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="submit" class="btn btn-primary">Cari</button>
                             </div>
                         </div>
                     </form>
                     <div class="row">
                         @foreach ($data as $data)
                             <div class="col-12 col-md-4 col-lg-4">
-                                <article class="article article-style-c">
+                                <article class="article article-style-c h-100">
                                     <div class="article-header">
                                         <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                         </div>
@@ -93,12 +89,14 @@
                             <div class="empty-state-icon">
                                 <i class="fas fa-question"></i>
                             </div>
-                            <h2>We couldn't find any data</h2>
+                            <h2>
+                                Kami tidak dapat menemukan data apapun.
+                            </h2>
                             <p class="lead">
-                                Sorry, we couldn't find any events. To remove this message, please create at least one entry.
+                                Maaf, kami tidak dapat menemukan event apapun. Untuk menghilangkan pesan ini, harap buat setidaknya satu event.
                             </p>
                             <a href="{{ route('create-event-eo') }}"
-                                class="btn btn-primary mt-4">Create new event</a>
+                                class="btn btn-primary mt-4">Tambah Event</a>
                         </div>
                     </div>
                 </div>

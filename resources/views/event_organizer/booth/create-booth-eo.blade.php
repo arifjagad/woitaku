@@ -12,14 +12,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new booth</h1>
+            <h1>Tambah Booth</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <ol class="list-group text-justify ml-2">
@@ -45,7 +45,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Booth</h4>
+                        <h4>Form Detail Booth</h4>
                     </div>
                     
                     <form
@@ -59,13 +59,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-12">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Pilih nama event yang ingin kamu tambahkan booth">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="event_name" name="event_name">
@@ -75,12 +75,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Code</label>
+                                        <label>Kode Booth</label>
                                         <input
                                             id="booth_code"
                                             type="text"
                                             class="form-control @error('booth_code') is-invalid @enderror"
                                             name="booth_code"
+                                            value="{{ old('booth_code') }}"
+                                            placeholder="Contoh: AA-001"
                                             required>
                                         <!-- Error Message -->
                                         @error('booth_code')
@@ -90,13 +92,14 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Size</label>
+                                        <label>Ukuran Booth</label>
                                         <input
                                             id="booth_size"
                                             type="text"
                                             class="form-control @error('booth_size') is-invalid @enderror"
                                             name="booth_size"
                                             placeholder="Contoh: 3x3 meter"
+                                            value="{{ old('booth_size') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('booth_size')
@@ -106,12 +109,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Booth Price</label>
+                                        <label>Harga Sewa Booth</label>
                                         <input
                                             id="rental_price"
                                             type="text"
                                             class="form-control @error('rental_price') is-invalid @enderror"
                                             name="rental_price"
+                                            value="{{ old('rental_price') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('rental_price')
@@ -126,6 +130,7 @@
                                             class="summernote-simple @error('provided_facilities') is-invalid @enderror"
                                             name="provided_facilities"
                                             id="provided_facilities"
+                                            value="{{ old('provided_facilities') }}"
                                             required>
                                                 1. Gratis Tiket Masuk Untuk 3 Orang
                                         </textarea>
@@ -140,7 +145,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Create Booth</button>
+                            <button class="btn btn-primary">Tambah Booth</button>
                         </div>
                     </form>
                 </div>
