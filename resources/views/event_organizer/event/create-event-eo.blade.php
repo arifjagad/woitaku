@@ -10,29 +10,20 @@
         href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet"
         href="{{ asset('library/summernote/dist/summernote-bs4.css') }}">
-    <style>
-        .preview-image {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 6px;
-        }
-    </style>
 @endpush
 
 @section('main')
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new event</h1>
+            <h1>Tambah Event</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <ol class="list-group text-justify ml-2">
@@ -56,7 +47,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Event Verification Status</h4>
+                        <h4>Penjelasan Status Verifikasi Event</h4>
                     </div>
                     <div class="card-body">
                         <p class="text-sm text-justify">
@@ -75,7 +66,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Event</h4>
+                        <h4>Form Detail Event</h4>
                     </div>
                     <form
                         class="needs-validation"
@@ -88,7 +79,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-6">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <input
                                             id="event_name"
                                             type="text"
@@ -104,7 +95,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Event City</label>
+                                        <label>Kota Event</label>
                                         <select class="form-control select2" id="city" name="city">
                                             @foreach ($indonesiaCities as $city)
                                                 <option value="{{ $city }}">{{ $city }}</option>
@@ -112,7 +103,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Event Adress</label>
+                                        <label>Alamat Event</label>
                                         <textarea class="form-control @error('event_address') is-invalid @enderror"
                                             name="event_address"
                                             id="event_address"
@@ -126,7 +117,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-12">
-                                        <label>Featured Image</label>
+                                        <label>Gambar Utama Event</label>
                                         <div class="custom-file">
                                             <input type="file"
                                                 name="featured_image"
@@ -144,7 +135,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-text text-muted">
-                                            The image must have a maximum size of 300kb
+                                            Gambar harus memiliki ukuran maksimal 300 KB.
                                         </div>
                                     </div>
                                     <div class="form-group col-12">
@@ -154,7 +145,7 @@
                                             data-toggle="tooltip"
                                             title="Jika Anda memiliki denah booth, maka bisa diupload">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <div class="custom-file">
@@ -174,11 +165,11 @@
                                             @enderror
                                         </div>
                                         <div class="form-text text-muted">
-                                            The image must have a maximum size of 300kb
+                                            Gambar harus memiliki ukuran maksimal 300 KB.
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Start Date</label>
+                                        <label>Tanggal Mulai Event</label>
                                         <input type="text"
                                             name="start_date"
                                             id="start_date"
@@ -193,7 +184,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>End Date</label>
+                                        <label>Tanggal Berakhir Event</label>
                                         <input type="text"
                                             name="end_date"
                                             id="end_date"
@@ -208,20 +199,20 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Description</label>
+                                        <label>Deskripsi Event (isi secara detail)</label>
                                         <textarea class="summernote"
                                             name="event_description"
                                             id="event_description"
                                             required>{{ old('event_description') }}</textarea>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Ticket Price</label>
+                                        <label>Harga Tiket Masuk</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan harga tiket jika kamu ingin membuat event berbayar">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -239,13 +230,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Ticket Qty</label>
+                                        <label>Jumlah Tiket</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan jumlah tiket jika kamu ingin membuat event berbayar">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <input
@@ -263,13 +254,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-12">
-                                        <label>Upload Dokumen</label>
+                                        <label>Dokumen Pendukung</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
-                                            title="Upload dokumen yang menyatakan bahwa kamu ingin menyelenggarakan event">
+                                            title="Berikan kami dokumen yang menyatakan bahwa kamu menyelenggarakan event ini secara legal dan sah">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <input
@@ -291,7 +282,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Create Event</button>
+                            <button class="btn btn-primary">Tambah Event</button>
                         </div>
                     </form>
                 </div>

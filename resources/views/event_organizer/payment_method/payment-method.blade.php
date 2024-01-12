@@ -9,13 +9,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Payment Method</h1>
+            <h1>Metode Pembayaran</h1>
         </div>
-        <h2 class="section-title">Explore the List of Payment Methods!</h2>
+        <h2 class="section-title">Daftar Semua Metode Pembayaran</h2>
         <p class="section-lead">
-            You can view all provided payment methods here.
+            Anda dapat melihat semua metode pembayaran yang dibuat di sini.
         </p>
-        
         <div class="section-body">
             <div class="card">
                 {{-- <div class="card-header">
@@ -25,7 +24,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href=" {{ route('create-payment-method') }} " class="btn btn-primary">Create New Payment Method</a>
+                            <a href=" {{ route('create-payment-method') }} " class="btn btn-primary">Tambah Metode Pembayaran</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,9 +34,9 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Bank Name</th>
-                                            <th>Account Number</th>
-                                            <th>Account Holder Name</th>
+                                            <th>Nama Bank</th>
+                                            <th>Nomor Rekening</th>
+                                            <th>Nama Pemilik Kartu</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>

@@ -16,14 +16,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create a new competition</h1>
+            <h1>Tambah Perlombaan</h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Guidebook</h4>
+                        <h4>Panduan</h4>
                     </div>
                     <div class="card-body">
                         <ol class="list-group text-justify ml-2">
@@ -49,7 +49,7 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Competition</h4>
+                        <h4>Form Detail Perlombaan</h4>
                     </div>
                     <form
                         class="needs-validation"
@@ -62,13 +62,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-12">
-                                        <label>Event Name</label>
+                                        <label>Nama Event</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Pilih nama event yang ingin kamu tambahkan competition">
                                             <label>
-                                                <i class="fa-solid fa-circle-info"></i> Infomation
+                                                <i class="fa-solid fa-circle-info"></i> Informasi
                                             </label>
                                         </div>
                                         <select class="form-control select2" id="event_name" name="event_name">
@@ -78,7 +78,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <label>Competition Name</label>
+                                        <label>Nama Perlombaan</label>
                                         <input
                                             id="competition_name"
                                             type="text"
@@ -95,7 +95,7 @@
                                     </div>
                                     
                                     <div class="form-group col-lg-12">
-                                        <label>Competition Description</label>
+                                        <label>Deskripsi Perlombaan</label>
                                         <textarea
                                             class="summernote @error('competition_description') is-invalid @enderror"
                                             name="competition_description"
@@ -111,7 +111,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition Start Date</label>
+                                        <label>Tanggal Mulai Perlombaan</label>
                                         <input type="text"
                                             name="competition_start_date"
                                             id="competition_start_date"
@@ -126,7 +126,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition End Date</label>
+                                        <label>Tanggal Berakhir Perlombaan</label>
                                         <input type="text"
                                             name="competition_end_date"
                                             id="competition_end_date"
@@ -141,13 +141,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Competition Fee</label>
+                                        <label>Biaya Pendaftaran</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan harga tiket jika competition ini berbayar">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -165,13 +165,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label>Participant Qty</label>
+                                        <label>Jumlah Peserta</label>
                                         <div 
                                             class="float-right"
                                             data-toggle="tooltip"
                                             title="Masukkan maximal participant">
                                                 <label>
-                                                    <i class="fa-solid fa-circle-info"></i> Infomation
+                                                    <i class="fa-solid fa-circle-info"></i> Informasi
                                                 </label>
                                         </div>
                                         <input
@@ -192,7 +192,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Create Competition</button>
+                            <button class="btn btn-primary">Tambah Perlombaan</button>
                         </div>
                     </form>
                 </div>

@@ -9,7 +9,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Update Payment Method</h1>
+            <h1>Perbaharui Metode Pembayaran</h1>
         </div>
         
         <div class="section-body">
@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="form-group col-lg-4">
-                                        <label>Bank Name</label>
+                                        <label>Nama Bank</label>
                                         <input
                                             id="bank_name"
                                             type="text"
@@ -38,7 +38,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Account Number</label>
+                                        <label>Nomor Rekening</label>
                                         <input
                                             id="account_number"
                                             type="text"
@@ -54,7 +54,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-4">
-                                        <label>Account Holder Name</label>
+                                        <label>Nama Pemilik Kartu</label>
                                         <input
                                             id="account_holder_name"
                                             type="text"
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Update Payment Method</button>
+                            <button class="btn btn-primary">Perbaharui Metode Pembayaran</button>
                         </div>
                     </form>
                 </div>

@@ -9,11 +9,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Competition</h1>
+            <h1>Daftar Perlombaan</h1>
         </div>
-        <h2 class="section-title">Explore the List of Competitions!</h2>
+        <h2 class="section-title">Daftar Semua Perlombaan</h2>
         <p class="section-lead">
-            You can view all provided Competitions here.
+            Anda dapat melihat semua perlombaan yang dibuat di sini.
         </p>
         
         <div class="section-body">
@@ -25,7 +25,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href=" {{ route('create-competition-eo') }} " class="btn btn-primary">Create New Competition</a>
+                            <a href=" {{ route('create-competition-eo') }} " class="btn btn-primary">Tambah Perlombaan</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,10 +35,10 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Competition Name</th>
-                                            <th>Event Name</th>
-                                            <th>Competition Start Date</th>
-                                            <th>Competition Fee</th>
+                                            <th>Nama Event</th>
+                                            <th>Nama Perlombaan</th>
+                                            <th>Tanggal Mulai Perlombaan</th>
+                                            <th>Biaya Pendaftaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -49,8 +49,8 @@
                                             <td class="text-center">
                                                 {{ $id++ }}
                                             </td>
-                                            <td>{{ $data->competition_name }}</td>
                                             <td>{{ $data->event_name }}</td>
+                                            <td>{{ $data->competition_name }}</td>
                                             <td>{{ $data->competition_start_date }}</td>
                                             <td>
                                                 @if ($data->competition_fee == 0)

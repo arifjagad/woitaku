@@ -9,11 +9,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Booth</h1>
+            <h1>Daftar Booth</h1>
         </div>
-        <h2 class="section-title">Explore the List of Booth!</h2>
+        <h2 class="section-title">Daftar Semua Booth!</h2>
         <p class="section-lead">
-            You can view all provided Booth here.
+            Anda dapat melihat semua booth yang dibuat di sini.
         </p>
         
         <div class="section-body">
@@ -25,7 +25,7 @@
                     <form class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="card-footer text-right">
-                            <a href=" {{ route('create-booth-eo') }} " class="btn btn-primary">Create New Booth</a>
+                            <a href=" {{ route('create-booth-eo') }} " class="btn btn-primary">Tambah Booth</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,10 +35,10 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Booth Name</th>
-                                            <th>Event Name</th>
-                                            <th>Rental Price</th>
-                                            <th>Availability Status</th>
+                                            <th>Nama Booth</th>
+                                            <th>Nama Event</th>
+                                            <th>Harga Sewa</th>
+                                            <th>Status Booth</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
