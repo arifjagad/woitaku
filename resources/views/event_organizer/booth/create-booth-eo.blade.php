@@ -81,6 +81,8 @@
                                             type="text"
                                             class="form-control @error('booth_code') is-invalid @enderror"
                                             name="booth_code"
+                                            value="{{ old('booth_code') }}"
+                                            placeholder="Contoh: AA-001"
                                             required>
                                         <!-- Error Message -->
                                         @error('booth_code')
@@ -97,6 +99,7 @@
                                             class="form-control @error('booth_size') is-invalid @enderror"
                                             name="booth_size"
                                             placeholder="Contoh: 3x3 meter"
+                                            value="{{ old('booth_size') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('booth_size')
@@ -112,6 +115,7 @@
                                             type="text"
                                             class="form-control @error('rental_price') is-invalid @enderror"
                                             name="rental_price"
+                                            value="{{ old('rental_price') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('rental_price')
@@ -126,6 +130,7 @@
                                             class="summernote-simple @error('provided_facilities') is-invalid @enderror"
                                             name="provided_facilities"
                                             id="provided_facilities"
+                                            value="{{ old('provided_facilities') }}"
                                             required>
                                                 1. Gratis Tiket Masuk Untuk 3 Orang
                                         </textarea>

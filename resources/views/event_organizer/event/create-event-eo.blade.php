@@ -10,6 +10,15 @@
         href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet"
         href="{{ asset('library/summernote/dist/summernote-bs4.css') }}">
+    <style>
+        .preview-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 6px;
+        }
+    </style>
 @endpush
 
 @section('main')
@@ -85,6 +94,7 @@
                                             type="text"
                                             class="form-control @error('event_name') is-invalid @enderror"
                                             name="event_name"
+                                            value="{{ old('event_name') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('event_name')
@@ -107,7 +117,7 @@
                                             name="event_address"
                                             id="event_address"
                                             data-height="60"
-                                            required></textarea>
+                                            required>{{ old('event_address') }}</textarea>
                                         <!-- Error Message -->
                                         @error('event_address')
                                         <div class="invalid-feedback">
@@ -173,12 +183,13 @@
                                             name="start_date"
                                             id="start_date"
                                             class="form-control datepicker @error('start_date') is-invalid @enderror"
+                                            value="{{ old('start_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('start_date')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
                                         @enderror
                                     </div>
                                     <div class="form-group col-lg-6">
@@ -187,6 +198,7 @@
                                             name="end_date"
                                             id="end_date"
                                             class="form-control datepicker @error('end_date') is-invalid @enderror"
+                                            value="{{ old('end_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('end_date')
@@ -200,7 +212,7 @@
                                         <textarea class="summernote"
                                             name="event_description"
                                             id="event_description"
-                                            required></textarea>
+                                            required>{{ old('event_description') }}</textarea>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>Ticket Price</label>
@@ -217,6 +229,7 @@
                                             type="number"
                                             class="form-control @error('ticket_price') is-invalid @enderror"
                                             name="ticket_price"
+                                            value="{{ old('ticket_price') }}"
                                             >
                                         <!-- Error Message -->
                                         @error('ticket_price')
@@ -240,6 +253,7 @@
                                             type="number"
                                             class="form-control @error('ticket_qty') is-invalid @enderror"
                                             name="ticket_qty"
+                                            value="{{ old('ticket_qty') }}"
                                             >
                                         <!-- Error Message -->
                                         @error('ticket_qty')
@@ -264,6 +278,7 @@
                                             class="form-control @error('document') is-invalid @enderror"
                                             name="document"
                                             placeholder="Kirim link dokumen kamu disini"
+                                            value="{{ old('document') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('document')

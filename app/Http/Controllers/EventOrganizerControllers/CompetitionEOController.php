@@ -5,13 +5,13 @@ namespace App\Http\Controllers\EventOrganizerControllers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\DetailCompetition;
-use App\Models\CompetitionCategory;
 use Illuminate\Http\Request;
 use DOMDocument;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailEvent;
 use HTMLPurifier_Config;
 use HTMLPurifier;
+use Illuminate\Support\Carbon;
 
 class CompetitionEOController extends Controller
 {
@@ -46,12 +46,12 @@ class CompetitionEOController extends Controller
             
         try {
             $this->validate($request, [
-                'competition_name' => 'required|max:50',
+                'competition_name' => 'required|max:100',
                 'competition_description' => 'required',
-                'competition_start_date' => 'required',
-                'competition_end_date' => 'required',
-                'competition_fee' => 'required',
-                'participant_qty' => 'required',
+                'competition_start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                'competition_end_date' => 'required|date|after_or_equal:competition_start_date',
+                'competition_fee' => 'max:9',
+                'participant_qty' => 'max:9',
                 'event_name' => 'required',
             ]);
 
@@ -133,12 +133,12 @@ class CompetitionEOController extends Controller
             
         try {
             $this->validate($request, [
-                'competition_name' => 'required|max:50',
+                'competition_name' => 'required|max:100',
                 'competition_description' => 'required',
-                'competition_start_date' => 'required',
-                'competition_end_date' => 'required',
-                'competition_fee' => 'required',
-                'participant_qty' => 'required',
+                'competition_start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                'competition_end_date' => 'required|date|after_or_equal:competition_start_date',
+                'competition_fee' => 'nullable|max:9',
+                'participant_qty' => 'required|max:9',
                 'event_name' => 'required',
             ]);
 

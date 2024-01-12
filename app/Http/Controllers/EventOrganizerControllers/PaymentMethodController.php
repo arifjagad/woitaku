@@ -30,16 +30,27 @@ class PaymentMethodController extends Controller
             return redirect()->route('create-payment-method');
         }
 
-        $data = PaymentMethods::create([
-            'id_eo' => $userId,
-            'bank_name' => request('bank_name'),
-            'account_number' => request('account_number'),
-            'account_holder_name' => request('account_holder_name'),
-            'status' => 1
-        ]);
+        try {
+            $this->validate($request, [
+                'bank_name' => 'required|max:100',
+                'account_number' => 'required|max:100',
+                'account_holder_name' => 'required|max:100',
+            ]);
 
-        toast('Payment Method Created!','success');
-        return redirect()->route('payment-method', compact('data'));
+            $data = PaymentMethods::create([
+                'id_eo' => $userId,
+                'bank_name' => request('bank_name'),
+                'account_number' => request('account_number'),
+                'account_holder_name' => request('account_holder_name'),
+                'status' => 1
+            ]);
+
+            toast('Payment Method Created!','success');
+            return redirect()->route('payment-method', compact('data'));
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            toast('Validation Failed!', 'error');
+            return redirect()->back()->withErrors($e->errors())->withInput($request->all());
+        }
     }
 
     public function editPaymentMethodEO($id){
@@ -48,24 +59,32 @@ class PaymentMethodController extends Controller
         return view('event_organizer.payment_method.edit-payment-method', ['type_menu' => 'payment-method'], compact('data'));
     }
 
-    public function updatePaymentMethodEO($id){
+    public function updatePaymentMethodEO(Request $request, $id){
+        try {
+            $this->validate($request, [
+                'bank_name' => 'required|max:100',
+                'account_number' => 'required|max:100',
+                'account_holder_name' => 'required|max:100',
+            ]);
 
-        $data = PaymentMethods::find($id);
-        $data->bank_name = request('bank_name');
-        $data->account_number = request('account_number');
-        $data->account_holder_name = request('account_holder_name');
-        $data->save();
+            $data = PaymentMethods::find($id);
+            $data->bank_name = request('bank_name');
+            $data->account_number = request('account_number');
+            $data->account_holder_name = request('account_holder_name');
+            $data->save();
 
-        toast('Payment Method Updated!','success');
+            toast('Payment Method Updated!','success');
         return redirect()->route('payment-method');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            toast('Validation Failed!', 'error');
+            return redirect()->back()->withErrors($e->errors())->withInput($request->all());
+        }
     }
 
     public function updateStatusPaymentMethodEO(Request $request){
-
         $data = PaymentMethods::find($request->id);
         $data->status = $request->status;
         $data->save();
-
 
         toast('Payment Method Updated!','success');
         return redirect()->route('payment-method');

@@ -84,6 +84,7 @@
                                             type="text"
                                             class="form-control @error('competition_name') is-invalid @enderror"
                                             name="competition_name"
+                                            value="{{ old('competition_name') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_name')
@@ -100,7 +101,7 @@
                                             name="competition_description"
                                             id="competition_description"
                                             required>
-                                            
+                                            {{ old('competition_description') }}
                                         </textarea>
                                         <!-- Error Message -->
                                         @error('competition_description')
@@ -115,6 +116,7 @@
                                             name="competition_start_date"
                                             id="competition_start_date"
                                             class="form-control datepicker @error('competition_start_date') is-invalid @enderror"
+                                            value="{{ old('competition_start_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_start_date')
@@ -129,6 +131,7 @@
                                             name="competition_end_date"
                                             id="competition_end_date"
                                             class="form-control datepicker @error('competition_end_date') is-invalid @enderror"
+                                            value="{{ old('competition_end_date') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('competition_end_date')
@@ -152,6 +155,7 @@
                                             type="number"
                                             class="form-control @error('competition_fee') is-invalid @enderror"
                                             name="competition_fee"
+                                            value="{{ old('competition_fee') }}"
                                             >
                                         <!-- Error Message -->
                                         @error('competition_fee')
@@ -175,6 +179,7 @@
                                             type="number"
                                             class="form-control @error('participant_qty') is-invalid @enderror"
                                             name="participant_qty"
+                                            value="{{ old('participant_qty') }}"
                                             required>
                                         <!-- Error Message -->
                                         @error('participant_qty')

@@ -25,13 +25,13 @@ class ProfileEOController extends Controller
         try {
             // Validasi
             $request->validate([
-                'name' => 'required|string|max:30',
-                'email' => 'required|email|max:50',
-                'description' => 'nullable|string',
-                'address' => 'nullable|string',
-                'city' => 'nullable|string',
-                'whatsappNumber' => ['nullable', 'string', 'min:10', 'regex:/^628[0-9]+$/'],
-                'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:3000',
+                'name' => 'required|string|max:100',
+                'email' => 'required|email|max:100',
+                'description' => 'required|string',
+                'address' => 'required|string|max:150',
+                'city' => 'required|string',
+                'whatsappNumber' => ['required', 'string', 'min:9', 'max:15', 'regex:/^628[0-9]+$/'],
+                'foto_profile' => 'required|image|mimes:jpeg,png,jpg|max:3000',
             ]);
     
             DB::beginTransaction();
@@ -81,7 +81,7 @@ class ProfileEOController extends Controller
     public function updatePasswordEO(Request $request, $id){
         // Validasi
         $request->validate([
-            'password' => 'required|string|min:8|max:30',
+            'password' => 'required|string|min:8|max:100',
         ]);
 
         $data = User::find(auth()->user()->id);
