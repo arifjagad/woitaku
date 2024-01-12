@@ -9,14 +9,14 @@
 @section('main')
     <div class="card card-primary">
         <div class="card-header">
-            <h4>Verify Account</h4>
+            <h4>Verifikasi Akun</h4>
         </div>
 
         <div class="card-body">
 
             @if (session('status') == 'verification-link-sent')
                 <div class="mb-4 font-medium text-sm text-green-600">
-                    A new email verification link has been emailed to you!
+                    Kami telah mengirimkan verifikasi email baru ke inbox Anda!
                 </div>
             @endif
             
@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        Resend Verification Email
+                        Kirim Ulang Email Verifikasi
                     </button>
                 </div>
             </form>
