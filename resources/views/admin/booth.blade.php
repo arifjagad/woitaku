@@ -11,15 +11,14 @@
 
 @section('main')
 
-
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Booth</h1>
+            <h1>Daftar Booth</h1>
         </div>
-        <h2 class="section-title">View All Existing Booth Data!</h2>
+        <h2 class="section-title">Daftar Semua Booth</h2>
         <p class="section-lead">
-            You can view all Booth here.
+            Anda dapat melihat semua booth yang ada.
         </p>
         <div class="section-body">
             <div class="card">
@@ -35,41 +34,30 @@
                                         <th class="text-center">
                                             #
                                         </th>
-                                        <th>Booth Name</th>
-                                        <th>Event Name</th>
+                                        <th>Nama Event</th>
+                                        <th>Kode Booth</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $id = 1; @endphp
-                                    @foreach($datas as $data)
+                                    @foreach($datas as $key => $data)
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $id++ }}
                                         </td>
-                                        <td>{{ $data->booth_code }}</td>
                                         <td>{{ $data->event_name }}</td>
+                                        <td>{{ $data->booth_code }}</td>
                                         <td>
-                                            @php if ($data->availability_status == 'available') {
-                                                echo '<span class="badge badge-success">Available</span>';
-                                            }else {
-                                                echo '<span class="badge badge-danger">Booked</span>';
-                                            } @endphp
+                                            @if($data->availability_status == 'available')
+                                                <span class="badge badge-success">Tersedia</span>
+                                            @else
+                                                <span class="badge badge-danger">Tidak Tersedia</span>
+                                            @endif
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary" 
-                                                onclick="showDetailsModal(
-                                                    '{{ $data->booth_code }}',
-                                                    '{{ $data->event_name }}',
-                                                    '{{ $data->booth_size }}',
-                                                    '{{ $data->provided_facilities }}',
-                                                    '{{ addslashes(htmlspecialchars($data->terms_and_conditions)) }}',
-                                                    '{{ number_format($data->rental_price, 0, ',', '.') }}',
-                                                    '{{ $data->availability_status}}',
-                                                )">
-                                                Detail
-                                            </button>
+                                            <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailBooth{{ $key }}">Detail</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -86,66 +74,64 @@
     </section>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Booth Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                <table class="table-striped table">
-                    <tr>
-                        <td>Booth Name</td>
-                        <td>:</td>
-                        <td id="boothCode"></td>
-                    </tr>
-                    <tr>
-                        <td>Event Name</td>
-                        <td>:</td>
-                        <td id="eventName"></td>
-                    </tr>
-                    <tr>
-                        <td>Booth Size</td>
-                        <td>:</td>
-                        <td id="boothSize"></td>
-                    </tr>
-                    <tr>
-                        <td>Provided Facilities</td>
-                        <td>:</td>
-                        <td id="providedFacilities"></td>
-                    </tr>
-                    <tr>
-                        <td>Terms and Condition</td>
-                        <td>:</td>
-                        <td id="termsAndCondition"></td>
-                    </tr>
-                    <tr>
-                        <td>Rental Price</td>
-                        <td>:</td>
-                        <td id="rentalPrice"></td>
-                    </tr>
-                    <tr>
-                        <td>Availability Status</td>
-                        <td>:</td>
-                        <td id="availabilityStatus">
-                        </td>
-                    </tr>
-                    
-                </table>
+@foreach ($datas as $key => $data)
+    <!-- Modal Detail Booth -->
+    <div class="modal fade" id="detailBooth{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailBoothLabel" aria-hidden="true">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailBoothLabel">Detail Booth</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <h5 id="competitionName"></h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td class="col-5">Nama Event</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->event_name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Kode Booth</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->booth_code }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Ukuran Booth</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->booth_size }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Biaya Sewa Booth</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->rental_price }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Fasilitas Booth</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->provided_facilities }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Status</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">
+                                    @if($data->availability_status == 'available')
+                                        <span class="badge badge-success">Tersedia</span>
+                                    @else
+                                        <span class="badge badge-danger">Tidak Tersedia</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach
 
 
 
@@ -155,34 +141,5 @@
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-
-<!-- Show Modal -->
-<script>
-    function showDetailsModal(
-        boothCode, 
-        eventName, 
-        boothSize, 
-        providedFacilities,
-        termsAndCondition,
-        rentalPrice,
-        availabilityStatus
-    ) {
-        $('#boothCode').text(boothCode);
-        $('#eventName').text(eventName);
-        $('#boothSize').text(boothSize);
-        $('#providedFacilities').text(providedFacilities);
-        $('#termsAndCondition').text(termsAndCondition);
-        var rentalPriceFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(rentalPrice);
-        $('#rentalPrice').text(rentalPriceFormatted);
-        $('#availabilityStatus').text(availabilityStatus);
-        $('#detailsModal').modal('show');
-    }
-
-    if (availabilityStatus == 'available') {
-        $('#availabilityStatus').text('<span class="badge badge-success">Available</span>');
-    }else {
-        $('#availabilityStatus').text('<span class="badge badge-danger">Booked</span>');
-    }
-</script>
 
 @endpush

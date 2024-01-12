@@ -13,12 +13,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Event Organizer</h1>
+            <h1>Daftar Event Organizer</h1>
         </div>
 
-        <h2 class="section-title">View All Existing Event Organizer Data!</h2>
+        <h2 class="section-title">Daftar Semua Event Organizer</h2>
             <p class="section-lead">
-                You can view all Event Organizer here.
+                Anda dapat melihat semua event organizer yang ada.
             </p>
 
             @if (session('success'))
@@ -48,12 +48,12 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Event Organizer Name</th>
+                                            <th>Event Organizer</th>
                                             <th>Email</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>WhatsApp Number</th>
-                                            <th>Created At</th>
+                                            <th>Alamat</th>
+                                            <th>Kota</th>
+                                            <th>Nomor Whatsapp</th>
+                                            <th>Dibuat Pada</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

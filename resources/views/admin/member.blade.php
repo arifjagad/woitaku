@@ -13,12 +13,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Member</h1>
+            <h1>Daftar Member</h1>
         </div>
 
-        <h2 class="section-title">View All Existing Member Data!</h2>
+        <h2 class="section-title">Daftar Semua Member</h2>
             <p class="section-lead">
-                You can view all Member here.
+                Anda dapat melihat semua member yang ada.
             </p>
 
             @if (session('success'))
@@ -48,12 +48,11 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Name</th>
+                                            <th>Nama</th>
                                             <th>Email</th>
-                                            <th>Foto Profile</th>
                                             <th>Kota</th>
                                             <th>Nomor Whatsapp</th>
-                                            <th>Created At</th>
+                                            <th>Dibuat Pada</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,13 +62,11 @@
                                                 <td class="text-center">{{ $id++ }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->email }}</td>
-                                                <td>{{ $data->foto_profile }}</td>
                                                 <td>{{ $data->kota }}</td>
                                                 <td>{{ $data->nomor_whatsapp }}</td>
                                                 <td>{{ $data->created_at }}</td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             </div>

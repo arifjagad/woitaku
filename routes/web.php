@@ -7,7 +7,6 @@ use App\Http\Controllers\AdminControllers\EventController;
 use App\Http\Controllers\AdminControllers\CompetitionController;
 use App\Http\Controllers\AdminControllers\BoothController;
 use App\Http\Controllers\AdminControllers\DashboardController;
-use App\Http\Controllers\AdminControllers\TransactionController;
 use App\Http\Controllers\AdminControllers\AdminController;
 use App\Http\Controllers\AdminControllers\UserController;
 
@@ -61,8 +60,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     // Route:Booth
     Route::get('booth', [BoothController::class, 'indexBooth'])->name('booth');
 
-    // Route:Transaction
-    Route::get('transaction', [TransactionController::class, 'indexTransaction'])->name('transaction');
 });
 
 // Route untuk usertype Event Organizer

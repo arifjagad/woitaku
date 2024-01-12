@@ -13,43 +13,39 @@
                 <li class="nav-item dropdown {{ Request::is('member') || Request::is('event-organizer') ? 'active' : '' }}">
                     <a href="#"
                         class="nav-link has-dropdown"
-                        data-toggle="dropdown"><i class="fa-solid fa-users-gear"></i> <span>Members</span></a>
+                        data-toggle="dropdown"><i class="fa-solid fa-users-gear"></i> <span>Pengguna</span></a>
                     <ul class="dropdown-menu">
                         <li class="{{ Request::is('member') ? 'active' : '' }}">
-                            <a href="{{ route('member') }}">List Users</a>
+                            <a href="{{ route('member') }}">Daftar Member</a>
                         </li>
                         <li class="{{ Request::is('event-organizer') ? 'active' : '' }}">
                             <a class="nav-link"
-                                href="{{ url('event-organizer') }}">List Event Organizers</a>
+                                href="{{ url('event-organizer') }}">Daftar Event Organizers</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown {{ Request::is('event') || Request::is('competition') || Request::is('booth') ? 'active' : '' }}">
                     <a href="#"
                         class="nav-link has-dropdown"
-                        data-toggle="dropdown"><i class="fa-solid fa-calendar-days"></i> <span>Activities</span></a>
+                        data-toggle="dropdown"><i class="fa-solid fa-calendar-days"></i> <span>Managemen</span></a>
                     <ul class="dropdown-menu">
                         <li class="{{ Request::is('event') ? 'active' : '' }}">
-                            <a href="{{ route('event') }}">List Events</a>
+                            <a href="{{ route('event') }}">Daftar Event</a>
                         </li>
                         <li class="{{ Request::is('competition') ? 'active' : '' }}">
                             <a class="nav-link"
-                                href="{{ url('competition') }}">List Competitions</a>
+                                href="{{ url('competition') }}">Daftar Perlombaan</a>
                         </li>
                         <li class="{{ Request::is('booth') ? 'active' : '' }}">
                             <a class="nav-link"
-                                href="{{ url('booth') }}">List Booth</a>
+                                href="{{ url('booth') }}">Daftar Booth</a>
                         </li>
                     </ul>
                 </li>
-                <li class="{{ Request::is('transaction') ? 'active' : '' }}">
-                    <a class="nav-link"
-                        href="{{ url('transaction') }}"><i class="fa-solid fa-file-invoice-dollar"></i> <span>Transaction</span></a>
-                </li>
-                <li class="menu-header">Settings</li>
+                <li class="menu-header">Pengaturan Tambahan</li>
                 <li class="{{ Request::is('list-admin') ? 'active' : '' }}">
                     <a class="nav-link"
-                        href="{{ url('list-admin') }}"><i class="fa-solid fa-user"></i> <span>List Admin</span></a>
+                        href="{{ url('list-admin') }}"><i class="fa-solid fa-user"></i> <span>Daftar Admin</span></a>
                 </li>
             </ul>
         </aside>

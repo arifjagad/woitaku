@@ -15,11 +15,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Competitions</h1>
+            <h1>Daftar Perlombaan</h1>
         </div>
-        <h2 class="section-title">View All Existing Competitions Data!</h2>
+        <h2 class="section-title">Daftar Semua Perlombaan!</h2>
         <p class="section-lead">
-            You can view all Competitions here.
+            Anda dapat melihat semua perlombaan yang ada.
         </p>
         <div class="section-body">
             <div class="card">
@@ -35,39 +35,24 @@
                                         <th class="text-center">
                                             #
                                         </th>
-                                        <th>Competition Name</th>
-                                        <th>Event Name</th>
-                                        <th>Category</th>
-                                        <th>Competition Fee</th>
-                                        <th>Participant Qty</th>
+                                        <th>Nama Event</th>
+                                        <th>Nama Perlombaan</th>
+                                        <th>Biaya Pendaftaran</th>
+                                        <th>Jumlah Partisipan</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $id = 1; @endphp
-                                    @foreach ($datas as $data)
+                                    @foreach ($datas as $key => $data)
                                         <tr>
                                             <td class="text-center">{{ $id++ }}</td>
-                                            <td>{{$data->competition_name}}</td>
                                             <td>{{$data->event_name}}</td>
-                                            <td>{{$data->id_competition_category}}</td>
+                                            <td>{{$data->competition_name}}</td>
                                             <td>IDR {{ number_format($data->competition_fee, 0, ',', '.') }}</td>
                                             <td>{{$data->participant_qty}} peserta</td>
                                             <td>
-                                                <button class="btn btn-primary" 
-                                                    onclick="showDetailsModal(
-                                                        '{{ $data->competition_name }}',
-                                                        '{{ $data->event_name }}',
-                                                        '{{ $data->name }}',
-                                                        '{{ $data->id_competition_category }}',
-                                                        '{{ number_format($data->competition_fee, 0, ',', '.') }}',
-                                                        '{{ $data->participant_qty }}',
-                                                        '{{ addslashes(htmlspecialchars($data->competition_description)) }}',
-                                                        '{{ $data->competition_start_date}}',
-                                                        '{{ $data->competition_end_date}}',
-                                                    )">
-                                                    Detail
-                                                </button>
+                                                <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetition{{ $key }}">Detail</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -84,73 +69,64 @@
     </section>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Competition Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                <table class="table-striped table">
-                    <tr>
-                        <td>Competition Name</td>
-                        <td>:</td>
-                        <td id="competitionName"></td>
-                    </tr>
-                    <tr>
-                        <td>Event Name</td>
-                        <td>:</td>
-                        <td id="eventName"></td>
-                    </tr>
-                    <tr>
-                        <td>Event Organizer</td>
-                        <td>:</td>
-                        <td id="eoName"></td>
-                    </tr>
-                    <tr>
-                        <td>Competition Category</td>
-                        <td>:</td>
-                        <td id="idCompetitionCategory"></td>
-                    </tr>
-                    <tr>
-                        <td>Competition Fee</td>
-                        <td>:</td>
-                        <td id="competitionFee"></td>
-                    </tr>
-                    <tr>
-                        <td>Participant Quantity</td>
-                        <td>:</td>
-                        <td id="participantQty"></td>
-                    </tr>
-                    <tr>
-                        <td>Competition Description</td>
-                        <td>:</td>
-                        <td id="competitionDescription" class="text-justify"></td>
-                    </tr>
-                    <tr>
-                        <td>Competition Period</td>
-                        <td>:</td>
-                        <td>
-                            <span id="competitionStartDate"></span> - <span id="competitionEndDate"></span>
-                        </td>
-                    </tr>
-                </table>
+@foreach ($datas as $key => $data)
+    <!-- Modal Detail Competition -->
+    <div class="modal fade" id="detailCompetition{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailCompetitionLabel" aria-hidden="true">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailCompetitionLabel">Detail Perlombaan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <h5 id="competitionName"></h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td class="col-5">Nama Event</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->event_name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Nama Perlombaan</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->competition_name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Biaya Pendaftaran</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">
+                                    @if ($data->competition_fee == 0 || $data->competition_fee == null)
+                                        Gratis
+                                    @else
+                                        IDR. {{ number_format($data->competition_fee, 0, ',', '.') }}
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Jumlah Partisipan</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ $data->participant_qty }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Tanggal Berlangsung Perlombaan</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{{ Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }} - {{ Carbon\Carbon::parse($data->competition_end_date)->translatedFormat('d F Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-5">Deskripsi Perlombaan</td>
+                                <td class="col-1">:</td>
+                                <td class="col-6">{!! $data->competition_description !!}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
+@endforeach
 
 @endsection @push('scripts')
 <!-- JS Libraies -->
@@ -159,29 +135,4 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 <!-- Show Modal -->
-<script>
-    function showDetailsModal(
-        competitionName, 
-        name, 
-        eventName, 
-        idCompetitionCategory, 
-        competitionFee, 
-        participantQty, 
-        competitionDescription,
-        competitionStartDate,
-        competitionEndDate
-    ) {
-        $('#competitionName').text(competitionName);
-        $('#eventName').text(name);
-        $('#eoName').text(eoName);
-        $('#idCompetitionCategory').text(idCompetitionCategory);
-        var competitionFeeFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(competitionFee);
-        $('#competitionFee').text(competitionFeeFormatted);
-        $('#participantQty').text(participantQty + ' peserta');
-        $('#competitionDescription').text(competitionDescription);
-        $('#competitionStartDate').text(competitionStartDate);
-        $('#competitionEndDate').text(competitionEndDate);
-        $('#detailsModal').modal('show');
-    }
-</script>
 @endpush
