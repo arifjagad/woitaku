@@ -71,11 +71,15 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="card">
-                                            <div class="card-header">
-                                                <img src="{{
-                                                    asset('storage/'.$detailEvent->featured_image)
-                                                }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
-                                                <span style="position: absolute; top: 30px; right: 40px;" class="badge badge-success text-uppercase py-2 px-4">
+                                            <div class="card-header d-flex justify-content-between" style="position: relative;">
+                                                <img src="{{ asset('storage/'.$detailEvent->featured_image) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                                @if(\Carbon\Carbon::parse($detailEvent->end_date)->isPast())
+                                                    <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
+                                                        <span class="text-dark">Event Berakhir</span>
+                                                    </span>
+                                                @endif
+                                                
+                                                <span class="badge badge-success text-uppercase py-2 px-4" style="position: absolute; top: 30px; right: 50px;">
                                                     @if ($detailEvent->ticket_price == 0)
                                                         GRATIS
                                                     @else
@@ -103,7 +107,7 @@
                                         @else
                                             @if(Auth::check())
                                                 @php session(['event_id' => $detailEvent->id]); @endphp
-                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
+                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" onclick="checkEventDate()">
                                                     Beli Tiket
                                                 </a>
                                             @else
@@ -204,7 +208,11 @@
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetitionModal{{ $key }}">Detail</a>
                                                     @if(Auth::check())
-                                                        <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarCompetitionModal{{ $key }}">Daftar</a>
+                                                        @if($data->end_date != true)
+                                                            <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarCompetitionModal{{ $key }}">Daftar</a>
+                                                        @else
+                                                            <a href="#" class="btn btn-success" onclick="checkEventDate()">Daftar</a>
+                                                        @endif
                                                     @else
                                                         <a href="#" class="btnTransaksi btn btn-success">Daftar</a>
                                                     @endif
@@ -439,7 +447,11 @@
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
                                                     @if($data->availability_status == 'available')
                                                         @if(Auth::check())
-                                                            <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
+                                                            @if($data->end_date != true)
+                                                                <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
+                                                            @else
+                                                                <a href="#" class="btn btn-success" onclick="checkEventDate()">Pesan Booth</a>
+                                                            @endif
                                                         @else
                                                             <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
                                                         @endif
@@ -679,7 +691,23 @@
 </script>
 
 <script>
-    
+    function checkEventDate() {
+        var eventEndDate = '{{ $detailEvent->end_date }}';
+        var today = new Date();
+
+        if (new Date(eventEndDate) < today) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Event Telah Berakhir!',
+                text: 'Maaf, event ini telah berakhir.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok'
+            });
+        } else {
+            // Lakukan apa yang diperlukan jika event masih berlangsung
+            // Contoh: Tampilkan modal atau lanjutkan ke halaman pembelian tiket
+        }
+    }
 </script>
 
 @endpush

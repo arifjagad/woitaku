@@ -58,12 +58,19 @@
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                     </div>
                                     <div class="article-badge">
-                                        <div class="article-badge-item bg-success text-uppercase">
-                                            @if ($data->ticket_price == 0)
-                                                GRATIS
-                                            @else
-                                                BERBAYAR
+                                        <div class="d-flex">
+                                            @if(\Carbon\Carbon::parse($data->end_date)->isPast())
+                                                <div class="article-badge-item bg-secondary text-uppercase">
+                                                    <span class="text-dark">Event Berakhir</span>
+                                                </div>
                                             @endif
+                                            <div class="ml-2 article-badge-item bg-success text-uppercase">
+                                                @if ($data->ticket_price == 0)
+                                                    GRATIS
+                                                @else
+                                                    BERBAYAR
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
