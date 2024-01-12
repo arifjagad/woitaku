@@ -45,7 +45,7 @@
                     <label for="password" class="control-label">Password</label>
                     <div class="float-right">
                         <a href="{{ route('password.request') }}" class="text-small">
-                            Forgot Password?
+                            Lupa Password?
                         </a>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
 </div>
 
 <div class="text-muted mt-5 text-center">
-    Don't have an account? <a href='{{ route('register') }}'>Create Account</a>
+    Belum punya akun? <a href='{{ route('register') }}'>Daftar sekarang!</a>
 </div>
 @endsection @push('scripts')
 <!-- JS Libraies -->

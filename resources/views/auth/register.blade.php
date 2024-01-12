@@ -13,7 +13,7 @@
 
 <div class="card card-primary">
     <div class="card-header">
-        <h4>Register</h4>
+        <h4>Daftar Akun</h4>
     </div>
 
     <div class="card-body">
@@ -25,7 +25,7 @@
             @csrf
 
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nama</label>
                 <input
                     id="name"
                     type="text"
@@ -75,7 +75,7 @@
             </div>
 
             <div class="form-group">
-                <label>Password Confirmation</label>
+                <label>Konfirmasi Password</label>
                 <input
                     id="password_confirmation"
                     type="password"
@@ -93,10 +93,10 @@
             <!-- ... -->
             <div class="form-group">
                 <div class="d-block">
-                    <label for="account-type" class="control-label">Account Type</label>
+                    <label for="account-type" class="control-label">Jenis Akun</label>
                     <div class="float-right">
                         <a href="#" data-toggle="tooltip" title="Tentukan Jenis Akun Anda!" class="text-small">
-                            <i class="fa-solid fa-circle-info"></i> Information
+                            <i class="fa-solid fa-circle-info"></i> Informasi
                         </a>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                    Register
+                    Daftar
                 </button>
             </div>
         </form>
@@ -124,7 +124,7 @@
 </div>
 
 <div class="text-muted mt-5 text-center">
-    Already have an account? <a href='{{ route('login') }}'>Log in</a>
+    Sudah memiliki akun? <a href='{{ route('login') }}'>Login</a>
 </div>
 @endsection @push('scripts')
 <!-- JS Libraies -->

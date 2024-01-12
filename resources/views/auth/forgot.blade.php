@@ -20,11 +20,11 @@
         @endif
 
         <div class="card-header">
-            <h4>Forgot Password</h4>
+            <h4>Lupa Password</h4>
         </div>
         
         <div class="card-body">
-            <p class="text-muted">We will send a link to reset your password</p>
+            <p class="text-muted text-justify">Kami akan mengirimkan link untuk me-reset password kamu.</p>
             <form class="needs-validation" novalidate="" method="POST" action="{{ route('password.email')}}">
                 @csrf
                 <div class="form-group">
@@ -42,12 +42,12 @@
                     <button type="submit"
                         class="btn btn-primary btn-lg btn-block"
                         tabindex="4">
-                        Forgot Password
+                        Lupa Password
                     </button>
                 </div>
             </form>
             <div class="text-center">
-                <a href="{{ route('login') }}">Back to Login</a>
+                <a href="{{ route('login') }}">Login</a>
             </div>
         </div>
     </div>

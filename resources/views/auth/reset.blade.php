@@ -23,7 +23,7 @@
         </div>
 
         <div class="card-body">
-            <p class="text-muted">We will send a link to reset your password</p>
+            <p class="text-muted">Kami akan mengirimkan link untuk mereset kata sandi Anda.</p>
             <form method="POST" class="needs-validation" novalidate="" action="{{ route('password.update')}}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $request->token }}">
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password">New Password</label>
+                    <label for="password">Password Baru</label>
                     <input id="password"
                         type="password"
                         class="form-control pwstrength"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password-confirm">Confirm Password</label>
+                    <label for="password-confirm">Konfirmasi Password</label>
                     <input
                         id="password_confirmation"
                         type="password"
