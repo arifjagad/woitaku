@@ -86,7 +86,7 @@
                 <div class="col-9">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Grafik Perkembangan Jumlah Event, Perlombaan, dan Booth Setiap Bulannya</h4>
+                            <h4>Grafik Perkembangan Pendapatan Untuk Setiap Bulan</h4>
                         </div>
                         <div class="card-body">
                             <!-- Data Perkembangan Bulanan Untuk Setiap Kategori -->
@@ -218,42 +218,27 @@
 
     <script>
         // Mengambil data dari controller
-        var detailEventData = {!! json_encode($detailEventData) !!};
-        var detailCompetitionData = {!! json_encode($detailCompetitionData) !!};
-        var boothRentalData = {!! json_encode($boothRentalData) !!};
+        var totalAmoutGraph = {!! json_encode($totalAmoutGraph) !!};
 
         // Menyiapkan data untuk Chart.js
         var chartData = {
             labels: ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
             datasets: [
                 {
-                    label: 'Jumlah Event',
-                    data: [0, ...detailEventData.map(entry => entry.count)],
+                    label: 'Total Pendapatan Bulanan',
+                    data: [0, ...totalAmoutGraph.map(entry => entry.total)],
                     backgroundColor: 'rgba(255, 0, 0, 0.2)',
                     borderColor: 'red',
                     borderWidth: 1
                 },
-                {
-                    label: 'Jumlah Perlombaan',
-                    data: [0, ...detailCompetitionData.map(entry => entry.count)],
-                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                    borderColor: 'blue',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Jumlah Booth',
-                    data: [0, ...boothRentalData.map(entry => entry.count)],
-                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                    borderColor: 'green',
-                    borderWidth: 1
-                }
+                
             ]
         };
 
         // Membuat Vertical Bar Chart menggunakan Chart.js
         var ctx = document.getElementById('monthlyChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: chartData,
             options: {
                 responsive: true,
@@ -263,7 +248,7 @@
                         labels: chartData.labels
                     },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
                     }
                 }
             }
