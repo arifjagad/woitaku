@@ -16,32 +16,39 @@ class DashboardController extends Controller
             ->where('users.id', $authId)
             ->first();
         
+        // Menghitung jumlah data dari tabel detail_event
         $eventsCount = DB::table('detail_event')
             ->where('id_eo', $authId)
             ->count();
 
+        // Menghitung jumlah data dari tabel detail_competition
         $competitionCount = DB::table('detail_competition')
             ->join('detail_event', 'detail_event.id', '=', 'detail_competition.id_event')
             ->where('id_eo', $authId)
             ->count();
 
+        // Menghitung jumlah data dari tabel booth_rental
         $boothCount = DB::table('booth_rental')
             ->join('detail_event', 'detail_event.id', '=', 'booth_rental.id_event')
             ->where('id_eo', $authId)
             ->count();
 
-        $transactionCount = DB::table('transaction')
-            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
-            ->where('id_eo', $authId)
-            ->where('transaction.transaction_status', '=', 'success')
-            ->count();
-
+        // Menghitung jumlah data dari tabel transaction
         $totalAmount = DB::table('transaction')
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
             ->where('id_eo', $authId)
             ->where('transaction.transaction_status', '=', 'success')
             ->sum('transaction.transaction_amout');
             
+        // Menghitung jumlah data per bulan dari tabel detail_event
+        $totalAmoutGraph = DB::table('transaction')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->select(DB::raw('MONTH(transaction.created_at) as month'), DB::raw('SUM(transaction.transaction_amout) as total'))
+            ->groupBy(DB::raw('MONTH(transaction.created_at)'))
+            ->where('detail_event.id_eo', $authId)
+            ->where('transaction.transaction_status', '=', 'success')
+            ->get();
+
         // Menghitung jumlah data per bulan dari tabel detail_event
         $detailEventData = DB::table('detail_event')
             ->select(DB::raw('MONTH(start_date) as month'), DB::raw('COUNT(*) as count'))
@@ -66,6 +73,7 @@ class DashboardController extends Controller
             ->where('detail_event.id_eo', $authId)
             ->get();
 
+        // Menampilkan 5 event terpopuler untuk tiap bulan (berdasarkan jumlah transaksi)
         $eventPopular = DB::table('detail_event')
             ->join('transaction', 'transaction.id_event', 'detail_event.id')
             ->where('detail_event.id_eo', $authId)
@@ -95,13 +103,13 @@ class DashboardController extends Controller
                 'eventsCount', 
                 'competitionCount', 
                 'boothCount', 
-                'transactionCount',
                 'totalAmount',
                 'detailEventData',
                 'detailCompetitionData',
                 'boothRentalData',
                 'eventPopular',
                 'transaction',
+                'totalAmoutGraph',
             ), 
             ['type_menu' => 'event_organizer.dashboard-eo'],
         );
