@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table-striped table" id="table-1">
+                                    <table class="table-striped table display nowrap" id="table-1">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
@@ -61,19 +61,21 @@
                                                 </td>
                                                 <td class="text-center">
                                                     @if($data->transaction_status == 'pending')
-                                                        <span class="badge badge-warning">{{ $data->transaction_status }}</span>
+                                                        <span class="badge badge-warning">Pending</span>
                                                     @elseif($data->transaction_status == 'success')
-                                                        <span class="badge badge-success">{{ $data->transaction_status }}</span>
+                                                        <span class="badge badge-success">Berhasil</span>
                                                     @elseif($data->transaction_status == 'expired')
-                                                        <span class="badge badge-danger">{{ $data->transaction_status }}</span>
+                                                        <span class="badge badge-danger">Gagal</span>
+                                                    @elseif($data->transaction_status == 'check')
+                                                        <span class="badge badge-info">Menunggu konfirmasi</span>
                                                     @endif
                                                     
                                                 </td>
-                                                <td class="text-center">
-                                                    @if($data->transaction_status == 'pending' || $data->transaction_status == 'expired')
+                                                <td>
+                                                    @if($data->transaction_status == 'pending' || $data->transaction_status == 'expired' || $data->transaction_status == 'check')
                                                         <a href="{{ route('invoice', ['id' => $data->id]) }}" class="btn btn-primary">Detail</a>
                                                     @elseif($data->transaction_status == 'success')
-                                                        <a href="#" class="btn btn-success">Download Tiket</a>
+                                                        <a href="{{ route('download-ticket') }}" class="btn btn-success">Download Tiket</a>
                                                     @endif
                                                 </td>
                                             </tr>
