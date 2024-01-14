@@ -97,19 +97,26 @@
                                     <div class="col-4">
                                         @if ($detailEvent->ticket_price == 0)
                                             @if(Auth::check())
-                                                <form action="{{ route('payment-ticket-free') }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</button>
-                                                </form>
+                                                @if(strtotime(now()) < strtotime($detailEvent->end_date))
+                                                    <form action="{{ route('payment-ticket-free') }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</button>
+                                                    </form>
+                                                @else
+                                                    <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" onclick="checkEventDate()">Daftar Sekarang</a>
+                                                @endif
                                             @else
-                                                <a href="#" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
-                                            @endif
+                                            <a href="#" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</a>
+                                        @endif
                                         @else
                                             @if(Auth::check())
-                                                @php session(['event_id' => $detailEvent->id]); @endphp
-                                                <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" onclick="checkEventDate()">
+                                                @if(strtotime(now()) < strtotime($detailEvent->end_date))
+                                                    <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
                                                     Beli Tiket
-                                                </a>
+                                                    </a>
+                                                @else
+                                                    <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" onclick="checkEventDate()">Beli Tiket</a>
+                                                @endif
                                             @else
                                                 <a href="#" class="btnTransaksi btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Beli Tiket</a>
                                             @endif
@@ -208,7 +215,7 @@
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetitionModal{{ $key }}">Detail</a>
                                                     @if(Auth::check())
-                                                        @if($data->end_date != true)
+                                                        @if(strtotime(now()) < strtotime($data->end_date))
                                                             <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarCompetitionModal{{ $key }}">Daftar</a>
                                                         @else
                                                             <a href="#" class="btn btn-success" onclick="checkEventDate()">Daftar</a>
@@ -447,10 +454,12 @@
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
                                                     @if($data->availability_status == 'available')
                                                         @if(Auth::check())
-                                                            @if($data->end_date != true)
-                                                                <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">Pesan Booth</a>
+                                                            @if(strtotime(now()) < strtotime($data->end_date))
+                                                                <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">
+                                                                    Pesan Booth
+                                                                </a>
                                                             @else
-                                                                <a href="#" class="btn btn-success" onclick="checkEventDate()">Pesan Booth</a>
+                                                                <a href="#" class="btn btn-success show-detail" onclick="checkEventDate()">Pesan Booth</a>
                                                             @endif
                                                         @else
                                                             <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>

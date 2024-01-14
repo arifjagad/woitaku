@@ -31,6 +31,7 @@ class DetailEventController extends Controller
             ->where('booth_rental.id_event', '=', $id)
             ->get();
 
+
         /* $listBooth = DB::table('detail_event')
             ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
             ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
@@ -44,9 +45,8 @@ class DetailEventController extends Controller
             ->whereNotNull('detail_booth.booth_name')
             ->whereNotNull('detail_booth.booth_description')
             ->whereNotNull('detail_booth.booth_image')
+            ->where('booth_rental.id_event', '=', $id)
             ->get();
-        
-            
 
         $detailPaymentMethod = DB::table('detail_event')
             ->join('payment_methods', 'detail_event.id_eo', '=', 'payment_methods.id_eo')

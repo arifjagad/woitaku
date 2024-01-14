@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="article-details">
                                         <div class="article-category">
-                                            {{$data->start_date}} s/d {{$data->end_date}}
+                                            {{Carbon\Carbon::parse($data->start_date)->translatedFormat('d F Y')}} - {{Carbon\Carbon::parse($data->end_date)->translatedFormat('d F Y')}}
                                         </div>
                                         <div class="article-title">
                                             <h1>
