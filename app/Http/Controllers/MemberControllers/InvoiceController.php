@@ -55,7 +55,7 @@ class InvoiceController extends Controller
                 ->where('id', $id)
                 ->update([
                     'proof_of_transaction' => $filePathTransaction,
-                    'transaction_status' => 'Menunggu konfirmasi'
+                    'transaction_status' => 'check'
                 ]);
 
             toast('Bukti transfer telah dikirim, mohon tunggu konfirmasi.', 'success');

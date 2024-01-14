@@ -87,7 +87,7 @@
                     <div class="alert alert-info">
                         <p class="text-center">Bukti transfer telah dikirim, mohon tunggu konfirmasi.</p>
                     </div>
-                @else
+                @elseif ($dataTransaction->transaction_status == 'pending')
                     <form action="{{ route('upload-transaction', ['id' => $dataTransaction->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -114,6 +114,10 @@
                             <button type="submit" class="btn btn-primary btn-block">Upload</button>
                         </div>
                     </form>
+                @elseif ($dataTransaction->transaction_status == 'success')
+                    <div class="alert alert-success">
+                        <p class="text-center">Pembayaran berhasil</p>
+                    </div>
                 @endif
             </div>
         </div>

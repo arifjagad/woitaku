@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use App\Models\Ticket;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class DetailEventController extends Controller
 {
@@ -88,12 +87,13 @@ class DetailEventController extends Controller
         $competitionId = $request->input('competition_id');
 
         // Cek apakah pengguna sudah terdaftar untuk event gratis ini
-        $existingTransaction = Transaction::where('id_member', auth()->user()->id)
+        $checkTransactionEvent = Transaction::where('id_member', auth()->user()->id)
             ->where('id_event', $event_id)
             ->where('transaction_amout', '0')
+            ->where('transaction.transaction_status', '=', 'success')
             ->first();
     
-        if ($existingTransaction) {
+        if ($checkTransactionEvent) {
             // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan Anda
             toast('Anda sudah terdaftar untuk event ini.', 'info');
             return redirect()->back();
@@ -136,10 +136,12 @@ class DetailEventController extends Controller
 
         $checkTransactionEvent = DB::table('transaction')
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
-            ->where('transaction.id_category', '=', '1')
+            ->where('id_event', $event_id)
             ->where('transaction.id_member', '=', $userId)
             ->where('transaction.transaction_status', '=', 'success')
             ->first();
+
+        /* dd($checkTransactionEvent); */
             
         if(!$checkTransactionEvent){
             toast('Anda belum terdaftar untuk event ini.', 'info');
@@ -175,23 +177,11 @@ class DetailEventController extends Controller
                     // Redirect ke route payment dengan membawa ID transaksi
                     return redirect()->route('invoice', ['id' => $transaction->id]);
                 }else{
-                    // Cek apakah pengguna sudah terdaftar untuk perlombaan ini
-                    $existingTransaction = Transaction::join('detail_competition', 'transaction.id_event', '=', 'detail_competition.id_event')
-                        ->where('transaction.id_member', auth()->user()->id)
-                        ->where('transaction.id_event', $event_id)
-                        ->where('transaction.transaction_amout', 0)
-                        ->first();
-        
-                    if ($existingTransaction) {
-                        // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan Anda
-                        toast('Anda sudah terdaftar untuk perlombaan ini.', 'info');
-                        return redirect()->back();
-                    }
-        
                     // Simpan data transaksi ke database
                     $transaction = new Transaction();
                     $transaction->id_member = auth()->user()->id;
                     $transaction->id_event = $event_id;
+                    $transaction->id_competition = $competitionId;
                     $transaction->preferred_date = null;
                     $transaction->qty = 1;
                     $transaction->id_category = 2;
@@ -199,7 +189,6 @@ class DetailEventController extends Controller
                     $transaction->transaction_status = 'success';
                     $transaction->id_payment_methods = null;
                     $transaction->expiration_time = null;
-        
                     
                     $transaction->save();
             
