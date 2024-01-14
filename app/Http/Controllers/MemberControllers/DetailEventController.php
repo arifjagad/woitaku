@@ -31,13 +31,6 @@ class DetailEventController extends Controller
             ->where('booth_rental.id_event', '=', $id)
             ->get();
 
-
-        /* $listBooth = DB::table('detail_event')
-            ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
-            ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
-            ->where('booth_rental.id_event', '=', $id)
-            ->get(); */
-
         $listBooth = DB::table('transaction')
             ->join('booth_rental', 'booth_rental.id', '=', 'transaction.id_booth_rental')
             ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
@@ -80,7 +73,7 @@ class DetailEventController extends Controller
         $transaction->preferred_date = $selectedDate;
         $transaction->qty = $ticketQuantity;
         $transaction->id_category = 1;
-        $transaction->transaction_amout = $detailEvent->ticket_price * $ticketQuantity;
+        $transaction->transaction_amout = ($detailEvent->ticket_price * $ticketQuantity)+(mt_rand(1, 99));
         $transaction->transaction_status = 'pending';
         $transaction->id_payment_methods = $paymentMethodId;
         $transaction->expiration_time = Carbon::now()->addDay();
@@ -172,7 +165,7 @@ class DetailEventController extends Controller
                     $transaction->preferred_date = null;
                     $transaction->qty = 1;
                     $transaction->id_category = 2;
-                    $transaction->transaction_amout = $detailCompetition->competition_fee;
+                    $transaction->transaction_amout = ($detailCompetition->competition_fee)+(mt_rand(1, 99));;
                     $transaction->transaction_status = 'pending';
                     $transaction->id_payment_methods = $paymentMethodId;
                     $transaction->expiration_time = Carbon::now()->addDay();
@@ -248,7 +241,7 @@ class DetailEventController extends Controller
         $transaction->preferred_date = null;
         $transaction->qty = 1;
         $transaction->id_category = 3;
-        $transaction->transaction_amout = $detailEvent->rental_price;
+        $transaction->transaction_amout = ($detailEvent->rental_price)+(mt_rand(1, 99));;
         $transaction->transaction_status = 'pending';
         $transaction->id_payment_methods = $paymentMethodId;
         $transaction->expiration_time = Carbon::now()->addDay();
