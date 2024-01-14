@@ -26,12 +26,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-1">
+                                    <table class="table-striped table display nowrap" id="table-1">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
                                                     #
                                                 </th>
+                                                <th>Id Tiket</th>
                                                 <th>Nama Event</th>
                                                 <th>Jenis Tiket</th>
                                                 <th>Tanggal Aktif Tiket</th>
@@ -45,6 +46,7 @@
                                                 <td class="text-center">
                                                     {{ $loop->iteration }}
                                                 </td>
+                                                <td>{{ $data->ticket_identifier }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
@@ -84,12 +86,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-2">
+                                    <table class="table-striped table display nowrap" id="table-2">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
                                                     #
                                                 </th>
+                                                <th>Id Tiket</th>
                                                 <th>Nama Event</th>
                                                 <th>Jenis Tiket</th>
                                                 <th>Nama Perlombaan</th>
@@ -104,6 +107,7 @@
                                                 <td class="text-center">
                                                     {{ $loop->iteration }}
                                                 </td>
+                                                <td>{{ $data->ticket_identifier }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->competition_name }}</td>
@@ -144,12 +148,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-3">
+                                    <table class="table-striped table display nowrap" id="table-3">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
                                                     #
                                                 </th>
+                                                <th>Id Tiket</th>
                                                 <th>Nama Event</th>
                                                 <th>Jenis Tiket</th>
                                                 <th>Kode Booth</th>
@@ -164,6 +169,7 @@
                                                 <td class="text-center">
                                                     {{ $loop->iteration }}
                                                 </td>
+                                                <td>{{ $data->ticket_identifier }}</td>
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->booth_code }}</td>
