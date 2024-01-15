@@ -21,6 +21,7 @@ class Transaction extends Model
         'id_category',
         'qty',
         'transaction_amout',
+        'proof_of_transaction',
         'transaction_status',
         'id_payment_methods',
         'expiration_time'

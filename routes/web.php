@@ -132,6 +132,8 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
     Route::post('payment-ticket-free', [DetailEventController::class, 'transactionTiketFree'])->name('payment-ticket-free');
     Route::post('payment-competition', [DetailEventController::class, 'transactionCompetition'])->name('payment-competition');
     Route::post('payment-booth', [DetailEventController::class, 'transactionBooth'])->name('payment-booth');
+    Route::get('/get-booth-info/{id}', [DetailEventController::class, 'getBoothInfo'])->name('get-booth-info');
+    Route::put('upload-transaction/{id}', [InvoiceController::class, 'uploadTransaction'])->name('upload-transaction');
 });
 
 // Route untuk semua (bisa diakses sebelum login)
