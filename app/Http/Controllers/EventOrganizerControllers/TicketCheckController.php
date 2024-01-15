@@ -60,6 +60,5 @@ class TicketCheckController extends Controller
         }
 
         return redirect()->back();
-
     }
 }

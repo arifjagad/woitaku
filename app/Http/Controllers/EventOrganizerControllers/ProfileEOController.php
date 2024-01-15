@@ -76,11 +76,11 @@ class ProfileEOController extends Controller
     
             DB::commit();
     
-            toast('Profile Successfully Updated!', 'success');
+            toast('Profile Successfully Updated', 'success');
             return view ('profile-eo', compact('indonesiaCities'));
         } catch (\Illuminate\Validation\ValidationException $e) {
             DB::rollback();
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -99,7 +99,7 @@ class ProfileEOController extends Controller
 
         $data->save();
 
-        toast('Password Successfully Updated!','success');
+        toast('Password Successfully Updated','success');
         return redirect()->route('profile-eo');
     }
 }

@@ -15,6 +15,7 @@ class DetailCompetition extends Model
     protected $fillable = [
         'id_event',
         'competition_name',
+        'thumbnail_competition',
         'competition_description',
         'competition_start_date',
         'competition_end_date',

@@ -56,9 +56,9 @@ class EventEOController extends Controller
                 'end_date' => 'required|date|after_or_equal:start_date',
                 'ticket_price' => 'nullable|max:9',
                 'ticket_qty' => 'nullable|max:9',
-                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'booth_layout' => 'image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
             
             // Upload data dari summernote untuk deskripsi event
@@ -126,11 +126,11 @@ class EventEOController extends Controller
             ]);
 
 
-            toast('Event Successfully Created!', 'success');
+            toast('Event Successfully Created', 'success');
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
         
@@ -164,9 +164,9 @@ class EventEOController extends Controller
                 'end_date' => 'required|date|after_or_equal:start_date',
                 'ticket_price' => 'nullable|max:9',
                 'ticket_qty' => 'nullable|max:9',
-                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'booth_layout' => 'image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
 
             // Upload data dari summernote untuk deskripsi event
@@ -231,11 +231,11 @@ class EventEOController extends Controller
                 'document' => $request->document,
             ]);
 
-            toast('Event Successfully Updated!', 'success');
+            toast('Event Successfully Updated', 'success');
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
 
@@ -247,7 +247,7 @@ class EventEOController extends Controller
         $event = DetailEvent::findOrFail($id);
         $event->delete();
 
-        toast('Event Successfully Deleted!', 'success');
+        toast('Event Successfully Deleted', 'success');
         return redirect()->route('event-eo');
     }
 

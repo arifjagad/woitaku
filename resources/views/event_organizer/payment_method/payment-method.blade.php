@@ -45,7 +45,7 @@
                                         @foreach($data as $data)
                                         <tr>
                                             <td class="text-center">
-                                                @php for ($i=0; $i < 1; $i++) { echo $i+1; } @endphp
+                                                {{ $loop->index + 1 }}
                                             </td>
                                             <td>{{ $data->bank_name }}</td>
                                             <td>{{ $data->account_number }}</td>

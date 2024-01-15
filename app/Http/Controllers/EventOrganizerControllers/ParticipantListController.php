@@ -36,7 +36,7 @@ class ParticipantListController extends Controller
             ->get();
 
         if($dataEvent->isEmpty()){
-            toast('You must create an event first!', 'error');
+            toast('You must create an event first', 'error');
             return redirect()->route('event-eo');
         }else{
             return view ('event_organizer.participant-list', compact('dataEvent', 'dataTransaction'), ['type_menu' => 'participant-list']);
