@@ -130,21 +130,5 @@ class DashboardController extends Controller
         );
     }
 
-    public function acceptTransaction($id){
-        $datas = Transaction::find($id);
-        $datas->transaction_status = 'success';
-        $datas->save();
-        
-        toast('Transaksi kamu terima.', 'success');
-        return redirect()->back();
-    }
-
-    public function rejectTransaction($id){
-        $datas = Transaction::find($id);
-        $datas->transaction_status = 'failed';
-        $datas->save();
-        
-        toast('Transaksi kamu tolak.', 'success');
-        return redirect()->back();
-    }
+    
 }

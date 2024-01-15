@@ -18,6 +18,7 @@ use App\Http\Controllers\EventOrganizerControllers\PaymentMethodController;
 use App\Http\Controllers\EventOrganizerControllers\CompetitionEOController;
 use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 use App\Http\Controllers\EventOrganizerControllers\TicketCheckController;
+use App\Http\Controllers\EventOrganizerControllers\ParticipantListController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -67,8 +68,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
     // Route:Dashboard
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
-    Route::put('/transaction/accept/{id}', [DashboardController_EventOrganizer::class, 'acceptTransaction'])->name('transaction.accept');
-    Route::put('/transaction/reject/{id}', [DashboardController_EventOrganizer::class, 'rejectTransaction'])->name('transaction.reject');
 
     // Route:Profile
     Route::get('profile-eo', [ProfileEOController::class, 'indexProfileEO'])->name('profile-eo');
@@ -112,6 +111,10 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('ticket-check', [TicketCheckController::class, 'indexTicketCheck'])->name('ticket-check');
     Route::post('check-ticket', [TicketCheckController::class, 'checkTicket'])->name('ticket-check');
     
+    // Route:Participant List
+    Route::get('participant-list', [ParticipantListController::class, 'indexParticipantList'])->name('participant-list');
+    Route::put('/transaction/accept/{id}', [ParticipantListController::class, 'acceptTransaction'])->name('transaction.accept');
+    Route::put('/transaction/reject/{id}', [ParticipantListController::class, 'rejectTransaction'])->name('transaction.reject');
 });
 
 // Route untuk usertype Member
