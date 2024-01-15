@@ -176,13 +176,14 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table" id="table-1">
+                                <table class="table-striped table display nowrap" id="table-1">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>Nama Event</th>
                                             <th>Nama Pemesan</th>
-                                            <th>Tanggal Pemesanan</th>
+                                            <th>Tanggal Transaksi</th>
+                                            <th>Kategori Transaksi</th>
                                             <th>Status</th>
                                             <th>Total Pembayaran</th>
                                             <th>Metode Pembayaran</th>
@@ -199,12 +200,23 @@
                                                     <td>{{ $data->name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
                                                     <td>
+                                                        @if ($data->id_category == '1')
+                                                            <span class="badge badge-primary">Tiket Event</span>
+                                                        @elseif ($data->id_category == '2')
+                                                            <span class="badge badge-primary">Pendaftaran Perlombaan</span>
+                                                        @elseif ($data->id_category == '3')
+                                                            <span class="badge badge-primary">Penyewaan Booth</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
                                                         @if ($data->transaction_status == 'pending')
                                                             <span class="badge badge-warning">Pending</span>
                                                         @elseif ($data->transaction_status == 'success')
-                                                            <span class="badge badge-success">Success</span>
+                                                            <span class="badge badge-success">Berhasil</span>
                                                         @elseif ($data->transaction_status == 'failed')
-                                                            <span class="badge badge-danger">Failed</span>
+                                                            <span class="badge badge-danger">Gagal</span>
+                                                        @elseif ($data->transaction_status == 'check')
+                                                            <span class="badge badge-info">Sedang dicek</span>
                                                         @endif
                                                     </td>
                                                     <td>IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}</td>
@@ -216,7 +228,7 @@
                                                             <span class="badge badge-danger">Belum Upload</span>
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="d-flex justify-content-end">
                                                         @if ($data->transaction_status == 'pending')
                                                             <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
                                                                 @csrf
@@ -224,10 +236,15 @@
                                                                 <button type="submit" class="btn btn-danger">Tolak</button>
                                                             </form>
                                                         @elseif ($data->transaction_status == 'check')
-                                                            <form action="{{ route('transaction.accept', $data->id) }}" method="POST">
+                                                            <form action="{{ route('transaction.accept', $data->id) }}" method="POST" class="mr-2">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <button type="submit" class="btn btn-success">Terima</button>
+                                                            </form>
+                                                            <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-danger">Tolak</button>
                                                             </form>
                                                         @endif
                                                     </td>

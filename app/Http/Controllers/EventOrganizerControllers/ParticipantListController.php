@@ -6,7 +6,10 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-USE App\Models\Transaction;
+use App\Models\Transaction;
+use App\Models\BoothRental;
+use App\Models\DetailEvent;
+use App\Models\DetailCompetition;
 
 class ParticipantListController extends Controller
 {
@@ -41,9 +44,9 @@ class ParticipantListController extends Controller
     }
 
     public function acceptTransaction($id){
-        $datas = Transaction::find($id);
-        $datas->transaction_status = 'success';
-        $datas->save();
+        $transactionId = Transaction::find($id);
+        $transactionId->transaction_status = 'success';
+        $transactionId->save();
         
         toast('Transaksi kamu terima.', 'success');
         return redirect()->back();
@@ -54,6 +57,27 @@ class ParticipantListController extends Controller
         $transactionId->transaction_status = 'failed';
         $transactionId->save();
         
+        // Memeriksa apakah id_category adalah 3
+        if ($transactionId->id_category == 1){
+            $detailEvent = DetailEvent::find($transactionId->id_event);
+
+            // Memperbarui status booth_rental menjadi 'available'
+            $detailEvent->ticket_qty = $detailEvent->ticket_qty + $transactionId->qty;
+            $detailEvent->save();
+
+        } elseif ($transactionId->id_category == 2) {
+            $detailCompetition = DetailCompetition::find($transactionId->id_competition);
+
+            $detailCompetition->ticket_qty = $detailCompetition->participant_qty + $transactionId->qty;
+            $detailCompetition->save();
+        
+        }elseif ($transactionId->id_category == 3) {
+            $boothRental = BoothRental::find($transactionId->id_booth_rental);
+
+            $boothRental->availability_status = 'available';
+            $boothRental->save();
+        }
+
         toast('Transaksi kamu tolak.', 'success');
         return redirect()->back();
     }
