@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\BoothRental;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class BoothEOController extends Controller
 {
@@ -30,7 +32,7 @@ class BoothEOController extends Controller
             ->get();
 
         if($dataEvent->isEmpty()){
-            toast('Harus memiliki event terlebih dahulu!', 'error');
+            toast('Harus memiliki event terlebih dahulu', 'error');
             return redirect()->route('event-eo');
         }else{
             return view('event_organizer.booth.create-booth-eo', compact('dataEvent'), ['type_menu' => 'booth-eo']);
@@ -58,11 +60,11 @@ class BoothEOController extends Controller
                 'provided_facilities' => $request->provided_facilities,
             ]);
 
-            toast('Booth berhasil dibuat!', 'success');
+            toast('Booth berhasil dibuat', 'success');
             return redirect()->route('booth-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -102,11 +104,11 @@ class BoothEOController extends Controller
                 'provided_facilities' => $request->provided_facilities,
             ]);
 
-            toast('Booth berhasil diupdate!', 'success');
+            toast('Booth berhasil diupdate', 'success');
             return redirect()->route('booth-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -115,7 +117,7 @@ class BoothEOController extends Controller
         $dataBooth = BoothRental::find($id);
         $dataBooth->delete();
 
-        toast('Booth berhasil dihapus!', 'success');
+        toast('Booth berhasil dihapus', 'success');
         return redirect()->route('booth-eo');
     }
 }

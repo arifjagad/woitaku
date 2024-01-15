@@ -45,10 +45,10 @@ class PaymentMethodController extends Controller
                 'status' => 1
             ]);
 
-            toast('Metode pembayaran berhasil ditambahkan!','success');
+            toast('Metode pembayaran berhasil ditambahkan','success');
             return redirect()->route('payment-method', compact('data'));
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -73,10 +73,10 @@ class PaymentMethodController extends Controller
             $data->account_holder_name = request('account_holder_name');
             $data->save();
 
-            toast('Metode pembayaran berhasil diupdate!','success');
+            toast('Metode pembayaran berhasil diupdate','success');
         return redirect()->route('payment-method');
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -86,7 +86,7 @@ class PaymentMethodController extends Controller
         $data->status = $request->status;
         $data->save();
 
-        toast('Berhasil mengubah status metode pembayaran!','success');
+        toast('Berhasil mengubah status metode pembayaran','success');
         return redirect()->route('payment-method');
     }
 
@@ -94,7 +94,7 @@ class PaymentMethodController extends Controller
         $data = PaymentMethods::find($id);
         $data->delete();
 
-        toast('Metode Pembayaran Berhasil Dihapus!','success');
+        toast('Metode Pembayaran Berhasil Dihapus','success');
         return redirect()->route('payment-method');
     }
 }

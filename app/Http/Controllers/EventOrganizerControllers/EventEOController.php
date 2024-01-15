@@ -126,11 +126,11 @@ class EventEOController extends Controller
             ]);
 
 
-            toast('Event Successfully Created!', 'success');
+            toast('Event Successfully Created', 'success');
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
         
@@ -231,11 +231,11 @@ class EventEOController extends Controller
                 'document' => $request->document,
             ]);
 
-            toast('Event Successfully Updated!', 'success');
+            toast('Event Successfully Updated', 'success');
             return redirect()->route('event-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
 
@@ -247,7 +247,7 @@ class EventEOController extends Controller
         $event = DetailEvent::findOrFail($id);
         $event->delete();
 
-        toast('Event Successfully Deleted!', 'success');
+        toast('Event Successfully Deleted', 'success');
         return redirect()->route('event-eo');
     }
 

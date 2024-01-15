@@ -62,7 +62,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="form-group col-lg-12">
+                                    <div class="form-group col-lg-6">
                                         <label>Nama Event</label>
                                         <div 
                                             class="float-right"
@@ -82,7 +82,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-lg-12">
+                                    <div class="form-group col-lg-6">
                                         <label>Nama Perlombaan</label>
                                         <input
                                             id="competition_name"
@@ -97,6 +97,28 @@
                                                 {{$message}}
                                             </div>
                                         @enderror
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Thumbnail Perlombaan</label>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                name="thumbnail_competition"
+                                                class="custom-file-input @error('thumbnail_competition') is-invalid @enderror"
+                                                id="thumbnail_competition"
+                                                accept=".jpg, .jpeg, .png"
+                                                
+                                                >
+                                            <label class="custom-file-label">Choose File</label>
+                                            <!-- Error Message -->
+                                            @error('thumbnail_competition')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-text text-muted">
+                                            Gambar harus memiliki ukuran maksimal 300 KB.
+                                        </div>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Deskripsi Perlombaan</label>

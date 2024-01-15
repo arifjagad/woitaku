@@ -13,6 +13,7 @@ class DetailBooth extends Model
 
     protected $fillable = [
         'booth_name',
+        'thumbnail_booth',
         'id_booth_rental',
         'id_member',
         'booth_image',

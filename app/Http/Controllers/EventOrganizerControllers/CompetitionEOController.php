@@ -12,6 +12,8 @@ use App\Models\DetailEvent;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CompetitionEOController extends Controller
 {
@@ -34,7 +36,7 @@ class CompetitionEOController extends Controller
             ->get();
 
         if($dataEvent->isEmpty()){
-            toast('Harus memiliki event terlebih dahulu!', 'error');
+            toast('Harus memiliki event terlebih dahulu', 'error');
             return redirect()->route('event-eo');
         }else{
             return view('event_organizer.competition.create-competition-eo', compact('dataEvent'), ['type_menu' => 'competition-eo']);
@@ -46,6 +48,7 @@ class CompetitionEOController extends Controller
             
         try {
             $this->validate($request, [
+                'thumbnail_competition' => 'required|image|mimes:jpeg,png,jpg|max:3000',
                 'competition_name' => 'required|max:100',
                 'competition_description' => 'required',
                 'competition_start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
@@ -82,9 +85,19 @@ class CompetitionEOController extends Controller
 
             $competition_description = $dom->saveHTML();
 
+            // Upload thumbnail
+            if ($request->hasFile('thumbnail_competition')) {
+                $file = $request->file('thumbnail_competition');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePathThumbnailCompetition = 'event_organizer/competition/' . $fileName;
+
+                Storage::disk('public')->put($filePathThumbnailCompetition, File::get($file));
+            }
+
             // Post ke database
             DetailCompetition::create([
                 'id_event' => $selectedEventId,
+                'thumbnail_competition' => $filePathThumbnailCompetition,
                 'competition_name' => $request->competition_name,
                 'competition_description' => $competition_description,
                 'competition_start_date' => $request->competition_start_date,
@@ -95,11 +108,11 @@ class CompetitionEOController extends Controller
             ]);
 
 
-            toast('Berhasil membuat perlombaan!', 'success');
+            toast('Berhasil membuat perlombaan', 'success');
             return redirect()->route('competition-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -133,6 +146,7 @@ class CompetitionEOController extends Controller
             
         try {
             $this->validate($request, [
+                'thumbnail_competition' => 'image|mimes:jpeg,png,jpg|max:3000',
                 'competition_name' => 'required|max:100',
                 'competition_description' => 'required',
                 'competition_start_date' => 'required|date|after_or_equal:' . Carbon::now()->format('Y-m-d'),
@@ -169,10 +183,20 @@ class CompetitionEOController extends Controller
 
             $competition_description = $dom->saveHTML();
 
+            // Upload thumbnail
+            if ($request->hasFile('thumbnail_competition')) {
+                $file = $request->file('thumbnail_competition');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePathThumbnailCompetition = 'event_organizer/competition/' . $fileName;
+
+                Storage::disk('public')->put($filePathThumbnailCompetition, File::get($file));
+            }
+
             // Update ke database
             $competition = DetailCompetition::find($competitionId);
             $competition->update([
                 'id_event' => $selectedEventId,
+                'thumbnail_competition' => $filePathThumbnailCompetition ?? $competition->thumbnail_competition,
                 'competition_name' => $request->competition_name,
                 'competition_description' => $competition_description,
                 'competition_start_date' => $request->competition_start_date,
@@ -183,11 +207,11 @@ class CompetitionEOController extends Controller
             ]);
 
 
-            toast('Perlombaan berhasil diupdate!', 'success');
+            toast('Perlombaan berhasil diupdate', 'success');
             return redirect()->route('competition-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            toast('Validation Failed!', 'error');
+            toast('Validasi gagal', 'error');
             return redirect()->back()->withErrors($e->errors())->withInput($request->all());
         }
     }
@@ -196,7 +220,7 @@ class CompetitionEOController extends Controller
         $dataCompetition = DetailCompetition::find($id);
         $dataCompetition->delete();
 
-        toast('Perlombaan berhasil dihapus!', 'success');
+        toast('Perlombaan berhasil dihapus', 'success');
         return redirect()->route('competition-eo');
     }
 }
