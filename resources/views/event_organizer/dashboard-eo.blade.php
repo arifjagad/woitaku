@@ -172,7 +172,7 @@
                         
                         <div class="card-header d-flex justify-content-between">
                             <h4>Transaksi Terbaru</h4>
-                            <a href="#" class="btn btn-primary">Lihat Semua</a>
+                            <a href="{{ route('participant-list') }}" class="btn btn-primary">Lihat Semua</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -191,51 +191,49 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($transaction as $data)
-                                            <tr>
-                                                <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td>{{ $data->event_name }}</td>
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
-                                                <td>
-                                                    @if ($data->transaction_status == 'pending')
-                                                        <span class="badge badge-warning">Pending</span>
-                                                    @elseif ($data->transaction_status == 'success')
-                                                        <span class="badge badge-success">Success</span>
-                                                    @elseif ($data->transaction_status == 'failed')
-                                                        <span class="badge badge-danger">Failed</span>
-                                                    @endif
-                                                </td>
-                                                <td>IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}</td>
-                                                <td>{{ $data->bank_name }}</td>
-                                                <td>
-                                                    @if ($data->proof_of_transaction)
-                                                        <a href="{{ asset('storage/' . $data->proof_of_transaction) }}" target="_blank" class="btn btn-primary">Lihat</a>
-                                                    @else
-                                                        <span class="badge badge-danger">Belum Upload</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if ($data->transaction_status == 'pending')
-                                                        <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button type="submit" class="btn btn-danger">Tolak</button>
-                                                        </form>
-                                                    @elseif ($data->transaction_status == 'check')
-                                                        <form action="{{ route('transaction.accept', $data->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button type="submit" class="btn btn-success">Terima</button>
-                                                        </form>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center">Tidak ada data.</td>
-                                            </tr>
-                                        @endforelse
+                                        @if(!empty($transaction))
+                                            @foreach ($transaction as $data)
+                                                <tr>
+                                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                                    <td>{{ $data->event_name }}</td>
+                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
+                                                    <td>
+                                                        @if ($data->transaction_status == 'pending')
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        @elseif ($data->transaction_status == 'success')
+                                                            <span class="badge badge-success">Success</span>
+                                                        @elseif ($data->transaction_status == 'failed')
+                                                            <span class="badge badge-danger">Failed</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}</td>
+                                                    <td>{{ $data->bank_name }}</td>
+                                                    <td>
+                                                        @if ($data->proof_of_transaction)
+                                                            <a href="{{ asset('storage/' . $data->proof_of_transaction) }}" target="_blank" class="btn btn-primary">Lihat</a>
+                                                        @else
+                                                            <span class="badge badge-danger">Belum Upload</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->transaction_status == 'pending')
+                                                            <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-danger">Tolak</button>
+                                                            </form>
+                                                        @elseif ($data->transaction_status == 'check')
+                                                            <form action="{{ route('transaction.accept', $data->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-success">Terima</button>
+                                                            </form>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
