@@ -1,1 +1,1 @@
-Detail Event Organizer
+Detail Event Organizer {{ $eventOrganizer->name}}

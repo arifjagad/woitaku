@@ -12,8 +12,7 @@ class DetailEventOrganizerController extends Controller
     public function indexDetailEventOrganizer($eoName)
     {
         $slug = Str::slug($eoName);
-
-        $eventOrganizer = User::where('name', $slug)->first();
+        $eventOrganizer = User::whereRaw("LOWER(REPLACE(name, ' ', '-')) = ?", $slug)->first();
 
         return view ('member.detail-event-organizer', compact('eventOrganizer'), ['type_menu' => 'detail-event-organizer']);
     }

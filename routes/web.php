@@ -147,5 +147,5 @@ Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');
-Route::get('{eoName}', [DetailEventOrganizerController::class, 'indexDetailEventOrganizer'])->name('detail-event-organizer');
-Route::get('{id}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');
+Route::get('eo/{eoName}', [DetailEventOrganizerController::class, 'indexDetailEventOrganizer'])->name('detail-event-organizer');
+Route::get('{eventName}', [DetailEventController::class, 'indexDetailEvent'])->name('detail-event');

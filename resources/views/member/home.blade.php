@@ -88,6 +88,8 @@
                 <div class="row py-3">
                     @forelse ($dataEvent->take(3) as $data)
                         <div class="col-12 col-md-4 col-lg-4">
+                            {{ $data->id }}
+                            <input type="hidden" name="event_id" value="{{ $data->id }}">
                             <article class="article article-style-c d-flex flex-column h-100">
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
@@ -114,7 +116,7 @@
                                     </div>
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->event_name }}</a>
+                                            <a href="{{ route('detail-event', ['eventName' => Str::slug($data->event_name)]) }}">{{ $data->event_name }}</a>
                                         </h2>
                                     </div>
                                     <p class="text-justify">

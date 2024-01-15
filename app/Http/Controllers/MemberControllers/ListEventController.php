@@ -21,7 +21,6 @@ class ListEventController extends Controller
             ->where('detail_event.verification', '=', 'accepted')
             ->paginate(12);
 
-
         return view('member.list-event', compact('dataEvent', 'dataEventCity'), ['type_menu' => 'list-event']);
     }
 
