@@ -97,7 +97,7 @@
                             <p class="text-center">Upload semua produk yang kamu punya ke dalam ini</p>
                         </div>
                         <div class="form-group col-12">
-                            <label>Name</label>
+                            <label>Nama Booth</label>
                             <input
                                 id="booth_name"
                                 type="text"
@@ -111,6 +111,27 @@
                                 {{$message}}
                             </div>
                             @enderror
+                        </div>
+                        <div class="form-group col-12">
+                            <label>Thumbnail Booth</label>
+                            <div class="custom-file">
+                                <input type="file"
+                                    name="thumbnail_booth"
+                                    class="custom-file-input @error('thumbnail_booth') is-invalid @enderror"
+                                    id="thumbnail_booth"
+                                    accept=".jpg, .jpeg, .png"
+                                    >
+                                <label class="custom-file-label">Choose File</label>
+                                <!-- Error Message -->
+                                @error('thumbnail_booth')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-text text-muted">
+                                Gambar harus memiliki ukuran maksimal 300 KB.
+                            </div>
                         </div>
                         <div class="form-group col-12">
                             <label>Deskripsi Booth</label>

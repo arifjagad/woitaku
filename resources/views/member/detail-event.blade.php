@@ -195,6 +195,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Tampilan Detail Perlombaan -->
                             <div class="tab-pane fade"
                                 id="perlombaan"
@@ -206,6 +207,8 @@
                                         @php session(['competition_id' => $data->id]); @endphp
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary h-100">
+                                                <img src="{{ asset('storage/'.$data->thumbnail_competition) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+
                                                 <div class="card-header">
                                                     <h4>{{ $data->competition_name }}</h4>
                                                 </div>
@@ -364,6 +367,8 @@
                                     @forelse($listBooth as $key => $data)
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card card-primary h-100">
+                                                <img src="{{ asset('storage/'.$data->thumbnail_booth) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+
                                                 <div class="d-flex justify-content-between card-header">
                                                     <h4>{{ $data->booth_code }}</h4>
                                                     <h4>{{ $data->booth_name }}</h4>

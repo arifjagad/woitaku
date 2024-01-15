@@ -33,6 +33,7 @@ class SettingBoothController extends Controller
 public function updateDetailBooth(Request $request)
 {
     $request->validate([
+        'thumbnail_booth' => 'image|mimes:jpeg,png,jpg|max:3000',
         'booth_image.*' => 'nullable|image|mimes:jpeg,png,jpg',
         'booth_name' => 'required|string|max:255',
     ]);
@@ -40,6 +41,16 @@ public function updateDetailBooth(Request $request)
     $detailBoothId = $request->input('booth_id');
     $detailBooth = DetailBooth::find($detailBoothId);
 
+    // Upload thumbnail
+    if ($request->hasFile('thumbnail_booth')) {
+        $file = $request->file('thumbnail_booth');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $filePathThumbnailBooth = 'booth_images/' . $fileName;
+
+        Storage::disk('public')->put($filePathThumbnailBooth, File::get($file));
+    }
+
+    $detailBooth->thumbnail_booth = $filePathThumbnailBooth ?? $detailBooth->thumbnail_booth;
     $detailBooth->booth_name = $request->input('booth_name');
     $detailBooth->booth_description = $request->input('booth_description');
 
@@ -66,6 +77,8 @@ public function updateDetailBooth(Request $request)
             $detailBooth->booth_image = json_encode($newImages);
         }
     }
+
+   
 
     $detailBooth->save();
     

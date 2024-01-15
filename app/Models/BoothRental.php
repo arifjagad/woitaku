@@ -13,6 +13,7 @@ class BoothRental extends Model
 
     protected $fillable = [
         'id_event',
+        'thumbnail_booth',
         'booth_code',
         'booth_size',
         'provided_facilities',
