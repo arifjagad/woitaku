@@ -67,7 +67,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], function () {
     // Route:Dashboard
     Route::get('dashboard-eo', [DashboardController_EventOrganizer::class, 'indexDashboard_EventOrganizer'])->name('dashboard-eo');
-    
+    Route::put('/transaction/accept/{id}', [DashboardController_EventOrganizer::class, 'acceptTransaction'])->name('transaction.accept');
+    Route::put('/transaction/reject/{id}', [DashboardController_EventOrganizer::class, 'rejectTransaction'])->name('transaction.reject');
+
     // Route:Profile
     Route::get('profile-eo', [ProfileEOController::class, 'indexProfileEO'])->name('profile-eo');
     Route::put('update-password-eo/{id}', [ProfileEOController::class, 'updatePasswordEO'])->name('update-password-eo');

@@ -20,7 +20,7 @@
                 <!-- Pengecekan apakah ada data event atau tidak -->
                 <div class="card">
                     <div class="card-header">
-                        <h4>Cari Tiket Peserta Berdasarkan ID</h4>
+                        <h4>Validasi Tiket Peserta Berdasarkan ID</h4>
                     </div>
                     <form action="{{ route('ticket-check') }}" method="post" class="mb-4">
                         @csrf
@@ -30,6 +30,7 @@
                                     <div class="form-group col-lg-3">
                                         <label>Nama Event</label>
                                         <select class="form-control select2" id="event_name" name="event_name">
+                                            <option value="">Pilih Event</option>
                                             @foreach($dataEvent as $data)
                                                 <option value="{{$data->id}}">{{ $data->event_name}}</option>
                                             @endforeach
@@ -48,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="input-group-append">
-                                    <button type="submit" class="btn btn-primary btn-block">Cari Tiket</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Validasi Tiket</button>
                                 </div>
                             </div>
                         </div>

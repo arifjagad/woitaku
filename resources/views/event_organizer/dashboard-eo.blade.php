@@ -20,7 +20,7 @@
         <div class="section-body">
             <!-- Count -->
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-primary">
                             <i class="far fa-solid fa-calendar-day"></i>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-warning">
                             <i class="far fa-solid fa-ranking-star"></i>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-danger">
                             <i class="far fa-solid fa-building"></i>
@@ -65,17 +65,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-8 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
-                            <i class="far fa-solid fa-users"></i>
+                            <i class="far fa-solid fa-money-bill-transfer"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Pendapatan</h4>
+                                <h4>Total Pendapatan Tahun {{ date('Y') }}</h4>
                             </div>
                             <div class="card-body">
                                 IDR {{ number_format($totalAmount, 0, ',', '.') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="far fa-solid fa-ticket"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Total Tiket Terjual Tahun {{ date('Y') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ $totalTransaction }} tiket
                             </div>
                         </div>
                     </div>
@@ -154,8 +169,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        
+                        <div class="card-header d-flex justify-content-between">
                             <h4>Transaksi Terbaru</h4>
+                            <a href="#" class="btn btn-primary">Lihat Semua</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -168,6 +185,9 @@
                                             <th>Tanggal Pemesanan</th>
                                             <th>Status</th>
                                             <th>Total Pembayaran</th>
+                                            <th>Metode Pembayaran</th>
+                                            <th>Bukti Pembayaran</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -187,6 +207,29 @@
                                                     @endif
                                                 </td>
                                                 <td>IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}</td>
+                                                <td>{{ $data->bank_name }}</td>
+                                                <td>
+                                                    @if ($data->proof_of_transaction)
+                                                        <a href="{{ asset('storage/' . $data->proof_of_transaction) }}" target="_blank" class="btn btn-primary">Lihat</a>
+                                                    @else
+                                                        <span class="badge badge-danger">Belum Upload</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($data->transaction_status == 'pending')
+                                                        <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-danger">Tolak</button>
+                                                        </form>
+                                                    @elseif ($data->transaction_status == 'check')
+                                                        <form action="{{ route('transaction.accept', $data->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-success">Terima</button>
+                                                        </form>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
