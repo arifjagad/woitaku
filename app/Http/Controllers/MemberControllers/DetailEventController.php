@@ -17,9 +17,9 @@ class DetailEventController extends Controller
     public function indexDetailEvent($eventName)
     {
         $slug = Str::slug($eventName);
-        $eventOrganizer = DetailEvent::whereRaw("LOWER(REPLACE(event_name, ' ', '-')) = ?", $slug)->first();
+        $eventName = DetailEvent::whereRaw("LOWER(REPLACE(event_name, ' ', '-')) = ?", $slug)->first();
 
-        $id = $eventOrganizer->id;
+        $id = $eventName->id;
 
         $detailEvent = DB::table('users')
             ->join('event_organizer', 'users.id', 'event_organizer.id_user')

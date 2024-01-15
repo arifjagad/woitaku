@@ -610,12 +610,10 @@
 </script>
 <script>
     $(document).ready(function () {
-        // Saat elemen select berubah
         $('#booth_code').change(function () {
             // Ambil nilai booth_code yang dipilih
             var selectedBoothId = $(this).val();
 
-            // Kirim permintaan AJAX untuk mendapatkan detail booth
             $.ajax({
                 url: '/get-booth-info/' + selectedBoothId,
                 type: 'GET',
