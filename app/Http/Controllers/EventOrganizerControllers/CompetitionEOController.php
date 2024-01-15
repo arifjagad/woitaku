@@ -34,7 +34,7 @@ class CompetitionEOController extends Controller
             ->get();
 
         if($dataEvent->isEmpty()){
-            toast('You must create an event first!', 'error');
+            toast('Harus memiliki event terlebih dahulu!', 'error');
             return redirect()->route('event-eo');
         }else{
             return view('event_organizer.competition.create-competition-eo', compact('dataEvent'), ['type_menu' => 'competition-eo']);
@@ -95,7 +95,7 @@ class CompetitionEOController extends Controller
             ]);
 
 
-            toast('Competition Successfully Created!', 'success');
+            toast('Berhasil membuat perlombaan!', 'success');
             return redirect()->route('competition-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -128,7 +128,7 @@ class CompetitionEOController extends Controller
         );
     }
     
-    public function updateCompetitionEO(Request $request){
+    public function updateCompetitionEO(Request $request, $competitionId){
         $selectedEventId = $request->input('event_name');
             
         try {
@@ -169,8 +169,9 @@ class CompetitionEOController extends Controller
 
             $competition_description = $dom->saveHTML();
 
-            // Post ke database
-            DetailCompetition::create([
+            // Update ke database
+            $competition = DetailCompetition::find($competitionId);
+            $competition->update([
                 'id_event' => $selectedEventId,
                 'competition_name' => $request->competition_name,
                 'competition_description' => $competition_description,
@@ -182,7 +183,7 @@ class CompetitionEOController extends Controller
             ]);
 
 
-            toast('Competition Successfully Updated!', 'success');
+            toast('Perlombaan berhasil diupdate!', 'success');
             return redirect()->route('competition-eo');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -195,7 +196,7 @@ class CompetitionEOController extends Controller
         $dataCompetition = DetailCompetition::find($id);
         $dataCompetition->delete();
 
-        toast('Competition Successfully Deleted!', 'success');
+        toast('Perlombaan berhasil dihapus!', 'success');
         return redirect()->route('competition-eo');
     }
 }

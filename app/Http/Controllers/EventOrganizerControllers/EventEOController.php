@@ -56,9 +56,9 @@ class EventEOController extends Controller
                 'end_date' => 'required|date|after_or_equal:start_date',
                 'ticket_price' => 'nullable|max:9',
                 'ticket_qty' => 'nullable|max:9',
-                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'booth_layout' => 'image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
             
             // Upload data dari summernote untuk deskripsi event
@@ -164,9 +164,9 @@ class EventEOController extends Controller
                 'end_date' => 'required|date|after_or_equal:start_date',
                 'ticket_price' => 'nullable|max:9',
                 'ticket_qty' => 'nullable|max:9',
-                'booth_layout' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'booth_layout' => 'image|mimes:jpeg,png,jpg|max:3000',
                 'document' => 'required|string',
-                'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'featured_image' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
 
             // Upload data dari summernote untuk deskripsi event
