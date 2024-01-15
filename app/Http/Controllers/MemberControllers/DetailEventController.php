@@ -10,10 +10,17 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use App\Models\Ticket;
 use App\Models\BoothRental;
+use App\Models\DetailEvent;
+
 class DetailEventController extends Controller
 {
-    public function indexDetailEvent($id)
+    public function indexDetailEvent($eventName)
     {
+        $slug = Str::slug($eventName);
+        $eventName = DetailEvent::whereRaw("LOWER(REPLACE(event_name, ' ', '-')) = ?", $slug)->first();
+
+        $id = $eventName->id;
+
         $detailEvent = DB::table('users')
             ->join('event_organizer', 'users.id', 'event_organizer.id_user')
             ->join('detail_event', 'users.id', 'detail_event.id_eo')

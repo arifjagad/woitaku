@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->event_name }}</a>
+                                            <a href="{{ route('detail-event', ['eventName' => Str::slug($data->event_name)]) }}">{{ $data->event_name }}</a>
                                         </h2>
                                     </div>
                                     <div class="article-user">
@@ -91,7 +91,7 @@
                                             src="{{ asset('storage/' . $data->foto_profile) }}">
                                         <div class="article-user-details">
                                             <div class="user-detail-name">
-                                                <a href="#">{{ $data->name }}</a>
+                                                <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($data->name)]) }}">{{ $data->name }}</a>
                                             </div>
                                             <div class="text-job">Verified</div>
                                         </div>
