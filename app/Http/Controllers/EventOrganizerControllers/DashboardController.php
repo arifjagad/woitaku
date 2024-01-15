@@ -4,6 +4,7 @@ namespace App\Http\Controllers\EventOrganizerControllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
@@ -38,8 +39,16 @@ class DashboardController extends Controller
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
             ->where('id_eo', $authId)
             ->where('transaction.transaction_status', '=', 'success')
+            ->whereYear('transaction.created_at', now()->year)
             ->sum('transaction.transaction_amout');
             
+        $totalTransaction = DB::table('transaction')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->where('id_eo', $authId)
+            ->where('transaction.transaction_status', '=', 'success')
+            ->whereYear('transaction.created_at', now()->year)
+            ->count();
+
         // Menghitung jumlah data per bulan dari tabel detail_event
         $totalAmoutGraph = DB::table('transaction')
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
@@ -94,8 +103,13 @@ class DashboardController extends Controller
         $transaction = DB::table('users')
             ->join('detail_event', 'detail_event.id_eo', '=', 'users.id')
             ->join('transaction', 'transaction.id_event', '=', 'detail_event.id')
+            ->join('payment_methods', 'payment_methods.id', '=', 'transaction.id_payment_methods')
             ->where('detail_event.id_eo', $authId)
+            ->orderByDesc('transaction.created_at')
+            ->take(10)
+            ->select('users.*', 'detail_event.*', 'payment_methods.*', 'transaction.*')
             ->get();
+
 
         return view('event_organizer.dashboard-eo', 
             compact(
@@ -104,6 +118,7 @@ class DashboardController extends Controller
                 'competitionCount', 
                 'boothCount', 
                 'totalAmount',
+                'totalTransaction',
                 'detailEventData',
                 'detailCompetitionData',
                 'boothRentalData',
@@ -114,4 +129,6 @@ class DashboardController extends Controller
             ['type_menu' => 'event_organizer.dashboard-eo'],
         );
     }
+
+    
 }

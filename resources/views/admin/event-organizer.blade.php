@@ -42,7 +42,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table" id="list-event-organizer">
+                                <table class="table-striped table display nowrap" id="list-event-organizer">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
