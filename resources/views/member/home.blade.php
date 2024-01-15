@@ -125,7 +125,7 @@
                                             src="{{ asset('storage/' . $data->foto_profile) }}">
                                         <div class="article-user-details">
                                             <div class="user-detail-name">
-                                                <a href="{{ route('detail-event', ['id' => $data->id]) }}">{{ $data->name }}</a>
+                                                <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($data->name)]) }}">{{ $data->name }}</a>
                                             </div>
                                             <div class="text-job">Verified</div>
                                         </div>

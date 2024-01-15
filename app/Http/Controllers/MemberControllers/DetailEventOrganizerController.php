@@ -3,30 +3,18 @@
 namespace App\Http\Controllers\MemberControllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
-use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\EventOrganizer;
+use App\Models\User;
 use Illuminate\Support\Str;
-use App\Models\Ticket;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class DetailEventOrganizerController extends Controller
 {
-    public function indexDetailEventOrganizer($id)
+    public function indexDetailEventOrganizer($eoName)
     {
-        $detailEventOrganizer = DB::table('users')
-            ->join('event_organizer', 'users.id', 'event_organizer.id_user')
-            ->join('detail_event', 'users.id', 'detail_event.id_eo')
-            ->where('detail_event.id', '=', $id)
-            ->first();
+        $slug = Str::slug($eoName);
 
-        $listEvent = DB::table('users')
-            ->join('event_organizer', 'users.id', 'event_organizer.id_user')
-            ->join('detail_event', 'users.id', 'detail_event.id_eo')
-            ->where('detail_event.id', '=', $id)
-            ->get();
+        $eventOrganizer = User::where('name', $slug)->first();
 
-        return view ('detail-event-organizer', compact('detailEventOrganizer'), ['type_menu' => 'detail-event-organizer']);
+        return view ('member.detail-event-organizer', compact('eventOrganizer'), ['type_menu' => 'detail-event-organizer']);
     }
 }
