@@ -417,8 +417,6 @@
                                             </div>
                                         </div>
                                     @endforelse
-
-                                    
                                 </div>
                             </div>
 
@@ -433,137 +431,32 @@
                                             asset('storage/'.$detailEvent->booth_layout)
                                         }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
                                     </div>
-                                    @forelse($detailBooth as $key => $data)
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="card card-primary h-100">
-                                                <div class="d-flex justify-content-between card-header">
-                                                    <h4>{{ $data->booth_code }}</h4>
-                                                    @if ($data->availability_status == 'available')
-                                                        <span class="badge badge-success text-uppercase py-2 px-4">
-                                                            Tersedia
-                                                        </span>
-                                                    @else
-                                                        <span class="badge badge-danger text-uppercase py-2 px-4">
-                                                            Tidak Tersedia
-                                                        </span>
-                                                    @endif
+                                    <div class="col-12 card">
+                                        <div class="input-group">
+                                            <div class="form-group col-12">
+                                                <label>Kode Booth</label>
+                                                <div 
+                                                    class="float-right"
+                                                    data-toggle="tooltip"
+                                                    title="Pilih lokasi booth yang di-inginkan">
+                                                    <label>
+                                                        <i class="fa-solid fa-circle-info"></i> Informasi
+                                                    </label>
                                                 </div>
-                                                <div class="card-body">
-                                                </div>
-                                                <div class="card-footer">
-                                                    <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailRentalBoothModal{{ $key }}">Detail</a>
-                                                    @if($data->availability_status == 'available')
-                                                        @if(Auth::check())
-                                                            @if(strtotime(now()) < strtotime($data->end_date))
-                                                                <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarRentalBoothModal{{ $key }}">
-                                                                    Pesan Booth
-                                                                </a>
-                                                            @else
-                                                                <a href="#" class="btn btn-success show-detail" onclick="checkEventDate()">Pesan Booth</a>
-                                                            @endif
-                                                        @else
-                                                            <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
-                                                        @endif
-                                                    @endif
+                                                <select class="form-control select2" name="booth_code" id="booth_code">
+                                                    <option value="">Pilih Booth</option>
+                                                    @foreach ($boothCode as $data)
+                                                        <option value="{{ $data->id }}">
+                                                            {{ $data->booth_code }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div id="booth_info">
+                                                    @include('booth_info', ['detailBooth' => $detailBooth])
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Modal Detail Booth -->
-                                        <div class="modal fade" id="detailRentalBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="detailRentalBoothModalLabel" aria-hidden="true">
-                                            <!-- Modal content -->
-                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="detailRentalBoothModalLabel">Detail Booth</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h3 class="text-primary">{{ $data->booth_code }}</h3>
-                                                            <h3 class="text-primary">IDR {{ number_format($data->rental_price, 0, ',', '.') }}</h3>
-                                                        </div>
-                                                        <div class="d-flex justify-content-between">
-                                                            <h6>Ukuran: <span>{{ $data->booth_size }} m<sup>2</sup></span></h6>
-                                                            <div>
-                                                                <h6>
-                                                                    {{ \Carbon\Carbon::parse($data->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->end_date)->translatedFormat('d F Y') }}
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                        <h6 class="mt-5">Fasilitas:</h6>
-                                                        <p class="text-justify mt-2">
-                                                            {!! $data->provided_facilities !!}
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Modal Pemesanan Booth -->
-                                        <div class="modal fade" id="daftarRentalBoothModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="daftarRentalBoothModalLabel" aria-hidden="true">
-                                            <!-- Modal content -->
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('payment-booth') }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="rentalBooth_id" value="{{ $data->id }}" />
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="daftarRentalBoothModalLabel">Pendaftaran Booth</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <table class="table">
-                                                                <tr>
-                                                                    <td class="col-5"><b>Code Booth:</b></td>
-                                                                    <td>{{ $data->booth_code }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="col-5"><b>Biaya pendaftaran:</b></td>
-                                                                    <td>IDR {{ number_format($data->rental_price, 0, ',', '.') }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="col-5"><b>Metode Pembayaran:</b></td>
-                                                                    <td>
-                                                                        <div class="input-group">
-                                                                            <select class="form-control select2" name="payment_method">
-                                                                                @foreach ($detailPaymentMethod as $method)
-                                                                                    <option value="{{ $method->id }}">Transfer {{ $method->bank_name }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success">Pesan Booth</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="col-12">
-                                            <div class="empty-state"
-                                                data-height="400">
-                                                <div class="empty-state-icon">
-                                                    <i class="fas fa-question"></i>
-                                                </div>
-                                                <h2>Maaf, event ini tidak menyewakan booth.</h2>
-                                                <p class="lead">
-                                                    Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    @endforelse
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -698,7 +591,6 @@
         });
     });
 </script>
-
 <script>
     function checkEventDate() {
         var eventEndDate = '{{ $detailEvent->end_date }}';
@@ -713,10 +605,46 @@
                 confirmButtonText: 'Ok'
             });
         } else {
-            // Lakukan apa yang diperlukan jika event masih berlangsung
-            // Contoh: Tampilkan modal atau lanjutkan ke halaman pembelian tiket
         }
     }
 </script>
+<script>
+    $(document).ready(function () {
+        // Saat elemen select berubah
+        $('#booth_code').change(function () {
+            // Ambil nilai booth_code yang dipilih
+            var selectedBoothId = $(this).val();
 
+            // Kirim permintaan AJAX untuk mendapatkan detail booth
+            $.ajax({
+                url: '/get-booth-info/' + selectedBoothId,
+                type: 'GET',
+                data: { booth_code: selectedBoothId },
+                success: function (response) {
+                    // Tampilkan data booth di dalam div dengan id "booth_info"
+                    $('#booth_info').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Tangani klik pada tombol "Pesan Booth"
+        $('#btnPesanBoothModal').on('click', function () {
+            // Ambil nilai data-rental-id dari tombol yang diklik
+            var rentalId = $(this).data('rental-id');
+
+            // Setel nilai input tersembunyi pada modal sesuai dengan data-rental-id
+            $('#daftarRentalBoothModal').find('input[name="rentalBooth_id"]').val(rentalId);
+
+            // Tampilkan modal
+            $('#daftarRentalBoothModal').modal('show');
+        });
+    });
+</script>
 @endpush

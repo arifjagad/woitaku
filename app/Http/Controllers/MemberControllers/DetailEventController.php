@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use App\Models\Ticket;
-
+use App\Models\BoothRental;
 class DetailEventController extends Controller
 {
     public function indexDetailEvent($id)
@@ -25,9 +25,10 @@ class DetailEventController extends Controller
             ->where('detail_competition.id_event', '=', $id)
             ->get();
 
-        $detailBooth = DB::table('detail_event')
+        $boothCode = DB::table('detail_event')
             ->join('booth_rental', 'detail_event.id', '=', 'booth_rental.id_event')
             ->where('booth_rental.id_event', '=', $id)
+            ->where('booth_rental.availability_status', '=', 'available')
             ->get();
 
         $listBooth = DB::table('transaction')
@@ -44,12 +45,39 @@ class DetailEventController extends Controller
             ->join('payment_methods', 'detail_event.id_eo', '=', 'payment_methods.id_eo')
             ->where('detail_event.id', '=', $id)
             ->get();
-            
+
+        $detailBooth = null; 
+        
+        // Periksa apakah permintaan datang melalui AJAX
+        if (request()->ajax()) {
+            $idBooth = request()->input('booth_code');
+            $detailBooth = $this->getBoothInfo($idBooth);
+            return response()->json(['detailBooth' => $detailBooth]);
+        }
+
         $start_date_event = Carbon::parse($detailEvent->start_date);
         $end_date_event = Carbon::parse($detailEvent->end_date);
         $daysDifference = $end_date_event->diffInDays($start_date_event);
         
-        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'listBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'boothCode', 'listBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+    }
+
+    public function getBoothInfo($boothCode){
+        $detailBooth = DB::table('detail_event')
+            ->join('booth_rental', 'detail_event.id', '=', 'booth_rental.id_event')
+            ->where('booth_rental.id', '=', $boothCode)
+            ->where('booth_rental.availability_status', '=', 'available')
+            ->first();
+
+        // Menggunakan event_id yang sesuai dengan boothCode
+        $event_id = $detailBooth->id_event;
+
+        $detailPaymentMethod = DB::table('detail_event')
+        ->join('payment_methods', 'detail_event.id_eo', '=', 'payment_methods.id_eo')
+        ->where('detail_event.id', '=', $event_id)
+        ->get(); 
+
+        return response()->view('booth_info', ['detailBooth' => $detailBooth, 'detailPaymentMethod' => $detailPaymentMethod]);
     }
     
     public function transactionTiket(Request $request){
@@ -210,6 +238,7 @@ class DetailEventController extends Controller
     }
 
     public function transactionBooth(Request $request){
+        $userId = auth()->user()->id;
         $event_id = session('event_id');
         $rentalBoothId = $request->input('rentalBooth_id');
 
@@ -221,23 +250,33 @@ class DetailEventController extends Controller
         
         $paymentMethodId = $request->input('payment_method');
 
-        // Simpan data transaksi ke database
-        $transaction = new Transaction();
-        $transaction->id_member = auth()->user()->id;
-        $transaction->id_event = $event_id;
-        $transaction->id_competition = null;
-        $transaction->id_booth_rental = $rentalBoothId;
-        $transaction->preferred_date = null;
-        $transaction->qty = 1;
-        $transaction->id_category = 3;
-        $transaction->transaction_amout = ($detailEvent->rental_price)+(mt_rand(1, 99));;
-        $transaction->transaction_status = 'pending';
-        $transaction->id_payment_methods = $paymentMethodId;
-        $transaction->expiration_time = Carbon::now()->addDay();
+        // Cek apakah pengguna sudah mendaftar untuk event atau kompetisi tertentu
+        $existingTransaction = Transaction::where('id_member', $userId)
+        ->first();
 
-        
-        $transaction->save();
-        // Redirect ke route payment dengan membawa ID transaksi
-        return redirect()->route('invoice', ['id' => $transaction->id]);
+        // Jika transaksi sudah ada, berikan pesan kesalahan atau ambil tindakan lain
+        if ($existingTransaction) {
+            toast('Anda sudah memiliki booth di event ini.', 'info');
+            return redirect()->back();
+        }else{
+            // Simpan data transaksi ke database
+            $transaction = new Transaction();
+            $transaction->id_member = auth()->user()->id;
+            $transaction->id_event = $event_id;
+            $transaction->id_competition = null;
+            $transaction->id_booth_rental = $rentalBoothId;
+            $transaction->preferred_date = null;
+            $transaction->qty = 1;
+            $transaction->id_category = 3;
+            $transaction->transaction_amout = ($detailEvent->rental_price)+(mt_rand(1, 99));;
+            $transaction->transaction_status = 'pending';
+            $transaction->id_payment_methods = $paymentMethodId;
+            $transaction->expiration_time = Carbon::now()->addDay();
+
+
+            $transaction->save();
+            // Redirect ke route payment dengan membawa ID transaksi
+            return redirect()->route('invoice', ['id' => $transaction->id]);
+        }
     }
 }
