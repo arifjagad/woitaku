@@ -127,7 +127,7 @@
                                     <div class="form-group col-lg-12">
                                         <label>Fasilitas Booth</label>
                                         <textarea
-                                            class="summernote @error('provided_facilities') is-invalid @enderror"
+                                            class="summernote-simple @error('provided_facilities') is-invalid @enderror"
                                             name="provided_facilities"
                                             id="provided_facilities"
                                             required>

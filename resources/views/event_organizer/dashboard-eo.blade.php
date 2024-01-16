@@ -98,10 +98,11 @@
             </div>
             <!-- Graph -->
             <div class="row align-items-stretch">
-                <div class="col-9">
+                <div class="col-8">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             <h4>Grafik Perkembangan Pendapatan Untuk Setiap Bulan</h4>
+                            <h4>Tahun {{ date('Y') }}</h4>
                         </div>
                         <div class="card-body">
                             <!-- Data Perkembangan Bulanan Untuk Setiap Kategori -->
@@ -109,10 +110,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="card gradient-bottom">
-                        <div class="card-header">
-                            <h4>5 Event Terpopuler - </h4>
+                        <div class="card-header d-flex justify-content-between">
+                            <h4>5 Event Terpopuler</h4>
                             <h4>{{ now()->translatedFormat('F') }}</h4>
                         </div>
                         <div class="card-body"
@@ -133,7 +134,7 @@
                                                     <div class="budget-price-square bg-primary"
                                                         data-width="{{ 60 - ($key + 1) * 10 }}%"></div>
                                                     <div class="budget-price-label">
-                                                        {{ $data->transaction_count }} tiket
+                                                        {{ $data->total_tickets }} tiket
                                                     </div>
                                                 </div>
                                                 <div class="budget-price">

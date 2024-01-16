@@ -12,34 +12,36 @@
     <div class="container">
         <div class="row my-5">
             <div class="col-3">
-                <h4 class="text-primary">Filter</h4>
-                <form action="{{ route('filter-event') }}" method="GET">
-                    <div class="form-group">
-                        <label for="price-range">Jenis Event</label>
-                        <select class="form-control" id="price-range" name="price_range">
-                            <option value="">Semua</option>
-                            <option value="free">Gratis</option>
-                            <option value="paid">Berbayar</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Kota Event</label>
-                        <select class="form-control select2" id="city" name="city">
-                            <option value="">Pilih Kota</option>
-                            @foreach ($dataEventCity as $data)
-                                <option value="{{ $data->city }}">{{ $data->city }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="{{ route('list-event') }}" class="btn btn-primary btn-block">Reset</a>
+                <div class="sticky-top" style="top: 30px;">
+                    <h4 class="text-primary">Filter</h4>
+                    <form action="{{ route('filter-event') }}" method="GET">
+                        <div class="form-group">
+                            <label for="price-range">Jenis Event</label>
+                            <select class="form-control" id="price-range" name="price_range">
+                                <option value="">Semua</option>
+                                <option value="free">Gratis</option>
+                                <option value="paid">Berbayar</option>
+                            </select>
                         </div>
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                        <div class="form-group">
+                            <label>Kota Event</label>
+                            <select class="form-control select2" id="city" name="city">
+                                <option value="">Pilih Kota</option>
+                                @foreach ($dataEventCity as $data)
+                                    <option value="{{ $data->city }}">{{ $data->city }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    </div>
-                </form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{ route('list-event') }}" class="btn btn-primary btn-block">Reset</a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="col-9">
                 <form action="{{ route('search-event') }}" method="GET" class="mb-4">
@@ -52,8 +54,8 @@
                 </form>
                 <div class="row">
                     @forelse($dataEvent as $data)
-                        <div class="col-4 h-100">
-                            <article class="article article-style-c">
+                        <div class="col-6">
+                            <article class="article article-style-c h-100">
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                     </div>
@@ -113,7 +115,7 @@
                 </div>
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+                    <ul class="pagination mt-4">
                         <li class="page-item">
                             <span class="sr-only">Previous</span>
                         </li>

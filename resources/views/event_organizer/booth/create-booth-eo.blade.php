@@ -127,11 +127,13 @@
                                     <div class="form-group col-lg-12">
                                         <label>Fasilitas Booth</label>
                                         <textarea
-                                            class="summernote @error('provided_facilities') is-invalid @enderror"
+                                            class="summernote-simple @error('provided_facilities') is-invalid @enderror"
                                             name="provided_facilities"
                                             id="provided_facilities"
+                                            value="{{ old('provided_facilities') }}"
+                                            placeholder=" 1. Gratis Tiket Masuk Untuk 3 Orang"
                                             required>
-                                            {{ old('provided_facilities') }}
+                                               
                                         </textarea>
                                         <!-- Error Message -->
                                         @error('provided_facilities')

@@ -44,6 +44,7 @@ class DashboardController extends Controller
             
         $totalTransaction = DB::table('transaction')
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('id_eo', $authId)
             ->where('transaction.transaction_status', '=', 'success')
             ->whereYear('transaction.created_at', now()->year)
@@ -85,18 +86,19 @@ class DashboardController extends Controller
         // Menampilkan 5 event terpopuler untuk tiap bulan (berdasarkan jumlah transaksi)
         $eventPopular = DB::table('detail_event')
             ->join('transaction', 'transaction.id_event', 'detail_event.id')
+            ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('detail_event.id_eo', $authId)
             ->whereMonth('transaction.created_at', now()->month)
             ->select([
                 'detail_event.id',
                 'detail_event.event_name',
                 'detail_event.featured_image',
-                DB::raw('COUNT(transaction.id) as transaction_count'),
-                DB::raw('SUM(transaction.transaction_amout) as total_transaction_amount'), 
-
+                DB::raw('COUNT(ticket.id) as total_tickets'), // Jumlah tiket
+                DB::raw('COUNT(transaction.id) as total_transactions'), // Jumlah transaksi
+                DB::raw('SUM(transaction.transaction_amout / transaction.qty) as total_transaction_amount'), // Total transaksi
             ])
             ->groupBy('detail_event.id', 'detail_event.event_name')
-            ->orderByDesc('transaction_count')
+            ->orderByDesc('total_transactions')
             ->take(5)
             ->get();
 

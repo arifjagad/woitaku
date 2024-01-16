@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table-striped table" id="table-1">
+                            <table class="table-striped table display nowrap" id="table-1">
                                 <thead>
                                     <tr>
                                         <th class="text-center">

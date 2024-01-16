@@ -19,7 +19,7 @@ class ListEventController extends Controller
             ->join('event_organizer', 'users.id', 'event_organizer.id_user')
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
-            ->paginate(12);
+            ->paginate(8);
 
         return view('member.list-event', compact('dataEvent', 'dataEventCity'), ['type_menu' => 'list-event']);
     }
@@ -31,7 +31,7 @@ class ListEventController extends Controller
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
             ->where('detail_event.event_name', 'like', "%".$search."%")
-            ->paginate(12);
+            ->paginate(8);
 
         return view('member.list-event', compact('dataEvent'), ['type_menu' => 'list-event']);
     }
@@ -67,7 +67,7 @@ class ListEventController extends Controller
         }
 
         $dataEvent = $dataEvent->orderBy('detail_event.created_at', 'desc')
-            ->paginate(12);
+            ->paginate(8);
 
         return view('member.list-event', compact('dataEvent', 'dataEventCity'), ['type_menu' => 'list-event']);
     }
