@@ -67,10 +67,10 @@
                                                 </div>
                                                 <div class="article-badge">
                                                     <div class="d-flex">
-                                                        @if(\Carbon\Carbon::parse($data->end_date)->isPast())
-                                                            <div class="article-badge-item bg-secondary text-uppercase">
+                                                        @if(\Carbon\Carbon::parse($data->end_date)->addDay()->isPast())
+                                                            <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
                                                                 <span class="text-dark">Event Berakhir</span>
-                                                            </div>
+                                                            </span>
                                                         @endif
                                                         <div class="ml-2 article-badge-item bg-success text-uppercase">
                                                             @if ($data->ticket_price == 0)
@@ -95,8 +95,14 @@
                                                     </h2>
                                                 </div>
                                                 <div class="article-user">
-                                                    <img alt="image"
-                                                        src="{{ asset('storage/' . $data->foto_profile) }}">
+                                                    @if($data->foto_profile == null)
+                                                        <img
+                                                            alt="image"
+                                                            src="{{ asset('img/avatar/avatar-1.png') }}">
+                                                    @else
+                                                        <img alt="image"
+                                                            src="{{ asset('storage/' . $data->foto_profile) }}">
+                                                    @endif
                                                     <div class="article-user-details">
                                                         <div class="user-detail-name">
                                                             <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($data->name)]) }}">{{ $data->name }}</a>

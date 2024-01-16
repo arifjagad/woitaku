@@ -93,6 +93,12 @@
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                     </div>
+                                    @if(\Carbon\Carbon::parse($data->end_date)->addDay()->isPast())
+                                        <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
+                                            <span class="text-dark">Event Berakhir</span>
+                                        </span>
+                                    @endif
+                                    
                                     <div class="article-badge">
                                         <div class="article-badge-item bg-success text-uppercase">
                                             @if ($data->ticket_price == 0)

@@ -73,7 +73,7 @@
                                         <div class="card">
                                             <div class="card-header d-flex justify-content-between" style="position: relative;">
                                                 <img src="{{ asset('storage/'.$detailEvent->featured_image) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
-                                                @if(\Carbon\Carbon::parse($detailEvent->end_date)->isPast())
+                                                @if(\Carbon\Carbon::parse($detailEvent->end_date)->addDay()->isPast())
                                                     <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
                                                         <span class="text-dark">Event Berakhir</span>
                                                     </span>
