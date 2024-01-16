@@ -182,7 +182,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nama Event</th>
-                                            <th>Nama Pemesan</th>
+                                            <th>Nama Member</th>
                                             <th>Tanggal Transaksi</th>
                                             <th>Kategori Transaksi</th>
                                             <th>Status</th>

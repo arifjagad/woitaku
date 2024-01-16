@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Peserta Event')
+@section('title', 'List Transaction')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,7 +16,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Daftar Peserta Event</h1>
+            <h1>Daftar Transaksi Event</h1>
         </div>
 
         <div class="section-body">
@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Daftar Peserta Event</h4>
+                            <h4>Daftar Transaksi</h4>
                         </div>
                         <div class="card-body">
                             <form id="your-form-id">
@@ -56,21 +56,23 @@
                                 <table class="table-striped table display nowrap" id="list-transaction">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Id Tiket</th>
+                                            <th>ID</th>
                                             <th>Nama Event</th>
-                                            <th>Nama Member</th>
+                                            <th>Nama Pemesan</th>
                                             <th>Tanggal Transaksi</th>
                                             <th>Kategori Transaksi</th>
                                             <th>Status</th>
+                                            <th>Total Pembayaran</th>
+                                            <th>Metode Pembayaran</th>
+                                            <th>Bukti Pembayaran</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if(!empty($dataTicket))
-                                            @foreach ($dataTicket as $data)
+                                        @if(!empty($dataTransaction))
+                                            @foreach ($dataTransaction as $data)
                                                 <tr>
                                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->ticket_identifier }}</td>
                                                     <td>{{ $data->event_name }}</td>
                                                     <td>{{ $data->name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
@@ -84,10 +86,43 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status == 'unused')
-                                                            <span class="badge badge-danger">Belum digunakan</span>
-                                                        @elseif ($data->status == 'success')
-                                                            <span class="badge badge-success">Sudah digunakan</span>
+                                                        @if ($data->transaction_status == 'pending')
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        @elseif ($data->transaction_status == 'success')
+                                                            <span class="badge badge-success">Berhasil</span>
+                                                        @elseif ($data->transaction_status == 'failed')
+                                                            <span class="badge badge-danger">Gagal</span>
+                                                        @elseif ($data->transaction_status == 'check')
+                                                            <span class="badge badge-info">Sedang dicek</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>IDR {{ number_format($data->transaction_amout, 0, ',', '.') }}</td>
+                                                    <td>{{ $data->bank_name }}</td>
+                                                    <td>
+                                                        @if ($data->proof_of_transaction)
+                                                            <a href="{{ asset('storage/' . $data->proof_of_transaction) }}" target="_blank" class="btn btn-primary">Lihat</a>
+                                                        @else
+                                                            <span class="badge badge-danger">Belum Upload</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="d-flex justify-content-end">
+                                                        @if ($data->transaction_status == 'pending')
+                                                            <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-danger">Tolak</button>
+                                                            </form>
+                                                        @elseif ($data->transaction_status == 'check')
+                                                            <form action="{{ route('transaction.accept', $data->id) }}" method="POST" class="mr-2">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-success">Terima</button>
+                                                            </form>
+                                                            <form action="{{ route('transaction.reject', $data->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-danger">Tolak</button>
+                                                            </form>
                                                         @endif
                                                     </td>
                                                 </tr>
