@@ -14,9 +14,16 @@
             <div class="col-12">
                 <div class="card profile-widget">
                     <div class="profile-widget-header">
-                        <img alt="image"
-                            src="{{ asset('storage/' . $eventOrganizer->foto_profile) }}"
-                            class="rounded-circle profile-widget-picture">
+                        @if($eventOrganizer->foto_profile == null)
+                            <img
+                                alt="image"
+                                src="{{ asset('img/avatar/avatar-1.png') }}"
+                                class="rounded-circle profile-widget-picture">
+                        @else
+                            <img alt="image"
+                                src="{{ asset('storage/' . $eventOrganizer->foto_profile) }}"
+                                class="rounded-circle profile-widget-picture">
+                        @endif
                         <div class="profile-widget-items">
                             <div class="profile-widget-item">
                                 <div class="profile-widget-item-label">Tanggal Bergabung</div>

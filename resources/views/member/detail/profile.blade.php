@@ -20,7 +20,13 @@
                     <!-- Panggil Components Sidebar-Profile.blade.php -->
                     @include('components.sidebar-profile')
                     <div class="col-12 col-md-6 col-lg-9">
+                        @if(auth()->user()->email_verified_at == null)
+                        <div class="alert alert-danger mb-4">
+                            Akun belum diverifikasi, silahkan cek email anda untuk melakukan verifikasi akun.
+                        </div>
+                        @endif
                         <div class="card">
+                            
                             <div class="card-header">
                                 <h4>Informasi Pribadi</h4>
                             </div>

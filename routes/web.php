@@ -118,11 +118,9 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
 });
 
 // Route untuk usertype Member
-Route::group(['middleware' => ['auth', 'role:member']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'role:member']], function () {
     // Detail
-    Route::get('profile', [ProfileController::class, 'indexProfile'])->name('profile');
-    Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
-    Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
+    
     Route::get('history-transaction', [HistoryTransactionController::class, 'indexHistoryTransaction'])->name('history-transaction');
     Route::get('download-ticket', [DownloadTicketController::class, 'indexDownloadTicket'])->name('download-ticket');
     Route::get('download-ticket-event/{id}', [DownloadTicketController::class, 'downloadTicket'])->name('download-ticket-event');
@@ -144,6 +142,9 @@ Route::group(['middleware' => ['auth', 'role:member']], function () {
 // Route untuk semua (bisa diakses sebelum login)
 Route::get('/', [Index_Member::class, 'homeMember'])->name('home');
 Route::get('/home', [Index_Member::class, 'homeMember'])->name('home');
+Route::get('profile', [ProfileController::class, 'indexProfile'])->name('profile');
+Route::put('update-profile/{id}', [ProfileController::class, 'updateProfile'])->name('update-profile');
+Route::put('update-password/{id}', [ProfileController::class, 'updatePasswordProfile'])->name('update-password');
 Route::get('list-event', [ListEventController::class, 'indexListEvent'])->name('list-event');
 Route::get('/search-event', [ListEventController::class, 'searchEvent'])->name('search-event');
 Route::get('/filter-event', [ListEventController::class, 'filterEvent'])->name('filter-event');

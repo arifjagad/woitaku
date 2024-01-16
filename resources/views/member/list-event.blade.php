@@ -87,8 +87,14 @@
                                         </h2>
                                     </div>
                                     <div class="article-user">
-                                        <img alt="image"
-                                            src="{{ asset('storage/' . $data->foto_profile) }}">
+                                        @if($data->foto_profile == null)
+                                            <img
+                                                alt="image"
+                                                src="{{ asset('img/avatar/avatar-1.png') }}">
+                                        @else
+                                            <img alt="image"
+                                                src="{{ asset('storage/' . $data->foto_profile) }}">
+                                        @endif
                                         <div class="article-user-details">
                                             <div class="user-detail-name">
                                                 <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($data->name)]) }}">{{ $data->name }}</a>

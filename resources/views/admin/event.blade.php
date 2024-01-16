@@ -42,7 +42,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table-striped table display nowrap" id="table-event">
+                                <table class="table-striped table display nowrap" id="table-1">
                                     <thead>
                                         <tr>
                                             <th class="text-center">
@@ -59,7 +59,7 @@
                                     </thead>
                                     <tbody>
                                         @php $id = 1; @endphp
-                                        @foreach ($datas as $data)
+                                        @forelse ($datas as $data)
                                             <tr>
                                                 <td class="text-center">{{ $id++ }}</td>
                                                 <td>{{ $data->event_name }}</td>
@@ -97,7 +97,9 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

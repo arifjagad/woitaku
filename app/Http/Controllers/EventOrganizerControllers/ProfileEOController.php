@@ -39,7 +39,7 @@ class ProfileEOController extends Controller
                 'address' => 'required|string|max:150',
                 'city' => 'required|string',
                 'whatsappNumber' => ['required', 'string', 'min:9', 'max:15', 'regex:/^628[0-9]+$/'],
-                'foto_profile' => 'required|image|mimes:jpeg,png,jpg|max:3000',
+                'foto_profile' => 'image|mimes:jpeg,png,jpg|max:3000',
             ]);
     
             DB::beginTransaction();

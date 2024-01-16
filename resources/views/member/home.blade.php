@@ -88,7 +88,6 @@
                 <div class="row py-3">
                     @forelse ($dataEvent->take(3) as $data)
                         <div class="col-12 col-md-4 col-lg-4">
-                            {{ $data->id }}
                             <input type="hidden" name="event_id" value="{{ $data->id }}">
                             <article class="article article-style-c d-flex flex-column h-100">
                                 <div class="article-header">
@@ -123,8 +122,14 @@
                                         {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                     </p>
                                     <div class="article-user mt-auto">
-                                        <img alt="image"
-                                            src="{{ asset('storage/' . $data->foto_profile) }}">
+                                        @if($data->foto_profile == null)
+                                            <img
+                                                alt="image"
+                                                src="{{ asset('img/avatar/avatar-1.png') }}">
+                                        @else
+                                            <img alt="image"
+                                                src="{{ asset('storage/' . $data->foto_profile) }}">
+                                        @endif
                                         <div class="article-user-details">
                                             <div class="user-detail-name">
                                                 <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($data->name)]) }}">{{ $data->name }}</a>
