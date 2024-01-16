@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 use App\Models\Ticket;
 use App\Models\BoothRental;
 use App\Models\DetailEvent;
+use App\Models\DetailCompetition;
+use App\Models\DetailBooth;
+
 
 class DetailEventController extends Controller
 {
@@ -263,8 +266,11 @@ class DetailEventController extends Controller
         $paymentMethodId = $request->input('payment_method');
 
         // Cek apakah pengguna sudah mendaftar untuk event atau kompetisi tertentu
-        $existingTransaction = Transaction::where('id_member', $userId)
-        ->first();
+        $existingTransaction = DB::table('users')
+            ->join('transaction', 'transaction.id_member', '=', 'users.id')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->join('detail_booth', 'detail_booth.id_member', '=', 'transaction.id_member')
+            ->first();
 
         // Jika transaksi sudah ada, berikan pesan kesalahan atau ambil tindakan lain
         if ($existingTransaction) {
