@@ -84,7 +84,7 @@
                 <tr>
                     <td>Tanggal Pembelian</td>
                     <td>:</td>
-                    <td>{{ \Carbon\Carbon::parse($dataTicket->preferred_date)->translatedFormat('d F Y H:i:s') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($dataTicket->transaction_created_at)->translatedFormat('d F Y') }}</td>
                 </tr>
             </table>
 

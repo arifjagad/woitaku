@@ -27,6 +27,7 @@ class DownloadTicketController extends Controller
             ->where('transaction.id_category', '=', '1')
             ->get();
 
+
         $dataTicketCompetition = DB::table('users')
             ->join('detail_event', 'detail_event.id_eo', '=', 'users.id')
             ->join('transaction', 'transaction.id_event', '=', 'detail_event.id')
@@ -62,7 +63,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')
@@ -105,7 +106,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'detail_competition.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'detail_competition.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')
@@ -148,7 +149,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'booth_rental.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'booth_rental.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')
