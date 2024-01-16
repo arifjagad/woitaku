@@ -19,6 +19,7 @@ use App\Http\Controllers\EventOrganizerControllers\CompetitionEOController;
 use App\Http\Controllers\EventOrganizerControllers\BoothEOController;
 use App\Http\Controllers\EventOrganizerControllers\TicketCheckController;
 use App\Http\Controllers\EventOrganizerControllers\ParticipantListController;
+use App\Http\Controllers\EventOrganizerControllers\ListTransactionController;
 
 //Member
 use App\Http\Controllers\MemberControllers\MemberController as Index_Member;
@@ -115,6 +116,9 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     Route::get('participant-list', [ParticipantListController::class, 'indexParticipantList'])->name('participant-list');
     Route::put('/transaction/accept/{id}', [ParticipantListController::class, 'acceptTransaction'])->name('transaction.accept');
     Route::put('/transaction/reject/{id}', [ParticipantListController::class, 'rejectTransaction'])->name('transaction.reject');
+
+    // Route:List Transaction
+    Route::get('list-transaction', [ListTransactionController::class, 'indexListTransaction'])->name('list-transaction');
 });
 
 // Route untuk usertype Member
