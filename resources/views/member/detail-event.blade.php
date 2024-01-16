@@ -110,7 +110,11 @@
                                         @endif
                                         @else
                                             @if(Auth::check())
-                                                @if(strtotime(now()) < strtotime($detailEvent->end_date))
+                                                @if($detailEvent->ticket_qty == 0)
+                                                    <div class="alert alert-info text-center">
+                                                        Tiket sudah habis terjual!
+                                                    </div>
+                                                @elseif(strtotime(now()) < strtotime($detailEvent->end_date))
                                                     <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
                                                     Beli Tiket
                                                     </a>
@@ -189,7 +193,7 @@
                                                         <td>{!! $detailEvent->description !!}</td>
                                                     </tr> --}}
                                                 </table>
-                                                <a href="#" class="btn btn-primary btn-block">Profil Penyelenggara</a>
+                                                <a href="{{ route('detail-event-organizer', ['eoName' => Str::slug($detailEvent->name)]) }}" class="btn btn-primary btn-block">Profil Penyelenggara</a>
                                             </div>
                                         </div>
                                     </div>
@@ -329,7 +333,11 @@
                                                             </table>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success">Daftar Sekarang</button>
+                                                            @if($data->participant_qty == 0)
+                                                                <button id="btnCompetition" type="button" class="btn btn-success">Daftar Sekarang</button>
+                                                            @else
+                                                                <button type="submit" class="btn btn-success">Daftar Sekarang</button>
+                                                            @endif
                                                         </div>
                                                     </form>
                                                 </div>
@@ -612,6 +620,28 @@
         } else {
         }
     }
+
+    document.getElementById('btnCompetition').addEventListener('click', function() {
+        // Tampilkan SweetAlert
+        Swal.fire({
+            icon: 'error',
+            title: 'Tidak ada slot tersedia!',
+            text: 'Maaf, partisipan perlombaan sudah penuh.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Ok'
+        });
+    });
+
+    document.getElementById('btnEvent').addEventListener('click', function() {
+        // Tampilkan SweetAlert
+        Swal.fire({
+            icon: 'error',
+            title: 'Tiket event sudah habis terjual!',
+            text: 'Maaf, tiket untuk event ini sudah habis terjual. Terima kasih atas minat Anda!',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Ok'
+        });
+    });
 </script>
 <script>
     $(document).ready(function () {
