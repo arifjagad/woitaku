@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-
-use App\Events\UserRegistered;
+use App\Models\EventOrganizer;
+use App\Models\Member;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -41,7 +41,19 @@ class CreateNewUser implements CreatesNewUsers
             'usertype' => $input['user_type'],
         ]);
 
-        event(new UserRegistered($user));
+        if($input['user_type'] === 'event organizer'){
+            $detailEventOrganizer = EventOrganizer::create([
+                'id_user' => $user->id,
+            ]);
+            $detailEventOrganizer->save();
+        }elseif($input['user_type'] === 'member'){
+            $detailMember = Member::create([
+                'id_member' => $user->id,
+            ]);
+            $detailMember->save();
+        }
+
+        $user->save();
 
         return $user;
     }

@@ -15,6 +15,7 @@ class Member extends Model
     protected $fillable = [
         'id_member',
         'foto_profile',
+        'address',
         'kota',
         'nomor_whatsapp',
     ];

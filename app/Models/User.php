@@ -46,20 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail // Add MustVerifyE
         'email_verified_at' => 'datetime',
     ];
 
-   /*  public static function validateUsers($data)
-    {
-        $rules = [
-            'name' => 'required|string|max:30',
-            'email' => 'required|email|max:50',
-            'password' => 'required|password|min:8|max:50',
-        ];
-
-        $validator = Validator::make($data, $rules);
-
-        return $validator;
-    } */
-
-
     public function eventOrganizer()
     {
         return $this->hasOne(EventOrganizer::class, 'id_user');
