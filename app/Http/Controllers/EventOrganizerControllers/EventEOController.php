@@ -118,7 +118,7 @@ class EventEOController extends Controller
                 'address' => $request->event_address,
                 'ticket_price' => $request->ticket_price,
                 'ticket_qty' => $request->ticket_qty,
-                'booth_layout' => $filePathBoothLayout,
+                'booth_layout' => $filePathBoothLayout ?? null,
                 'document' => $request->document,
                 'verification' => 'pending',
                 'id_category' => '1',

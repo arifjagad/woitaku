@@ -154,7 +154,7 @@
                                                 class="custom-file-input @error('booth_layout') is-invalid @enderror"
                                                 id="booth_layout"
                                                 accept=".jpg, .jpeg, .png"
-                                                required
+                                                
                                                 >
                                             <label class="custom-file-label">Choose File</label>
                                             <!-- Error Message -->

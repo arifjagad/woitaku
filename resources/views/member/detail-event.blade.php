@@ -143,7 +143,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="col-6"><b>Lokasi:</b></td>
-                                                        <td>{{ $detailEvent->kota . ', Indonesia' }}</td>
+                                                        <td>{{ $detailEvent->city . ', Indonesia' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="col-6"><b>Alamat:</b></td>
@@ -438,39 +438,54 @@
                                 id="pendaftaran-booth"
                                 role="tabpanel"
                                 aria-labelledby="pendaftaraan-booth-tab">
-                                <div class="row">
-                                    <div class="col-12 mb-4">
-                                        <img src="{{
-                                            asset('storage/'.$detailEvent->booth_layout)
-                                        }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                @if(is_null($dataBooth))
+                                    <div class="col-12">
+                                        <div class="empty-state"
+                                            data-height="400">
+                                            <div class="empty-state-icon">
+                                                <i class="fas fa-question"></i>
+                                            </div>
+                                            <h2>Maaf, event ini tidak memiliki booth.</h2>
+                                            <p class="lead">
+                                                Harap bersabar dan tunggu informasi selanjutnya, ketika penyelenggara acara menambahkan booth baru.
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="col-12 card">
-                                        <div class="input-group">
-                                            <div class="form-group col-12">
-                                                <label>Kode Booth</label>
-                                                <div 
-                                                    class="float-right"
-                                                    data-toggle="tooltip"
-                                                    title="Pilih lokasi booth yang di-inginkan">
-                                                    <label>
-                                                        <i class="fa-solid fa-circle-info"></i> Informasi
-                                                    </label>
-                                                </div>
-                                                <select class="form-control select2" name="booth_code" id="booth_code">
-                                                    <option value="">Pilih Booth</option>
-                                                    @foreach ($boothCode as $data)
-                                                        <option value="{{ $data->id }}">
-                                                            {{ $data->booth_code }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <div id="booth_info">
-                                                    @include('booth_info', ['detailBooth' => $detailBooth])
+                                @else
+                                    <div class="row">
+                                        <div class="col-12 mb-4">
+                                            <img src="{{
+                                                asset('storage/'.$detailEvent->booth_layout)
+                                            }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                        </div>
+                                        <div class="col-12 card">
+                                            <div class="input-group">
+                                                <div class="form-group col-12">
+                                                    <label>Kode Booth</label>
+                                                    <div 
+                                                        class="float-right"
+                                                        data-toggle="tooltip"
+                                                        title="Pilih lokasi booth yang di-inginkan">
+                                                        <label>
+                                                            <i class="fa-solid fa-circle-info"></i> Informasi
+                                                        </label>
+                                                    </div>
+                                                    <select class="form-control select2" name="booth_code" id="booth_code">
+                                                        <option value="">Pilih Booth</option>
+                                                        @foreach ($boothCode as $data)
+                                                            <option value="{{ $data->id }}">
+                                                                {{ $data->booth_code }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div id="booth_info">
+                                                        @include('booth_info', ['detailBooth' => $detailBooth])
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

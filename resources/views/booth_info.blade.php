@@ -15,7 +15,7 @@
     </div>
     <h6 class="mt-5">Fasilitas:</h6>
     <p class="text-justify mt-2">
-        {!! $detailBooth->provided_facilities !!}
+        {!! trim(strip_tags($detailBooth->provided_facilities)) !!}
     </p>
 
     <div class="d-flex justify-content-end">

@@ -53,6 +53,11 @@ class DetailEventController extends Controller
             ->where('detail_event.id', '=', $id)
             ->get();
 
+        $dataBooth = DB::table('detail_event')
+            ->join('booth_rental', 'booth_rental.id_event', 'detail_event.id')
+            ->where('booth_rental.id_event', '=', $id)
+            ->get();
+
         $detailBooth = null; 
         
         // Periksa apakah permintaan datang melalui AJAX
@@ -66,7 +71,7 @@ class DetailEventController extends Controller
         $end_date_event = Carbon::parse($detailEvent->end_date);
         $daysDifference = $end_date_event->diffInDays($start_date_event);
         
-        return view('member.detail-event', compact('detailEvent', 'listCompetition', 'detailBooth', 'boothCode', 'listBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
+        return view('member.detail-event', compact('dataBooth', 'detailEvent', 'listCompetition', 'detailBooth', 'boothCode', 'listBooth', 'detailPaymentMethod', 'start_date_event', 'daysDifference'), ['type_menu' => 'detail-event']);
     }
 
     public function getBoothInfo($boothCode){
