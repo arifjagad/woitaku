@@ -22,31 +22,11 @@
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Panduan</h4>
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <ol class="list-group text-justify ml-2">
-                                <li>
-                                    Perhatikan keseluruhan kolom form yang ada, pastikan tidak ada yang kosong.
-                                </li>
-                                <li>
-                                    Upload featured image dengan ukuran yang sesuai, yaitu 1300x600 px.
-                                </li>
-                                <li>
-                                    Isi deskripsi event selengkap mungkin, agar peserta dapat memahami event yang kamu buat.
-                                </li>
-                                <li>
-                                    Jika kamu ingin membuat event berbayar, maka isi kolom ticket price dan ticket qty. Jika tidak, maka kosongkan saja.
-                                </li>
-                                <li>
-                                    Upload dokumen yang menyatakan bahwa kamu ingin menyelenggarakan event. Kami akan verifikasi secara manual apakah event yang ingin kamu selenggarakan sudah sesuai ketentuan atau tidak.
-                                </li>
-                            </ol>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Penjelasan Status Verifikasi Event</h4>
                         </div>
-                        <hr>
-                        <div class="my-4">
+                        <div class="card-body">
                             <p class="text-sm text-justify">
                                 Kamu dapat melihat status verifikasi event yang kamu buat di sini. 
                                 Jika statusnya <span class="badge badge-success">Verified</span>, maka event kamu sudah dapat diakses oleh peserta. 
@@ -55,7 +35,6 @@
                                 Jika statusnya <span class="badge badge-danger">Rejected</span>, maka event kamu tidak memenuhi syarat dan tidak dapat diakses oleh peserta.
                             </p>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="card">

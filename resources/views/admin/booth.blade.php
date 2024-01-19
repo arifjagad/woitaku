@@ -112,7 +112,7 @@
                             <tr>
                                 <td class="col-5">Fasilitas Booth</td>
                                 <td class="col-1">:</td>
-                                <td class="col-6">{{ $data->provided_facilities }}</td>
+                                <td class="col-6">{!! $data->provided_facilities !!}</td>
                             </tr>
                             <tr>
                                 <td class="col-5">Status</td>
