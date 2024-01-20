@@ -16,7 +16,7 @@
                     Temukan Semua Event Jejepangan di Seluruh Indonesia dengan Mudah dan Seru!
                 </p>
             </div>
-            <div class="col-lg-6">
+            <div class="col-sm-12 col-lg-6 d-flex align-items-center justify-content-center">
                 <img src="{{ asset('img/static/hero-section-2.jpg')}}" class="rounded img-fluid"/>
             </div>
         </div>
@@ -87,7 +87,7 @@
                 <p class="text-center">Jelajahi keasyikan event jejepangan favoritmu. Temukan informasi lengkap, perbarui jadwal, dan nikmati kemudahan bertransaksi—semua dalam satu tempat, Woitaku!</p>
                 <div class="row py-3">
                     @forelse ($dataEvent->take(3) as $data)
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-sm-12 col-lg-4 my-3">
                             <input type="hidden" name="event_id" value="{{ $data->id }}">
                             <article class="article article-style-c d-flex flex-column h-100">
                                 <div class="article-header">
