@@ -73,7 +73,7 @@
                                                     <td>{{ $data->ticket_identifier }}</td>
                                                     <td>{{ $data->event_name }}</td>
                                                     <td>{{ $data->name }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->updated_at)->translatedFormat('d F Y') }}</td>
                                                     <td>
                                                         @if ($data->id_category == '1')
                                                             <span class="badge badge-primary">Tiket Event</span>

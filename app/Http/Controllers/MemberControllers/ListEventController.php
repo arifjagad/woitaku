@@ -19,6 +19,12 @@ class ListEventController extends Controller
             ->join('event_organizer', 'users.id', 'event_organizer.id_user')
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
+            ->select(
+                '*',
+                DB::raw('(CASE WHEN detail_event.start_date >= NOW() - INTERVAL 1 DAY THEN 0 ELSE 1 END) AS has_expired')
+            )
+            ->orderBy('has_expired', 'asc')
+            ->orderBy('detail_event.start_date', 'asc')
             ->paginate(8);
 
         return view('member.list-event', compact('dataEvent', 'dataEventCity'), ['type_menu' => 'list-event']);
@@ -31,6 +37,12 @@ class ListEventController extends Controller
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
             ->where('detail_event.event_name', 'like', "%".$search."%")
+            ->select(
+                '*',
+                DB::raw('(CASE WHEN detail_event.start_date >= NOW() - INTERVAL 1 DAY THEN 0 ELSE 1 END) AS has_expired')
+            )
+            ->orderBy('has_expired', 'asc')
+            ->orderBy('detail_event.start_date', 'asc')
             ->paginate(8);
 
         return view('member.list-event', compact('dataEvent'), ['type_menu' => 'list-event']);
@@ -51,7 +63,13 @@ class ListEventController extends Controller
             ->join('event_organizer', 'users.id', 'event_organizer.id_user')
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
-            ->where('detail_event.event_name', 'like', "%".$search."%");
+            ->where('detail_event.event_name', 'like', "%".$search."%")
+            ->select(
+                '*',
+                DB::raw('(CASE WHEN detail_event.start_date >= NOW() - INTERVAL 1 DAY THEN 0 ELSE 1 END) AS has_expired')
+            )
+            ->orderBy('has_expired', 'asc')
+            ->orderBy('detail_event.start_date', 'asc');
 
         if ($priceRange === 'free') {
             $dataEvent = $dataEvent->where(function ($query) {

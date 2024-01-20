@@ -33,6 +33,12 @@ class DetailEventOrganizerController extends Controller
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
             ->where('detail_event.id_eo', '=', $id)
+            ->select(
+                '*',
+                DB::raw('(CASE WHEN detail_event.start_date >= NOW() - INTERVAL 1 DAY THEN 0 ELSE 1 END) AS has_expired')
+            )
+            ->orderBy('has_expired', 'asc')
+            ->orderBy('detail_event.start_date', 'asc')
             ->paginate(3);
 
         return view ('member.detail-event-organizer', compact('eventOrganizer', 'eventCount', 'dataEvent'), ['type_menu' => 'detail-event-organizer']);

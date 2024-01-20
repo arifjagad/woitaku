@@ -10,8 +10,8 @@
 
 <div class="main-content" style="padding: 80px 0px;">
     <div class="container">
-        <div class="row my-5">
-            <div class="col-3">
+        <div class="row">
+            <div class="col-sm-12 col-lg-3 mt-5">
                 <div class="sticky-top" style="top: 30px;">
                     <h4 class="text-primary">Filter</h4>
                     <form action="{{ route('filter-event') }}" method="GET">
@@ -33,17 +33,17 @@
                             </select>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 my-2">
                                 <a href="{{ route('list-event') }}" class="btn btn-primary btn-block">Reset</a>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 my-2">
                                 <button type="submit" class="btn btn-primary btn-block">Filter</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-sm-12 col-lg-9 mt-5">
                 <form action="{{ route('search-event') }}" method="GET" class="mb-4">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama event...">
@@ -54,7 +54,7 @@
                 </form>
                 <div class="row">
                     @forelse($dataEvent as $data)
-                        <div class="col-6">
+                        <div class="col-sm-12 col-md-6 col-lg-6 my-2">
                             <article class="article article-style-c h-100">
                                 <div class="article-header">
                                     <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">

@@ -8,19 +8,22 @@ use App\Models\User;
 use App\Models\EventOrganizer;
 use App\Models\DetailEvent;
 use App\Models\DetailCompetition;
+use App\Models\BoothRental;
 
 class UserController extends Controller
 {
     public function indexMember()
     {
-        $data = User::where('usertype', 'member')->get();
+        $data = User::join('detail_member', 'users.id', '=', 'detail_member.id_member')
+        ->where('users.usertype', 'member')
+        ->get();
 
         return view('admin.member', compact('data'), ['type_menu' => 'member']);
     }
 
     public function indexEventOrganizer(){
-        $data = DB::table('event_organizer')
-            ->join('users', 'event_organizer.id_user', '=', 'users.id')
+        $data = DB::table('users')
+            ->join('event_organizer', 'event_organizer.id_user', '=', 'users.id')
             ->get();
             
         return view('admin.event-organizer', compact('data'), ['type_menu' => 'event-organizer']);
@@ -39,9 +42,17 @@ class UserController extends Controller
             ->join('event_organizer', 'detail_competition.id_event', '=', 'event_organizer.id')
             ->get();
 
-        $eventCount = DetailEvent::count();
-        $competitionCount = DetailCompetition::count();
+        $dataBooth = DB::table('detail_event')
+            ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
+            ->get();
 
-        return view('admin.detail-event-organizer', compact('dataProfile', 'dataEvent', 'dataCompetition', 'eventCount', 'competitionCount'), ['type_menu' => 'event-organizer']);
+        $eventCount = DetailEvent::join('users', 'users.id', '=', 'detail_event.id_eo')
+            ->count();
+        $competitionCount = DetailCompetition::join('event_organizer', 'detail_competition.id_event', '=', 'event_organizer.id')
+            ->count();
+        $boothCount = DetailEvent::join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
+            ->count();
+
+        return view('admin.detail-event-organizer', compact('boothCount', 'dataProfile', 'dataEvent', 'dataCompetition', 'dataBooth', 'eventCount', 'competitionCount'), ['type_menu' => 'event-organizer']);
     }
 }

@@ -114,11 +114,12 @@ Route::group(['middleware' => ['auth', 'role:event organizer', 'verified']], fun
     
     // Route:Participant List
     Route::get('participant-list', [ParticipantListController::class, 'indexParticipantList'])->name('participant-list');
-    Route::put('/transaction/accept/{id}', [ParticipantListController::class, 'acceptTransaction'])->name('transaction.accept');
-    Route::put('/transaction/reject/{id}', [ParticipantListController::class, 'rejectTransaction'])->name('transaction.reject');
 
     // Route:List Transaction
     Route::get('list-transaction', [ListTransactionController::class, 'indexListTransaction'])->name('list-transaction');
+    Route::put('/transaction/accept/{id}', [ListTransactionController::class, 'acceptTransaction'])->name('transaction.accept');
+    Route::put('/transaction/reject/{id}', [ListTransactionController::class, 'rejectTransaction'])->name('transaction.reject');
+
 });
 
 // Route untuk usertype Member

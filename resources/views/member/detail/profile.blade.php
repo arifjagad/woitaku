@@ -19,14 +19,13 @@
                 <div class="row">
                     <!-- Panggil Components Sidebar-Profile.blade.php -->
                     @include('components.sidebar-profile')
-                    <div class="col-12 col-md-6 col-lg-9">
+                    <div class="col-sm-12 col-md-12 col-lg-9">
                         @if(auth()->user()->email_verified_at == null)
                         <div class="alert alert-danger mb-4">
                             Akun belum diverifikasi, silahkan cek email anda untuk melakukan verifikasi akun.
                         </div>
                         @endif
                         <div class="card">
-                            
                             <div class="card-header">
                                 <h4>Informasi Pribadi</h4>
                             </div>
@@ -41,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Nama</label>
                                                 <input
                                                     id="name"
@@ -57,7 +56,7 @@
                                                 </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Email</label>
                                                 <input
                                                     id="email"
@@ -112,7 +111,7 @@
                                                 </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Kota</label>
                                                 <select class="form-control select2" id="city" name="city">
                                                     @foreach ($indonesiaCities as $city)
@@ -120,7 +119,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Nomor Whatsapp (628xx)</label>
                                                 <input
                                                     id="whatsappNumber"
@@ -161,7 +160,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Password Baru</label>
                                                 <input
                                                     id="password"
@@ -176,7 +175,7 @@
                                                 </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-6">
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label>Konfirmasi Password</label>
                                                 <input
                                                     id="password_confirmation"

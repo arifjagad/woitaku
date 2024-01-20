@@ -25,7 +25,9 @@ class DownloadTicketController extends Controller
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('transaction.id_member', '=', $authId)
             ->where('transaction.id_category', '=', '1')
+            ->orderBy('ticket.created_at', 'asc')
             ->get();
+
 
         $dataTicketCompetition = DB::table('users')
             ->join('detail_event', 'detail_event.id_eo', '=', 'users.id')
@@ -33,6 +35,7 @@ class DownloadTicketController extends Controller
             ->join('detail_competition', 'detail_competition.id', '=', 'transaction.id_competition')
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
+            ->orderBy('ticket.created_at', 'asc')
             ->get();
 
         $dataTicketBooth = DB::table('users')
@@ -43,6 +46,7 @@ class DownloadTicketController extends Controller
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('transaction.id_member', '=', $authId)
             ->where('transaction.id_category', '=', '3')
+            ->orderBy('ticket.created_at', 'asc')
             ->get();
 
         return view ('member.detail.download-ticket', compact('dataTicketEvent', 'dataTicketCompetition', 'dataTicketBooth'), ['type_menu' => 'download-ticket']);
@@ -62,7 +66,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')
@@ -105,7 +109,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'detail_competition.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'detail_competition.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')
@@ -148,7 +152,7 @@ class DownloadTicketController extends Controller
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
             ->where('ticket.id', $id)
-            ->select('users.*', 'detail_event.*', 'booth_rental.*', 'category_transaction.*', 'transaction.*', 'ticket.*')
+            ->select('users.*', 'detail_event.*', 'booth_rental.*', 'category_transaction.*', 'transaction.*', 'transaction.created_at as transaction_created_at', 'ticket.*')
             ->first();
 
         $dataTicketBuy = DB::table('transaction')

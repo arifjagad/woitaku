@@ -27,14 +27,14 @@
                 <div class="row">
                     <!-- Panggil Components Sidebar-Profile.blade.php -->
                     @include('components.sidebar-profile')
-                    <div class="col-12 col-md-6 col-lg-9">
+                    <div class="col-sm-12 col-md-12 col-lg-9">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Pengaturan Booth</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-1">
+                                    <table class="table table-striped nowrap" id="table-1">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">

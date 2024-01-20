@@ -19,6 +19,7 @@ class HistoryTransactionController extends Controller
             ->join('category_transaction', 'transaction.id_category', '=', 'category_transaction.id')
             ->select('detail_event.*', 'category_transaction.*', 'users.*', 'transaction.*')
             ->where('transaction.id_member', '=', $authId)
+            ->orderBy('transaction.updated_at', 'desc')
             ->get();
             
         return view('member.detail.history-transaction', compact('dataTransaction'), ['type_menu' => 'history-transaction']);
