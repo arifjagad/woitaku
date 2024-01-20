@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-8 order-md-last col-sm-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="far fa-solid fa-money-bill-transfer"></i>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="far fa-solid fa-ticket"></i>
@@ -98,7 +98,7 @@
             </div>
             <!-- Graph -->
             <div class="row align-items-stretch">
-                <div class="col-8">
+                <div class="col-sm-12 col-md-12 col-lg-8">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h4>Grafik Perkembangan Pendapatan Untuk Setiap Bulan</h4>
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-12 col-md-12 col-lg-4">
                     <div class="card gradient-bottom">
                         <div class="card-header d-flex justify-content-between">
                             <h4>5 Event Terpopuler</h4>
@@ -170,7 +170,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        
                         <div class="card-header d-flex justify-content-between">
                             <h4>Transaksi Terbaru</h4>
                             <a href="{{ route('participant-list') }}" class="btn btn-primary">Lihat Semua</a>

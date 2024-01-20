@@ -56,7 +56,7 @@
                                 <table class="table-striped table display nowrap" id="list-transaction">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>#</th>
                                             <th>Nama Event</th>
                                             <th>Nama Pemesan</th>
                                             <th>Tanggal Transaksi</th>
@@ -177,15 +177,21 @@
                     {
                         extend: 'copy',
                         className: 'btn btn-primary',
-                        /* exportOptions: {
-                            columns: ':not(:last-child)',
-                        } */
+                        exportOptions: {
+                            columns: ':not(:eq(-2)):not(:last-child)',
+                        }
                     }, {
                         extend: 'csv',
                         className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(:eq(-2)):not(:last-child)',
+                        }
                     }, {
                         extend: 'excel',
                         className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(:eq(-2)):not(:last-child)',
+                        }
                     }
                 ],
                 initComplete: function () {

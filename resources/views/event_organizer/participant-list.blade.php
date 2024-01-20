@@ -142,15 +142,21 @@
                     {
                         extend: 'copy',
                         className: 'btn btn-primary',
-                        /* exportOptions: {
+                        exportOptions: {
                             columns: ':not(:last-child)',
-                        } */
+                        }
                     }, {
                         extend: 'csv',
                         className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
                     }, {
                         extend: 'excel',
                         className: 'btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(:last-child)',
+                        }
                     }
                 ],
                 initComplete: function () {

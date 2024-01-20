@@ -20,7 +20,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
+            <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card">
                         <div class="card-header">
@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <p class="text-sm text-justify">
                                 Kamu dapat melihat status verifikasi event yang kamu buat di sini. 
-                                Jika statusnya <span class="badge badge-success">Verified</span>, maka event kamu sudah dapat diakses oleh peserta. 
+                                Jika statusnya <span class="badge badge-success">Accepted</span>, maka event kamu sudah dapat diakses oleh peserta. 
                                 Jika statusnya <span class="badge badge-warning">Pending</span>, maka event kamu sedang dalam proses verifikasi. 
                                 Jika statusnya <span class="badge badge-info">Revision</span>, maka perlu mengubah sedikit sesuai instruksi yang kami berikan agar event tersebut sesuai. 
                                 Jika statusnya <span class="badge badge-danger">Rejected</span>, maka event kamu tidak memenuhi syarat dan tidak dapat diakses oleh peserta.
@@ -68,7 +68,7 @@
                     </div> --}}
                 </div>
             </div>
-            <div class="col-12 col-md-8 col-lg-8">
+            <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <h4>Form Detail Event</h4>
