@@ -97,7 +97,7 @@
                                     <div class="col-4">
                                         @if ($detailEvent->ticket_price == 0)
                                             @if(Auth::check())
-                                                @if(strtotime(now()) < strtotime($detailEvent->end_date))
+                                                @if(strtotime(now()) < strtotime((new Carbon\Carbon($detailEvent->end_date))->addDays()))
                                                     <form action="{{ route('payment-ticket-free') }}" method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;">Daftar Sekarang</button>
@@ -114,10 +114,10 @@
                                                     <div class="alert alert-info text-center">
                                                         Tiket sudah habis terjual!
                                                     </div>
-                                                @elseif(strtotime(now()) < strtotime($detailEvent->end_date))
-                                                    <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
-                                                    Beli Tiket
-                                                    </a>
+                                                    @elseif(strtotime(now()) < strtotime((new Carbon\Carbon($detailEvent->end_date))->addDays()))
+                                                        <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" data-toggle="modal" data-target="#ticketModal">
+                                                        Beli Tiket
+                                                        </a>
                                                 @else
                                                     <a href="#" class="btn btn-success btn-lg btn-block text-uppercase mt-3 mb-4 py-3" style="font-size: 16px;" onclick="checkEventDate()">Beli Tiket</a>
                                                 @endif
@@ -222,7 +222,7 @@
                                                 <div class="card-footer">
                                                     <a href="#" class="btn btn-primary show-detail" data-toggle="modal" data-target="#detailCompetitionModal{{ $key }}">Detail</a>
                                                     @if(Auth::check())
-                                                        @if(strtotime(now()) < strtotime($data->end_date))
+                                                        @if(strtotime(now()) < strtotime((new Carbon\Carbon($detailEvent->end_date))->addDays()))
                                                             <a href="#" class="btn btn-success show-detail" data-toggle="modal" data-target="#daftarCompetitionModal{{ $key }}">Daftar</a>
                                                         @else
                                                             <a href="#" class="btn btn-success" onclick="checkEventDate()">Daftar</a>
@@ -635,6 +635,23 @@
         } else {
         }
     }
+
+    function checkEventDateBooth() {
+        var eventStartDate = '{{ $detailEvent->start_date }}';
+        var today = new Date();
+
+        if (new Date(eventStartDate) < today) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Event Telah Dimulai!',
+                text: 'Maaf, Anda tidak bisa melakukan penyewaan booth lagi.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok'
+            });
+        } else {
+        }
+    }
+    
 
     document.getElementById('btnCompetition').addEventListener('click', function() {
         // Tampilkan SweetAlert

@@ -20,12 +20,12 @@
 
     <div class="d-flex justify-content-end">
         @if(Auth::check())
-            @if(strtotime(now()) < strtotime($detailBooth->end_date))
+            @if(strtotime(now()) < strtotime($detailBooth->start_date))
                 <a href="#" id="btnPesanBoothModal" class="btn btn-success show-detail" data-rental-id="{{ $detailBooth->id }}" data-toggle="modal" data-target="#daftarRentalBoothModal">
                     Pesan Booth
                 </a>
             @else
-                <a href="#" class="btn btn-success show-detail" onclick="checkEventDate()">Pesan Booth</a>
+                <a href="#" class="btn btn-success show-detail" onclick="checkEventDateBooth()">Pesan Booth</a>
             @endif
         @else
             <a href="#" class="btnTransaksi btn btn-success">Pesan Booth</a>
