@@ -34,8 +34,8 @@
                     </form>
                     <div class="row">
                         @foreach ($data as $data)
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <article class="article article-style-c h-100">
+                            <div class="col-sm-12 col-md-6 col-lg-4 my-2">
+                                <article class="article article-style-c d-flex flex-column h-100">
                                     <div class="article-header">
                                         <div class="article-image" data-background="{{ asset('storage/' . $data->featured_image) }}">
                                         </div>
@@ -51,7 +51,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="article-details">
+                                    <div class="article-details flex-grow-1 d-flex flex-column align-items-start">
                                         <div class="article-category">
                                             {{Carbon\Carbon::parse($data->start_date)->translatedFormat('d F Y')}} - {{Carbon\Carbon::parse($data->end_date)->translatedFormat('d F Y')}}
                                         </div>
@@ -65,7 +65,7 @@
                                         <p class="text-justify">
                                             {!! \Illuminate\Support\Str::limit(strip_tags($data->event_description), 100) !!}
                                         </p>
-                                        <div class="article-user">
+                                        <div class="article-user mt-auto">
                                             <a href="{{ route('edit-event-eo', ['id' => $data->id]) }}" class="btn btn-icon icon-left btn-primary">
                                                 EDIT
                                             </a>
