@@ -32,8 +32,8 @@ class ParticipantListController extends Controller
             ->when($selectedEventId, function ($query) use ($selectedEventId) {
                 $query->where('detail_event.id', $selectedEventId);
             })
-            ->orderByDesc('transaction.created_at')
             ->select('users.*', 'detail_event.*', 'payment_methods.*', 'transaction.*', 'ticket.*')
+            ->orderBy('ticket.updated_at', 'desc')
             ->get();
 
         if($dataEvent->isEmpty()){

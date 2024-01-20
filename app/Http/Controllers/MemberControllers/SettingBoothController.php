@@ -23,6 +23,7 @@ class SettingBoothController extends Controller
             ->join('detail_booth', 'detail_booth.id_booth_rental', '=', 'booth_rental.id')
             ->where('transaction.transaction_status', '=', 'success')
             ->where('detail_booth.id_member', '=', $authId)
+            ->orderBy('detail_booth.id', 'asc')
             ->get();
 
         return view ('member.detail.setting-booth', compact('dataBooth'), ['type_menu' => 'setting-booth']);

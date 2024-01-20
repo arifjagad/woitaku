@@ -31,8 +31,7 @@ class ListTransactionController extends Controller
             ->when($selectedEventId, function ($query) use ($selectedEventId) {
                 $query->where('detail_event.id', $selectedEventId);
             })
-            ->orderByDesc('transaction.created_at')
-            ->select('users.*', 'detail_event.*', 'payment_methods.*', 'transaction.*')
+            ->orderBy('transaction.updated_at', 'desc')
             ->get();
 
         if($dataEvent->isEmpty()){

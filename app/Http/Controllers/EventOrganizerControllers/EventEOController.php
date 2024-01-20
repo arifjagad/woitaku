@@ -20,11 +20,12 @@ class EventEOController extends Controller
         $query = $request->input('search');
         
         $userId = Auth::id();
-        $data = DetailEvent::where('id_eo', $userId)->get();
+        $data = DetailEvent::where('id_eo', $userId)->orderBy('id', 'asc')->get();
 
         if ($query) {
             $data = DetailEvent::where('id_eo', $userId)
                 ->where('event_name', 'LIKE', "%$query%")
+                ->orderBy('id', 'asc')
                 ->get();
         }
 

@@ -107,9 +107,9 @@ class DashboardController extends Controller
             ->join('transaction', 'transaction.id_event', '=', 'detail_event.id')
             ->join('payment_methods', 'payment_methods.id', '=', 'transaction.id_payment_methods')
             ->where('detail_event.id_eo', $authId)
-            ->orderByDesc('transaction.created_at')
-            ->take(10)
             ->select('users.*', 'detail_event.*', 'payment_methods.*', 'transaction.*')
+            ->orderBy('transaction.created_at', 'desc')
+            ->take(10)
             ->get();
 
 

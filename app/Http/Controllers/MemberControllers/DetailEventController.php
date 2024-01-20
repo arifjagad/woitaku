@@ -33,12 +33,14 @@ class DetailEventController extends Controller
         $listCompetition = DB::table('detail_event')
             ->join('detail_competition', 'detail_event.id', '=', 'detail_competition.id_event')
             ->where('detail_competition.id_event', '=', $id)
+            ->orderBy('detail_competition.competition_name', 'asc')
             ->get();
 
         $boothCode = DB::table('detail_event')
             ->join('booth_rental', 'detail_event.id', '=', 'booth_rental.id_event')
             ->where('booth_rental.id_event', '=', $id)
             ->where('booth_rental.availability_status', '=', 'available')
+            ->orderBy('booth_rental.booth_code', 'asc')
             ->get();
 
         $listBooth = DB::table('transaction')
@@ -49,16 +51,19 @@ class DetailEventController extends Controller
             ->whereNotNull('detail_booth.booth_description')
             ->whereNotNull('detail_booth.booth_image')
             ->where('booth_rental.id_event', '=', $id)
+            ->orderBy('booth_rental.booth_code', 'asc')
             ->get();
 
         $detailPaymentMethod = DB::table('detail_event')
             ->join('payment_methods', 'detail_event.id_eo', '=', 'payment_methods.id_eo')
             ->where('detail_event.id', '=', $id)
+            ->orderBy('payment_methods.bank_name', 'asc')
             ->get();
 
         $dataBooth = DB::table('detail_event')
             ->join('booth_rental', 'booth_rental.id_event', 'detail_event.id')
             ->where('booth_rental.id_event', '=', $id)
+            ->where('booth_rental.booth_code', 'asc')
             ->get();
 
         $detailBooth = null; 

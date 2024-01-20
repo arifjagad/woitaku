@@ -68,7 +68,7 @@
                                                 <div class="article-badge">
                                                     <div class="d-flex">
                                                         @if(\Carbon\Carbon::parse($data->end_date)->addDay()->isPast())
-                                                            <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
+                                                            <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; left: -155px;">
                                                                 <span class="text-dark">Event Berakhir</span>
                                                             </span>
                                                         @endif

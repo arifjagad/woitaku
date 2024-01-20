@@ -22,6 +22,8 @@ class MemberController extends Controller
             ->join('detail_event', 'users.id', 'detail_event.id_eo')
             ->where('detail_event.verification', '=', 'accepted')
             ->select('event_organizer.id as event_organizer_id', 'detail_event.id as detail_event_id', 'users.*', 'event_organizer.*', 'detail_event.*')
+            ->where('detail_event.start_date', '>=', DB::raw('NOW() - INTERVAL 1 DAY'))
+            ->orderBy('detail_event.start_date', 'asc')
             ->get();
 
         return view('member.home', compact('dataEvent'), ['type_menu' => 'home']);
