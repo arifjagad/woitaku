@@ -24,7 +24,7 @@
                 <div class="card mt-4">
                     <div class="card-body">
                         <h3 class="text-primary mb-4">{{ $detailEvent->event_name }} </h3>
-                        <ul class="nav nav-pills nav-fill" id="myTab3" role="tablist">
+                        <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="myTab3" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active"
                                     id="detail-event-tab"
@@ -69,32 +69,29 @@
                                 role="tabpanel"
                                 aria-labelledby="detail-event-tab">
                                 <div class="row">
-                                    <div class="col-8">
-                                        <div class="card">
-                                            <div class="card-header d-flex justify-content-between" style="position: relative;">
-                                                <img src="{{ asset('storage/'.$detailEvent->featured_image) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
-                                                @if(\Carbon\Carbon::parse($detailEvent->end_date)->addDay()->isPast())
-                                                    <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
-                                                        <span class="text-dark">Event Berakhir</span>
-                                                    </span>
-                                                @endif
-                                                
-                                                <span class="badge badge-success text-uppercase py-2 px-4" style="position: absolute; top: 30px; right: 50px;">
-                                                    @if ($detailEvent->ticket_price == 0)
-                                                        GRATIS
-                                                    @else
-                                                        BERBAYAR
-                                                    @endif
+                                    <div class="col-sm-12 col-md-12 col-lg-8">
+                                        <div class="d-flex justify-content-between" style="position: relative;">
+                                            <img src="{{ asset('storage/'.$detailEvent->featured_image) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
+                                            @if(\Carbon\Carbon::parse($detailEvent->end_date)->addDay()->isPast())
+                                                <span class="badge badge-secondary text-uppercase py-2 px-4" style="position: absolute; top: 30px; left: 50px;">
+                                                    <span class="text-dark">Event Berakhir</span>
                                                 </span>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    {!! $detailEvent->event_description !!}
-                                                </p>
-                                            </div>
+                                            @endif
+                                            
+                                            <span class="badge badge-success text-uppercase py-2 px-4" style="position: absolute; top: 30px; right: 50px;">
+                                                @if ($detailEvent->ticket_price == 0)
+                                                    GRATIS
+                                                @else
+                                                    BERBAYAR
+                                                @endif
+                                            </span>
                                         </div>
+                                        <p>
+                                            {!! $detailEvent->event_description !!}
+                                        </p>
+                                        
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-sm-12 col-md-12 col-lg-4">
                                         @if ($detailEvent->ticket_price == 0)
                                             @if(Auth::check())
                                                 @if(strtotime(now()) < strtotime((new Carbon\Carbon($detailEvent->end_date))->addDays()))
@@ -127,7 +124,7 @@
                                         @endif
                         
                                         <!-- Detail Event -->
-                                        <div class="card">
+                                        <div>
                                             <div class="card-header">
                                                 <h4 class="card-title">Informasi Event</h4>
                                             </div>
@@ -166,7 +163,7 @@
                                         </div>
                         
                                         <!-- Detail Organizer -->
-                                        <div class="card">
+                                        <div>
                                             <div class="card-header">
                                                 <h4 class="card-title">Informasi Penyelenggara</h4>
                                             </div>
@@ -200,7 +197,7 @@
                                 </div>
                             </div>
 
-                            <!-- Tampilan Detail Perlombaan -->
+                            <!-- Tampilan List Perlombaan -->
                             <div class="tab-pane fade"
                                 id="perlombaan"
                                 role="tabpanel"
@@ -209,7 +206,7 @@
                                 <div class="row">
                                     @forelse($listCompetition as $key => $data)
                                         @php session(['competition_id' => $data->id]); @endphp
-                                        <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="col-sm-12 col-md-6 col-lg-4 my-2">
                                             <div class="card card-primary h-100">
                                                 <img src="{{ asset('storage/'.$data->thumbnail_competition) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
 
@@ -246,26 +243,31 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h3 class="text-primary">{{ $data->competition_name }}</h3>
-                                                            @if ($data->competition_fee == 0)
-                                                                <h3 class="text-primary">GRATIS</h3>
-                                                            @else
-                                                                <h3 class="text-primary">IDR. {{ number_format($data->competition_fee, 0, ',', '.') }}</h3>
-                                                            @endif
-                                                        </div>
-                                                        <div class="d-flex justify-content-between">
-                                                            <h6>Sisa partisipan: <span>{{ $data->participant_qty }}</span> peserta</h6>
-                                                            <div>
-                                                                <h6>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                                                <h3 class="text-primary">{{ $data->competition_name }}</h3>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                                                @if ($data->competition_fee == 0)
+                                                                    <h3 class="text-primary float-lg-right">GRATIS</h3>
+                                                                @else
+                                                                    <h3 class="text-primary float-lg-right">IDR. {{ number_format($data->competition_fee, 0, ',', '.') }}</h3>
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                                                <h6>Sisa partisipan: <span>{{ $data->participant_qty }}</span> peserta</h6>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                                                <h6 class="float-lg-right">
                                                                     {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }}
                                                                 </h6>
                                                             </div>
+                                                            <div class="col-12">
+                                                                <p class="text-justify mt-3">
+                                                                    {!! $data->competition_description !!}
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                        
-                                                        <p class="text-justify mt-3">
-                                                            {!! $data->competition_description !!}
-                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -373,7 +375,7 @@
                                         }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
                                     </div>
                                     @forelse($listBooth as $key => $data)
-                                        <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="col-12 col-md-6 col-lg-4 my-2">
                                             <div class="card card-primary h-100">
                                                 <img src="{{ asset('storage/'.$data->thumbnail_booth) }}" alt="" class="img-fluid rounded" style="width: 100%; height: auto;">
 
@@ -403,11 +405,19 @@
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <div class="modal-body row">
+                                                    <div class="modal-body  row text-center">
                                                         @foreach (json_decode($data->booth_image) as $key => $image)
-                                                            <div class="col-4 mb-4">
-                                                                <img src="{{ asset('storage/booth_images/'.$image) }}" class="img-fluid preview-image" alt="Image {{ $key + 1 }}">
-                                                            </div>
+                                                            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                                                                <a href="{{ asset('storage/booth_images/'.$image) }}"
+                                                                    target="_blank"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Open image new tab!">
+                                                                        <img
+                                                                            src="{{ asset('storage/booth_images/'.$image) }}"
+                                                                            class="img-fluid preview-image"
+                                                                            alt="Image {{ $key + 1 }}"
+                                                                        >
+                                                                </a>                                                            </div>
                                                         @endforeach
                                                     </div>
                                                     <div class="modal-footer">

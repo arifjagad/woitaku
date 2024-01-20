@@ -1,14 +1,20 @@
 @if (isset($detailBooth))
 <div class="mt-4">
-    <div class="d-flex justify-content-between">
-        <h3 class="text-primary">KODE: {{ $detailBooth->booth_code }}</h3>
-        <h3 class="text-primary">IDR {{ number_format($detailBooth->rental_price, 0, ',', '.') }}</h3>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h3 class="text-primary">KODE: {{ $detailBooth->booth_code }}</h3>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h3 class="text-primary float-sm-right">IDR {{ number_format($detailBooth->rental_price, 0, ',', '.') }}</h3>
+        </div>
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
         <h6>Ukuran: <span>{{ $detailBooth->booth_size }} m<sup>2</sup></span></h6>
-        <div>
-            <h6>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h6 class="float-sm-right">
                 {{ \Carbon\Carbon::parse($detailBooth->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($detailBooth->end_date)->translatedFormat('d F Y') }}
             </h6>
         </div>
@@ -51,7 +57,7 @@
                 <div class="modal-body">
                     <table class="table">
                         <tr>
-                            <td class="col-5"><b>Code Booth:</b></td>
+                            <td class="col-5"><b>Kode Booth:</b></td>
                             <td>{{ $detailBooth->booth_code }}</td>
                         </tr>
                         <tr>
