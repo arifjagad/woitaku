@@ -21,23 +21,25 @@
         <div class="card-header">
             <h4>Reset Password</h4>
         </div>
-
         <div class="card-body">
-            <p class="text-muted">Kami akan mengirimkan link untuk mereset kata sandi Anda.</p>
-            <form method="POST" class="needs-validation" novalidate="" action="{{ route('password.update')}}">
+            <form method="POST" action="{{ route('password.update') }}">
                 @csrf
-                <input type="hidden" name="token" value="{{ $request->token }}">
+            
+                <input hidden name="token" value="{{ $request->route('token') }}">
+            
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email"
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        tabindex="1"
-                        disabled
-                        value="{{$request->email}}">
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1"
+                        type="email" class="form-control @error('email') is-invalid @enderror"
+                        value="{{ $request->email ?? old('email') }}" required
+                        autocomplete="email" readonly>
+                    @error('email')
+                        <div class="alert alert-danger mt-2">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                 </div>
-
+            
                 <div class="form-group">
                     <label for="password">Password Baru</label>
                     <input id="password"
@@ -60,11 +62,9 @@
                         tabindex="2"
                         required>
                 </div>
-
+            
                 <div class="form-group">
-                    <button type="submit"
-                        class="btn btn-primary btn-lg btn-block"
-                        tabindex="4">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                         Reset Password
                     </button>
                 </div>
