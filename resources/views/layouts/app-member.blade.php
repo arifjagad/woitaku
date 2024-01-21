@@ -23,6 +23,8 @@
     <link rel="stylesheet"
         href="{{ asset('css/style.css') }}">
     <link rel="stylesheet"
+        href="{{ asset('css/style-custom.css') }}">
+    <link rel="stylesheet"
         href="{{ asset('css/components.css') }}">
 
     <!-- Start GA -->
@@ -77,6 +79,7 @@
 
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/menu.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
     @include('sweetalert::alert')
