@@ -26,7 +26,7 @@
 
     <div class="d-flex justify-content-end">
         @if(Auth::check())
-            @if(strtotime(now()) < strtotime($detailBooth->start_date))
+            @if(strtotime(\Carbon\Carbon::parse(now())->translatedFormat('Y-m-d')) < strtotime($detailBooth->start_date))
                 <a href="#" id="btnPesanBoothModal" class="btn btn-success show-detail" data-rental-id="{{ $detailBooth->id }}" data-toggle="modal" data-target="#daftarRentalBoothModal">
                     Pesan Booth
                 </a>

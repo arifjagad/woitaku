@@ -123,9 +123,7 @@
                     <td>Status</td>
                     <td>:</td>
                     <td>
-                        @if ($dataTicket->transaction_amout == 0 )
-                            <div class="badge badge-success">GRATIS</div>
-                        @elseif (($dataTicket->transaction_amout != 0 || $dataTicket->transaction_amout != null) && $dataTicket->status == 'unused')
+                        @if ($dataTicket->status == 'unused')
                             <div class="badge badge-danger">Belum dipakai</div>
                         @else
                             <div class="badge badge-success">Sudah dipakai</div>

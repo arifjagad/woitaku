@@ -20,7 +20,7 @@
         <div class="section-body">
             <!-- Count -->
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-primary">
                             <i class="far fa-solid fa-calendar-day"></i>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-warning">
                             <i class="far fa-solid fa-ranking-star"></i>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-danger">
                             <i class="far fa-solid fa-building"></i>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 order-md-last col-sm-12">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-md order-last">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="far fa-solid fa-money-bill-transfer"></i>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="far fa-solid fa-ticket"></i>
@@ -197,7 +197,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $loop->iteration }}</td>
                                                     <td>{{ $data->event_name }}</td>
-                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ $data->member_name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
                                                     <td>
                                                         @if ($data->id_category == '1')

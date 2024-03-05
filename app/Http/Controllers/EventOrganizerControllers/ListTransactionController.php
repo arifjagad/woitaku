@@ -23,14 +23,22 @@ class ListTransactionController extends Controller
             ->where('detail_event.id_eo', $authId)
             ->get();
         
-        $dataTransaction = DB::table('users')
-            ->join('detail_event', 'detail_event.id_eo', '=', 'users.id')
-            ->join('transaction', 'transaction.id_event', '=', 'detail_event.id')
+        $dataTransaction = DB::table('transaction')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->join('users as eo', 'eo.id', '=', 'detail_event.id_eo')
+            ->join('users as member', 'member.id', '=', 'transaction.id_member')
             ->join('payment_methods', 'payment_methods.id', '=', 'transaction.id_payment_methods')
-            ->where('detail_event.id_eo', $authId)
+            ->where('eo.id', $authId)
             ->when($selectedEventId, function ($query) use ($selectedEventId) {
                 $query->where('detail_event.id', $selectedEventId);
             })
+            ->select(
+                'eo.name as eo_name',
+                'member.name as member_name',
+                'detail_event.*',
+                'payment_methods.*',
+                'transaction.*'
+            )
             ->orderBy('transaction.updated_at', 'desc')
             ->get();
 

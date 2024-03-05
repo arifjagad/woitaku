@@ -30,6 +30,10 @@ class ProfileEOController extends Controller
             'Ambon', 'Banda Aceh', 'Bandar Lampung', 'Bandung', 'Banjar', 'Banjarmasin', 'Batam', 'Batu', 'Bekasi', 'Bengkulu', 'Bima', 'Binjai', 'Bitung', 'Blitar', 'Bogor', 'Bondowoso', 'Bukittinggi', 'Cilegon', 'Cimahi', 'Cirebon', 'Denpasar', 'Depok', 'Dumai', 'Gorontalo', 'Jakarta', 'Jambi', 'Jayapura', 'Kediri', 'Kendari', 'Kotamobagu', 'Kupang', 'Langsa', 'Lhokseumawe', 'Lubuklinggau', 'Madiun', 'Magelang', 'Makassar', 'Malang', 'Manado', 'Mataram', 'Medan', 'Mojokerto', 'Padang', 'Palangkaraya', 'Palembang', 'Palopo', 'Palu', 'Pamekasan', 'Pangkal Pinang', 'Pekalongan', 'Pekanbaru', 'Pematangsiantar', 'Pontianak', 'Probolinggo', 'Samarinda', 'Sawahlunto', 'Semarang', 'Serang', 'Singkawang', 'Solo (Surakarta)', 'Sorong', 'Subang', 'Sukabumi', 'Sungai Penuh', 'Surabaya', 'Surakarta (Solo)', 'Tangerang', 'Tanjungbalai', 'Tanjung Pinang', 'Tarakan', 'Tasikmalaya', 'Tegal', 'Ternate', 'Tidore', 'Tomohon', 'Tual', 'Yogyakarta', 'Parepare', 'Palopo', 'Raba', 'Ruteng', 'Sabang', 'Salatiga', 'Samarinda', 'Sampit', 'Sibolga', 'Singaraja', 'Sinjai', 'Singkawang', 'Situbondo', 'Solok', 'Soppeng', 'Sorong', 'Subang', 'Sukabumi', 'Sungai Penuh', 'Surabaya', 'Tabanan'
         ];
 
+        $data = User::where('users.id', auth()->user()->id)
+            ->join('event_organizer', 'users.id', '=', 'event_organizer.id_user')
+            ->first();
+
         try {
             // Validasi
             $request->validate([
@@ -77,7 +81,7 @@ class ProfileEOController extends Controller
             DB::commit();
     
             toast('Profile Successfully Updated', 'success');
-            return view ('profile-eo', compact('indonesiaCities'));
+            return view ('event_organizer.profile-eo', compact('indonesiaCities', 'data'));
         } catch (\Illuminate\Validation\ValidationException $e) {
             DB::rollback();
             toast('Validasi gagal', 'error');

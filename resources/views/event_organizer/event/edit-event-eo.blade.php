@@ -68,7 +68,7 @@
                     </div> --}}
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="col-sm-12 col-md-12 col-lg-8">
                 <div class="card">
                     <div class="card-header">
                         <h4>Form Detail Event</h4>
@@ -302,4 +302,16 @@
     <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 
     <!-- Custom JS -->
+    <script>
+        function updateInputLabel(inputId) {
+            $(inputId).on('change', function() {
+              var fileName = $(this).val().split('\\').pop(); // memisahkan path, mengambil hanya nama file
+              $(this).next('.custom-file-label').text(fileName); // mengganti teks pada label
+            });
+          }
+        
+          // Memanggil fungsi untuk setiap input file
+          updateInputLabel('#featured_image');
+          updateInputLabel('#booth_layout');
+    </script>
 @endpush

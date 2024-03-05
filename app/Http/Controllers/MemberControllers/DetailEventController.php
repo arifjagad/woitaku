@@ -132,7 +132,10 @@ class DetailEventController extends Controller
 
     public function transactionTiketFree(Request $request) {
         $event_id = session('event_id');
-        $competitionId = $request->input('competition_id');
+
+        $dataEvent = DB::table('detail_event')
+            ->where('detail_event.id', '=', $event_id)
+            ->first();
 
         // Cek apakah pengguna sudah terdaftar untuk event gratis ini
         $checkTransactionEvent = Transaction::where('id_member', auth()->user()->id)
@@ -142,7 +145,7 @@ class DetailEventController extends Controller
             ->first();
     
         if ($checkTransactionEvent) {
-            // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan Anda
+            // Jika pengguna sudah terdaftar, berikan pesan atau tindakan sesuai kebutuhan
             toast('Anda sudah terdaftar untuk event ini.', 'info');
             return redirect()->back();
         }
@@ -151,8 +154,8 @@ class DetailEventController extends Controller
         $transaction = new Transaction();
         $transaction->id_member = auth()->user()->id;
         $transaction->id_event = $event_id;
-        $transaction->id_competition = $competitionId;
-        $transaction->preferred_date = now();
+        $transaction->id_competition = null;
+        $transaction->preferred_date = $dataEvent->start_date;
         $transaction->id_category = 1;
         $transaction->qty = 1;
         $transaction->transaction_amout = '0';
@@ -195,7 +198,7 @@ class DetailEventController extends Controller
             toast('Anda belum terdaftar untuk event ini.', 'info');
             return redirect()->back();
         }else{
-            // Cek apakah pengguna sudah mendaftar untuk event atau kompetisi tertentu
+            // Cek apakah pengguna sudah mendaftar untuk kompetisi tertentu
             $existingTransaction = Transaction::where('id_member', $userId)
             ->where(function ($query) use ($competitionId) {
                 $query->where('id_competition', $competitionId);
@@ -204,7 +207,7 @@ class DetailEventController extends Controller
 
             // Jika transaksi sudah ada, berikan pesan kesalahan atau ambil tindakan lain
             if (!$existingTransaction) {
-                if($detailCompetition->competition_fee != 0 || $detailCompetition->competition_fee != null){
+                if($detailCompetition->competition_fee != 0){
                     $paymentMethodId = $request->input('payment_method');
         
                     // Simpan data transaksi ke database
@@ -212,7 +215,7 @@ class DetailEventController extends Controller
                     $transaction->id_member = auth()->user()->id;
                     $transaction->id_event = $event_id;
                     $transaction->id_competition = $competitionId;
-                    $transaction->preferred_date = null;
+                    $transaction->preferred_date = $detailCompetition->competition_start_date;
                     $transaction->qty = 1;
                     $transaction->id_category = 2;
                     $transaction->transaction_amout = ($detailCompetition->competition_fee)+(mt_rand(1, 99));;
@@ -230,7 +233,7 @@ class DetailEventController extends Controller
                     $transaction->id_member = auth()->user()->id;
                     $transaction->id_event = $event_id;
                     $transaction->id_competition = $competitionId;
-                    $transaction->preferred_date = null;
+                    $transaction->preferred_date = $detailCompetition->competition_start_date;
                     $transaction->qty = 1;
                     $transaction->id_category = 2;
                     $transaction->transaction_amout = null;
@@ -267,28 +270,35 @@ class DetailEventController extends Controller
             ->join('booth_rental', 'booth_rental.id_event', '=', 'detail_event.id')
             ->where('booth_rental.id', '=', $rentalBoothId)
             ->first();
-        
+
         $paymentMethodId = $request->input('payment_method');
 
-        // Cek apakah pengguna sudah mendaftar untuk event atau kompetisi tertentu
-        $existingTransaction = DB::table('users')
-            ->join('transaction', 'transaction.id_member', '=', 'users.id')
+        // Cek apakah pengguna sudah mendaftar untuk booth tertentu
+        $existingTransaction = DB::table('transaction')
+            ->join('users', 'users.id', '=', 'transaction.id_member')
             ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
-            ->join('detail_booth', 'detail_booth.id_member', '=', 'transaction.id_member')
-            ->first();
-
+            ->join('booth_rental', 'booth_rental.id', '=', 'transaction.id_booth_rental')
+            ->where('transaction.id_member', '=', $userId)
+            ->where('transaction.id_event', '=', $event_id)
+            ->where('transaction.id_category', '=', '3')
+            ->where(function ($query) {
+                $query->where('transaction.transaction_status', '=', 'success')
+                    ->orWhere('transaction.transaction_status', '=', 'pending');
+            })
+            ->count();
+        
         // Jika transaksi sudah ada, berikan pesan kesalahan atau ambil tindakan lain
-        if ($existingTransaction) {
+        if ($existingTransaction > 0) {
             toast('Anda sudah memiliki booth di event ini.', 'info');
             return redirect()->back();
-        }else{
+        }elseif ($existingTransaction == 0){
             // Simpan data transaksi ke database
             $transaction = new Transaction();
             $transaction->id_member = auth()->user()->id;
             $transaction->id_event = $event_id;
             $transaction->id_competition = null;
             $transaction->id_booth_rental = $rentalBoothId;
-            $transaction->preferred_date = null;
+            $transaction->preferred_date = $detailEvent->start_date;
             $transaction->qty = 1;
             $transaction->id_category = 3;
             $transaction->transaction_amout = ($detailEvent->rental_price)+(mt_rand(1, 99));;

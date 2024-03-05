@@ -25,6 +25,7 @@ class EventController extends Controller
             ->join('event_organizer', 'detail_event.id_eo', '=', 'event_organizer.id_user')
             ->join('users', 'detail_event.id_eo', '=', 'users.id')
             ->select('detail_event.*', 'users.name')
+            ->orderBy('updated_at', 'desc')
             ->get();
 
         return view('admin.event', compact('datas'), ['type_menu' => 'event']);

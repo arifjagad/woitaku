@@ -1,3 +1,3 @@
 <div class="simple-footer">
-    Copyright &copy; {{ date('Y') }}
+    Copyright Arif Jagad &copy; {{ date('Y') }}
 </div>

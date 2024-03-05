@@ -45,7 +45,12 @@ class ListEventController extends Controller
             ->orderBy('detail_event.start_date', 'asc')
             ->paginate(8);
 
-        return view('member.list-event', compact('dataEvent'), ['type_menu' => 'list-event']);
+        $dataEventCity = DB::table('detail_event')
+            ->select('city')
+            ->where('detail_event.verification', '=', 'accepted')
+            ->get();
+
+        return view('member.list-event', compact('dataEvent', 'dataEventCity'), ['type_menu' => 'list-event']);
     }
 
     public function filterEvent(Request $request)

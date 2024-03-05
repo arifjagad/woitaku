@@ -24,6 +24,8 @@ class TicketCheckController extends Controller
     }
 
     public function checkTicket(Request $request){
+        
+        
         $eventId = $request->input('event_name');
         $ticketId = $request->input('ticket_identifier');
 
@@ -42,10 +44,10 @@ class TicketCheckController extends Controller
             ->first();
 
         if($checkTicket && $checkTicket->status == 'used'){
-            alert()->warning('Tiket sudah digunakan', "Silakan periksa kembali ID-nya");
+            alert()->warning('Tiket sudah digunakan', "Tiket sudah digunakan!");
         } elseif ($checkTicket && $checkTicket->detail_event_id != $eventId){
             alert()->warning('Tiket tidak asdasdas', "Silakan periksa kembali ID-nya");
-        } elseif ($checkTicket && $checkTicket->preferred_date != date('Y-m-d')) {
+        } elseif ($checkTicket && Carbon::parse($checkTicket->preferred_date)->translatedFormat('Y-m-d') != date('Y-m-d')) {
             $preferredDate = Carbon::parse($checkTicket->preferred_date)->translatedFormat('l, d F Y');
             
             alert()->warning('Tanggal kedatangan tidak sesuai', "Harap datang pada tanggal $preferredDate");

@@ -8,10 +8,10 @@
 
 @section('main')
 <div class="main-content" style="padding: 80px 0px 0px 0px; backgorund-color:white;">
-    <div class="container h-100">
-        <div class="row vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row d-flex align-items-center py-5">
             <div class="col-lg-6">
-                <h2 class="text-primary heading-hero-text">Bergabunglah dalam Keasyikan Jejepangan bersama Woitaku!</h2>
+                <h3 class="text-primary heading-hero-text">Bergabunglah dalam Keasyikan Jejepangan bersama Woitaku!</h2>
                 <p class="subheading-hero-text">
                     Temukan Semua Event Jejepangan di Seluruh Indonesia dengan Mudah dan Seru!
                 </p>

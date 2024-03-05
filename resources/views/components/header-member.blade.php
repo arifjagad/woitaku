@@ -8,7 +8,7 @@
         <i class="fa-solid fa-bars"></i>
     </div>
     <div class="navbar-brand">
-        <a href="{{ route('home') }}" class="nav-link text-white">
+        <a href="{{ route('home') }}" class="text-white" style="text-decoration:none;">
             WOITAKU
         </a>
     </div>
@@ -18,7 +18,7 @@
         @auth
 
         @else
-            <a href="{{ route('login') }}" class="nav-link my-2 nav-right"><u>Login</u></a>
+            <a href="{{ route('login') }}" class="nav-link my-2 nav-right mr-5"><u>Login</u></a>
         @endauth
     </div>
     @auth

@@ -86,7 +86,7 @@
                                                     <td>
                                                         @if ($data->status == 'unused')
                                                             <span class="badge badge-danger">Belum digunakan</span>
-                                                        @elseif ($data->status == 'success')
+                                                        @elseif ($data->status == 'used')
                                                             <span class="badge badge-success">Sudah digunakan</span>
                                                         @endif
                                                     </td>
