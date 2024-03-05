@@ -87,6 +87,9 @@
 <div class="text-muted mt-5 text-center">
     Belum punya akun? <a href='{{ route('register') }}'>Daftar sekarang!</a>
 </div>
+<div class="text-muted mt-2 text-center">
+    <a href='{{ route('home') }}'><u>Kembali</u></a>
+</div>
 @endsection @push('scripts')
 <!-- JS Libraies -->
 

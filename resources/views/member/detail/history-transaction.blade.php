@@ -64,7 +64,7 @@
                                                         <span class="badge badge-warning">Pending</span>
                                                     @elseif($data->transaction_status == 'success')
                                                         <span class="badge badge-success">Berhasil</span>
-                                                    @elseif($data->transaction_status == 'expired')
+                                                    @elseif($data->transaction_status == 'expired' || $data->transaction_status == 'failed')
                                                         <span class="badge badge-danger">Gagal</span>
                                                     @elseif($data->transaction_status == 'check')
                                                         <span class="badge badge-info">Menunggu konfirmasi</span>

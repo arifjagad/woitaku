@@ -35,6 +35,7 @@ class DownloadTicketController extends Controller
             ->join('detail_competition', 'detail_competition.id', '=', 'transaction.id_competition')
             ->join('category_transaction', 'category_transaction.id', '=', 'transaction.id_category')
             ->join('ticket', 'ticket.id_transaction', '=', 'transaction.id')
+            ->where('transaction.id_member', '=', $authId)
             ->orderBy('ticket.created_at', 'asc')
             ->get();
 
@@ -161,7 +162,7 @@ class DownloadTicketController extends Controller
             ->select('transaction.*')
             ->first();
 
-        $pdfContent = view('layouts.ticket-booth', compact('dataTicketBooth', 'dataUser', 'dataTicketBuy'))->render();
+        $pdfContent = view('layouts.ticket-booth', compact('dataTicket', 'dataUser', 'dataTicketBuy'))->render();
         // Set up Dompdf
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);

@@ -111,7 +111,7 @@
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->competition_name }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data->competition_start_date)->format('d F Y') }}</td>
                                                 <td>
                                                     @if ($data->transaction_amout == 0 && $data->id_category == 1)
                                                         <div class="badge badge-success">GRATIS</div>
@@ -173,7 +173,7 @@
                                                 <td>{{ $data->event_name }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->booth_code }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data->preferred_date)->format('d F Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data->start_date)->format('d F Y') }}</td>
                                                 <td>
                                                     @if ($data->transaction_amout == 0 && $data->id_category == 1)
                                                         <div class="badge badge-success">GRATIS</div>

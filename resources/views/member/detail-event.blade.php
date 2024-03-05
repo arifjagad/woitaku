@@ -259,7 +259,7 @@
                                                             </div>
                                                             <div class="col-sm-12 col-md-12 col-lg-6">
                                                                 <h6 class="float-lg-right">
-                                                                    {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }}
+                                                                    {{ \Carbon\Carbon::parse($data->competition_start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($data->competition_end_date)->translatedFormat('d F Y') }}
                                                                 </h6>
                                                             </div>
                                                             <div class="col-12">
@@ -632,9 +632,9 @@
 <script>
     function checkEventDate() {
         var eventEndDate = '{{ $detailEvent->end_date }}';
-        var today = new Date();
+        var today = moment().format('YYYY-MM-DD');
 
-        if (new Date(eventEndDate) < today) {
+        if (new Date(eventEndDate) <= new Date(today)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Event Telah Berakhir!',
@@ -648,9 +648,9 @@
 
     function checkEventDateBooth() {
         var eventStartDate = '{{ $detailEvent->start_date }}';
-        var today = new Date();
-
-        if (new Date(eventStartDate) < today) {
+        var today = moment().format('YYYY-MM-DD');
+        
+        if (new Date(eventStartDate) <= new Date(today)) {
             Swal.fire({
                 icon: 'info',
                 title: 'Event Telah Dimulai!',

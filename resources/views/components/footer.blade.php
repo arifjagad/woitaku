@@ -1,5 +1,5 @@
 <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; {{ date('Y') }}
+        Copyright Arif Jagad &copy; {{ date('Y') }}
     </div>
 </footer>

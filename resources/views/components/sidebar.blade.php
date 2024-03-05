@@ -82,19 +82,19 @@
                                 href="{{ route('payment-method') }}">Metode Pembayaran</a>
                         </li>
                     </ul>
-                    <li class="{{ Request::is('list-transaction') ? 'active' : '' }}">
-                        <a class="nav-link"
-                            href="{{ url('list-transaction') }}"><i class="fa-solid fa-money-bill-transfer"></i> <span>Daftar Transaksi</span></a>
-                    </li>
-                    <li class="{{ Request::is('participant-list') ? 'active' : '' }}">
-                        <a class="nav-link"
-                            href="{{ url('participant-list') }}"><i class="fa-solid fa-users-viewfinder"></i> <span>Peserta Event</span></a>
-                    </li>
-                    <li class="menu-header">Fitur Tamabahan</li>
-                    <li class="{{ Request::is('ticket-check') ? 'active' : '' }}">
-                        <a class="nav-link"
-                            href="{{ url('ticket-check') }}"><i class="fa-solid fa-ticket"></i> <span>Cek Tiket Peserta</span></a>
-                    </li>
+                </li>
+                <li class="{{ Request::is('list-transaction') ? 'active' : '' }}">
+                    <a class="nav-link"
+                        href="{{ url('list-transaction') }}"><i class="fa-solid fa-money-bill-transfer"></i> <span>Daftar Transaksi</span></a>
+                </li>
+                <li class="{{ Request::is('participant-list') ? 'active' : '' }}">
+                    <a class="nav-link"
+                        href="{{ url('participant-list') }}"><i class="fa-solid fa-users-viewfinder"></i> <span>Peserta Event</span></a>
+                </li>
+                <li class="menu-header">Fitur Tamabahan</li>
+                <li class="{{ Request::is('ticket-check') ? 'active' : '' }}">
+                    <a class="nav-link"
+                        href="{{ url('ticket-check') }}"><i class="fa-solid fa-ticket"></i> <span>Cek Tiket Peserta</span></a>
                 </li>
             </ul>
         </aside>

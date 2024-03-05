@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-lg-3 mt-5">
-                <div class="sticky-top" style="top: 30px;">
+                <div class="position-sticky" style="top: 100px;">
                     <h4 class="text-primary">Filter</h4>
                     <form action="{{ route('filter-event') }}" method="GET">
                         <div class="form-group">

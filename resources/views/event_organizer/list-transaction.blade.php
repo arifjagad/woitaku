@@ -74,7 +74,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $loop->iteration }}</td>
                                                     <td>{{ $data->event_name }}</td>
-                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ $data->member_name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->created_at)->translatedFormat('d F Y') }}</td>
                                                     <td>
                                                         @if ($data->id_category == '1')

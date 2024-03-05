@@ -97,17 +97,19 @@ class DashboardController extends Controller
                 DB::raw('COUNT(transaction.id) as total_transactions'), // Jumlah transaksi
                 DB::raw('SUM(transaction.transaction_amout / transaction.qty) as total_transaction_amount'), // Total transaksi
             ])
-            ->groupBy('detail_event.id', 'detail_event.event_name')
+            ->groupBy('detail_event.id', 'detail_event.event_name', 'detail_event.featured_image')
             ->orderByDesc('total_transactions')
             ->take(5)
             ->get();
 
-        $transaction = DB::table('users')
-            ->join('detail_event', 'detail_event.id_eo', '=', 'users.id')
-            ->join('transaction', 'transaction.id_event', '=', 'detail_event.id')
+
+        $transaction = DB::table('transaction')
+            ->join('detail_event', 'detail_event.id', '=', 'transaction.id_event')
+            ->join('users as eo', 'eo.id', '=', 'detail_event.id_eo')
+            ->join('users as member', 'member.id', '=', 'transaction.id_member')
             ->join('payment_methods', 'payment_methods.id', '=', 'transaction.id_payment_methods')
-            ->where('detail_event.id_eo', $authId)
-            ->select('users.*', 'detail_event.*', 'payment_methods.*', 'transaction.*')
+            ->where('eo.id', $authId)
+            ->select('eo.name as eo_name', 'member.name as member_name', 'detail_event.*', 'payment_methods.*', 'transaction.*')
             ->orderBy('transaction.created_at', 'desc')
             ->take(10)
             ->get();
